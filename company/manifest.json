@@ -5,7 +5,7 @@
   "includes": { "company": true, "agents": true },
   "company": {
     "path": "COMPANY.md",
-    "name": "BrownAI",
+    "name": "Brown Biotech Inc.",
     "description": "AI-powered longevity platform — combining endocrinology expertise with autonomous AI agents for metabolic health optimization and drug discovery in aging.",
     "brandColor": "#059669",
     "requireBoardApprovalForNewAgents": true

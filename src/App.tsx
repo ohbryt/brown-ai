@@ -46,7 +46,7 @@ interface Agent {
   bu: BU | "shared";
 }
 
-/* ── BrownAI Health agents (B2C) ── */
+/* ── Brown Biotech Health agents (B2C) ── */
 const healthAgents: Agent[] = [
   { slug: "metabolic-analyst", name: "Metabolic Analyst", title: "혈액/대사 패널 분석", icon: Activity, personality: "인슐린 저항성 패턴을 당뇨 진단 5년 전에 잡아냅니다.", capabilities: ["blood-panels", "glucose-dynamics", "insulin-resistance", "lipid-metabolism"], bu: "health" },
   { slug: "endocrine-specialist", name: "Endocrine Specialist", title: "호르몬 분석", icon: ScanLine, personality: "호르몬 패널을 소설처럼 읽어냅니다. 시상하부부터 말초기관까지 전체 내분비 축을 매핑합니다.", capabilities: ["thyroid", "cortisol", "sex-hormones", "HPA-axis", "growth-hormone"], bu: "health" },
@@ -56,7 +56,7 @@ const healthAgents: Agent[] = [
   { slug: "sleep-specialist", name: "Sleep Specialist", title: "수면/일주기 최적화", icon: Moon, personality: "가장 과소평가된 장수 개입을 최적화합니다 — 수면. 일주기 리듬과 호르몬 주기를 매핑.", capabilities: ["sleep-architecture", "circadian-rhythm", "HRV-analysis", "melatonin"], bu: "health" },
 ];
 
-/* ── BrownAI Discovery agents (B2B) ── */
+/* ── Brown Biotech Discovery agents (B2B) ── */
 const discoveryAgents: Agent[] = [
   { slug: "drug-discovery-lead", name: "Drug Discovery Lead", title: "타겟 발굴 & 약물 재창출", icon: FlaskConical, personality: "문헌 마이닝, 화합물 스크리닝, 기존 약물의 새로운 용도를 찾아 노화 치료제를 사냥합니다.", capabilities: ["target-identification", "drug-repurposing", "PubMed-mining", "ChEMBL"], bu: "discovery" },
   { slug: "computational-chemist", name: "Computational Chemist", title: "분자 모델링 & 도킹", icon: Atom, personality: "원자 수준의 정밀도로 분자 상호작용을 시뮬레이션합니다. 약물이 세포에 닿기 전에 행동을 예측.", capabilities: ["molecular-docking", "ADMET-prediction", "binding-affinity", "SAR"], bu: "discovery" },
@@ -244,7 +244,7 @@ export function App() {
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-brand to-teal flex items-center justify-center">
               <Dna size={17} className="text-white" />
             </div>
-            <span className="font-bold text-lg tracking-tight">BrownAI</span>
+            <span className="font-bold text-lg tracking-tight">Brown Biotech</span>
           </div>
           <div className="hidden md:flex items-center gap-1 text-sm">
             <button onClick={() => { setActiveTab("health"); document.getElementById("bu-section")?.scrollIntoView({ behavior: "smooth" }); }} className={`px-3 py-1.5 rounded-lg transition ${activeTab === "health" ? "bg-emerald-500/10 text-emerald-400" : "text-text-secondary hover:text-text-primary"}`}>
@@ -294,7 +294,7 @@ export function App() {
                   <HeartPulse size={20} />
                 </div>
                 <div>
-                  <h3 className="font-bold text-emerald-400">BrownAI Health</h3>
+                  <h3 className="font-bold text-emerald-400">Brown Biotech Health</h3>
                   <p className="text-[10px] text-emerald-400/60 font-medium uppercase tracking-wider">B2C · Consumer</p>
                 </div>
               </div>
@@ -310,7 +310,7 @@ export function App() {
                   <FlaskConical size={20} />
                 </div>
                 <div>
-                  <h3 className="font-bold text-violet-400">BrownAI Discovery</h3>
+                  <h3 className="font-bold text-violet-400">Brown Biotech Discovery</h3>
                   <p className="text-[10px] text-violet-400/60 font-medium uppercase tracking-wider">B2B · Pharma & Biotech</p>
                 </div>
               </div>
@@ -348,14 +348,14 @@ export function App() {
                 onClick={() => setActiveTab("health")}
                 className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition ${activeTab === "health" ? "bg-emerald-500/15 text-emerald-400 shadow-sm" : "text-text-muted hover:text-text-secondary"}`}
               >
-                <HeartPulse size={16} /> BrownAI Health
+                <HeartPulse size={16} /> Brown Biotech Health
                 <span className="text-[10px] opacity-60">B2C</span>
               </button>
               <button
                 onClick={() => setActiveTab("discovery")}
                 className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition ${activeTab === "discovery" ? "bg-violet-500/15 text-violet-400 shadow-sm" : "text-text-muted hover:text-text-secondary"}`}
               >
-                <FlaskConical size={16} /> BrownAI Discovery
+                <FlaskConical size={16} /> Brown Biotech Discovery
                 <span className="text-[10px] opacity-60">B2B</span>
               </button>
             </div>
@@ -426,7 +426,7 @@ export function App() {
               {/* Our Products */}
               <div id="products">
                 <h3 className="text-xl font-bold text-center mb-2">Our Products</h3>
-                <p className="text-sm text-text-muted text-center mb-6">BrownAI 생태계를 구성하는 제품들</p>
+                <p className="text-sm text-text-muted text-center mb-6">Brown Biotech 생태계를 구성하는 제품들</p>
                 <div className="grid sm:grid-cols-2 gap-4">
                   {/* BioStatX */}
                   <a href="https://biostatx.vercel.app" target="_blank" rel="noopener" className="group flex flex-col sm:flex-row items-center gap-5 bg-surface-card border border-border-dim rounded-2xl p-6 hover:border-orange-500/20 transition">
@@ -581,7 +581,7 @@ export function App() {
       <section id="pricing" className="py-20">
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-12">
-            <p className="text-xs text-emerald-400 font-semibold uppercase tracking-widest mb-2">BrownAI Health Pricing</p>
+            <p className="text-xs text-emerald-400 font-semibold uppercase tracking-widest mb-2">Brown Biotech Health Pricing</p>
             <h2 className="text-3xl font-bold mb-3">개인 건강 관리 플랜</h2>
             <p className="text-text-secondary text-sm">무료로 시작하세요. Drug Discovery는 별도 파트너십으로 운영됩니다.</p>
           </div>
@@ -611,7 +611,7 @@ export function App() {
             ))}
           </div>
           <p className="text-center text-xs text-text-muted mt-6">
-            BrownAI Discovery (B2B) 파트너십은 <a href="mailto:brownbio.ocm@gmail.com" className="text-violet-400 hover:underline">contact@brownai.com</a>으로 문의하세요.
+            Brown Biotech Discovery (B2B) 파트너십은 <a href="mailto:brownbio.ocm@gmail.com" className="text-violet-400 hover:underline">brownbio.ocm@gmail.com</a>으로 문의하세요.
           </p>
         </div>
       </section>
@@ -643,7 +643,7 @@ export function App() {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-3">
             <div className="flex items-center gap-2">
               <Dna size={14} className="text-brand-light" />
-              <span className="text-sm font-semibold">BrownAI</span>
+              <span className="text-sm font-semibold">Brown Biotech Inc.</span>
             </div>
             <div className="flex items-center gap-4 text-xs text-text-muted">
               <a href="https://biostatx.vercel.app" target="_blank" rel="noopener" className="hover:text-text-secondary transition">BioStatX</a>

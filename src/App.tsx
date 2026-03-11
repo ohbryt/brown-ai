@@ -611,7 +611,7 @@ export function App() {
             ))}
           </div>
           <p className="text-center text-xs text-text-muted mt-6">
-            BrownAI Discovery (B2B) 파트너십은 <a href="mailto:contact@brownai.com" className="text-violet-400 hover:underline">contact@brownai.com</a>으로 문의하세요.
+            BrownAI Discovery (B2B) 파트너십은 <a href="mailto:brownbio.ocm@gmail.com" className="text-violet-400 hover:underline">contact@brownai.com</a>으로 문의하세요.
           </p>
         </div>
       </section>

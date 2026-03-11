@@ -4,6 +4,7 @@ import {
   Apple,
   Atom,
   ArrowRight,
+  BarChart3,
   Brain,
   Building2,
   Check,
@@ -25,6 +26,7 @@ import {
   Sparkles,
   TestTubes,
   Users,
+  X,
   type LucideIcon,
 } from "lucide-react";
 
@@ -163,10 +165,75 @@ function AgentCard({ agent, accentColor }: { agent: Agent; accentColor: string }
 }
 
 /* ═══════════════════════════════════════════
+   WAITLIST MODAL
+   ═══════════════════════════════════════════ */
+function WaitlistModal({ open, onClose, plan }: { open: boolean; onClose: () => void; plan: string }) {
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  if (!open) return null;
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) return;
+    setSubmitted(true);
+  };
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" onClick={onClose}>
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+      <div className="relative bg-surface-card border border-border-dim rounded-2xl p-6 w-full max-w-md shadow-2xl" onClick={(e) => e.stopPropagation()}>
+        <button onClick={onClose} className="absolute top-4 right-4 text-text-muted hover:text-text-primary transition"><X size={18} /></button>
+        {submitted ? (
+          <div className="text-center py-4">
+            <div className="w-14 h-14 rounded-full bg-emerald-500/10 flex items-center justify-center mx-auto mb-4">
+              <Check size={28} className="text-emerald-400" />
+            </div>
+            <h3 className="text-xl font-bold mb-2">Waitlist 등록 완료!</h3>
+            <p className="text-sm text-text-secondary mb-1">{email}</p>
+            <p className="text-xs text-text-muted">런칭 시 가장 먼저 알려드리겠습니다.</p>
+          </div>
+        ) : (
+          <>
+            <div className="mb-5">
+              <h3 className="text-xl font-bold mb-1">
+                {plan === "discovery" ? "파트너십 문의" : `${plan} 플랜 — Waitlist`}
+              </h3>
+              <p className="text-sm text-text-secondary">
+                {plan === "discovery"
+                  ? "Drug Discovery 파이프라인에 관심이 있으시면 이메일을 남겨주세요."
+                  : "현재 사전 등록 중입니다. 이메일을 남겨주시면 런칭 시 가장 먼저 초대해드립니다."}
+              </p>
+            </div>
+            <form onSubmit={handleSubmit} className="space-y-3">
+              <input
+                type="email"
+                required
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full px-4 py-2.5 rounded-xl bg-surface border border-border-dim text-text-primary placeholder:text-text-muted text-sm focus:outline-none focus:border-brand/50 transition"
+              />
+              <button type="submit" className="w-full py-2.5 rounded-xl bg-gradient-to-r from-brand to-brand-dark text-white font-semibold text-sm hover:shadow-lg hover:shadow-brand/25 transition">
+                {plan === "discovery" ? "문의하기" : "Waitlist 등록"}
+              </button>
+            </form>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════
    APP — Two-Section Landing Page
    ═══════════════════════════════════════════ */
 export function App() {
   const [activeTab, setActiveTab] = useState<BU>("health");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalPlan, setModalPlan] = useState("");
+
+  const openWaitlist = (plan: string) => { setModalPlan(plan); setModalOpen(true); };
 
   return (
     <div className="min-h-screen bg-surface text-text-primary">
@@ -187,6 +254,7 @@ export function App() {
               Discovery
             </button>
             <span className="w-px h-4 bg-border-dim mx-2" />
+            <a href="#products" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Products</a>
             <a href="#team" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Team</a>
             <a href="#pricing" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Pricing</a>
           </div>
@@ -207,11 +275,16 @@ export function App() {
             <br />
             <span className="text-text-primary">Age Smarter.</span>
           </h1>
-          <p className="text-lg text-text-secondary max-w-2xl mx-auto mb-8">
+          <p className="text-lg text-text-secondary max-w-2xl mx-auto mb-4">
             내분비 전문의의 의학 전문성 + AI 에이전트의 자동화.
             <br className="hidden sm:inline" />
             두 개의 사업부로 노화와 대사를 공략합니다.
           </p>
+          <div className="flex justify-center mb-8">
+            <button onClick={() => openWaitlist("Basic")} className="group inline-flex items-center gap-2 px-7 py-3 rounded-xl bg-gradient-to-r from-brand to-brand-dark text-white font-semibold hover:shadow-lg hover:shadow-brand/25 transition">
+              Get Started Free <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
 
           {/* Two BU Cards */}
           <div className="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
@@ -350,18 +423,44 @@ export function App() {
                 </div>
               </div>
 
-              {/* FitFlow */}
-              <div className="flex flex-col sm:flex-row items-center gap-6 bg-surface-card border border-border-dim rounded-2xl p-6">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-lime to-emerald flex items-center justify-center shrink-0">
-                  <HeartPulse size={28} className="text-white" />
+              {/* Our Products */}
+              <div id="products">
+                <h3 className="text-xl font-bold text-center mb-2">Our Products</h3>
+                <p className="text-sm text-text-muted text-center mb-6">BrownAI 생태계를 구성하는 제품들</p>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  {/* BioStatX */}
+                  <a href="https://biostatx.vercel.app" target="_blank" rel="noopener" className="group flex flex-col sm:flex-row items-center gap-5 bg-surface-card border border-border-dim rounded-2xl p-6 hover:border-orange-500/20 transition">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-orange-500 to-amber-500 flex items-center justify-center shrink-0">
+                      <BarChart3 size={28} className="text-white" />
+                    </div>
+                    <div className="flex-1 text-center sm:text-left">
+                      <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
+                        <h4 className="text-lg font-bold">BioStatX</h4>
+                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-orange-500/10 text-orange-400 font-medium">Analytics Engine</span>
+                      </div>
+                      <p className="text-sm text-text-secondary">바이오메디컬 통계 플랫폼 — T-Test, ANOVA, Kaplan-Meier, Curve Fitting, RT-PCR ΔΔCt 등 11개 도구. 브라우저에서 분석, 데이터 서버 전송 없음.</p>
+                      <div className="mt-2 flex items-center justify-center sm:justify-start gap-1 text-xs text-orange-400 group-hover:gap-2 transition-all">
+                        BioStatX 열기 <ExternalLink size={10} />
+                      </div>
+                    </div>
+                  </a>
+                  {/* FitFlow */}
+                  <a href="https://fitflow-website.vercel.app" target="_blank" rel="noopener" className="group flex flex-col sm:flex-row items-center gap-5 bg-surface-card border border-border-dim rounded-2xl p-6 hover:border-emerald-500/20 transition">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-lime to-emerald flex items-center justify-center shrink-0">
+                      <HeartPulse size={28} className="text-white" />
+                    </div>
+                    <div className="flex-1 text-center sm:text-left">
+                      <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
+                        <h4 className="text-lg font-bold">FitFlow</h4>
+                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-medium">Fitness App</span>
+                      </div>
+                      <p className="text-sm text-text-secondary">대사 최적화 운동이 FitFlow로 자동 전송. Zone 2 유산소, 저항 운동, HIIT — 바이오마커 맞춤 설계.</p>
+                      <div className="mt-2 flex items-center justify-center sm:justify-start gap-1 text-xs text-emerald-400 group-hover:gap-2 transition-all">
+                        FitFlow 다운로드 <ExternalLink size={10} />
+                      </div>
+                    </div>
+                  </a>
                 </div>
-                <div className="flex-1 text-center sm:text-left">
-                  <h4 className="text-lg font-bold mb-1">FitFlow 앱 연동</h4>
-                  <p className="text-sm text-text-secondary">대사 최적화 운동이 FitFlow로 자동 전송. Zone 2, 저항 운동, HIIT — 바이오마커 맞춤 설계.</p>
-                </div>
-                <a href="https://fitflow-website.vercel.app" target="_blank" rel="noopener" className="shrink-0 px-4 py-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm hover:bg-emerald-500/20 transition flex items-center gap-1">
-                  다운로드 <ExternalLink size={12} />
-                </a>
               </div>
             </div>
           )}
@@ -444,9 +543,9 @@ export function App() {
                   제약사, 바이오텍, 연구기관을 위한 맞춤 AI 파이프라인.
                   <br />라이선싱, 공동연구, 전용 에이전트 배정.
                 </p>
-                <a href="mailto:contact@brownai.com" className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-violet-500 to-purple-500 text-white font-semibold hover:shadow-lg hover:shadow-violet-500/25 transition text-sm">
+                <button onClick={() => openWaitlist("discovery")} className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-violet-500 to-purple-500 text-white font-semibold hover:shadow-lg hover:shadow-violet-500/25 transition text-sm">
                   Contact Us <ArrowRight size={14} />
-                </a>
+                </button>
               </div>
             </div>
           )}
@@ -505,7 +604,7 @@ export function App() {
                     </li>
                   ))}
                 </ul>
-                <button className={`w-full py-2.5 rounded-xl text-sm font-semibold transition ${p.highlight ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white hover:shadow-lg hover:shadow-emerald-500/25" : "border border-border-dim text-text-secondary hover:text-text-primary hover:border-emerald-500/30"}`}>
+                <button onClick={() => openWaitlist(p.name)} className={`w-full py-2.5 rounded-xl text-sm font-semibold transition ${p.highlight ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white hover:shadow-lg hover:shadow-emerald-500/25" : "border border-border-dim text-text-secondary hover:text-text-primary hover:border-emerald-500/30"}`}>
                   {p.cta}
                 </button>
               </div>
@@ -523,9 +622,10 @@ export function App() {
           <p className="text-[10px] text-text-muted uppercase tracking-widest mb-4">Powered By</p>
           <div className="flex flex-wrap justify-center gap-3">
             {[
+              { name: "BioStatX", desc: "Biomedical Statistics", url: "https://biostatx.vercel.app" },
+              { name: "FitFlow", desc: "Fitness App", url: "https://fitflow-website.vercel.app" },
               { name: "Paperclip", desc: "AI Orchestration", url: "https://github.com/paperclipai/paperclip" },
               { name: "Agent Hub", desc: "AI Agent Catalog", url: "https://agent-hub-alpha-nine.vercel.app" },
-              { name: "FitFlow", desc: "Fitness App", url: "https://fitflow-website.vercel.app" },
             ].map((t) => (
               <a key={t.name} href={t.url} target="_blank" rel="noopener" className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface-card border border-border-dim hover:border-brand/20 transition text-xs">
                 <Globe size={12} className="text-text-muted" />
@@ -546,8 +646,10 @@ export function App() {
               <span className="text-sm font-semibold">BrownAI</span>
             </div>
             <div className="flex items-center gap-4 text-xs text-text-muted">
-              <span className="text-emerald-400/60">Health (B2C)</span>
-              <span className="text-violet-400/60">Discovery (B2B)</span>
+              <a href="https://biostatx.vercel.app" target="_blank" rel="noopener" className="hover:text-text-secondary transition">BioStatX</a>
+              <a href="https://fitflow-website.vercel.app" target="_blank" rel="noopener" className="hover:text-text-secondary transition">FitFlow</a>
+              <span className="text-emerald-400/60">Health</span>
+              <span className="text-violet-400/60">Discovery</span>
               <a href="https://github.com/ohbryt" target="_blank" rel="noopener" className="hover:text-text-secondary transition">GitHub</a>
             </div>
           </div>
@@ -556,6 +658,9 @@ export function App() {
           </p>
         </div>
       </footer>
+
+      {/* ── WAITLIST MODAL ── */}
+      <WaitlistModal open={modalOpen} onClose={() => setModalOpen(false)} plan={modalPlan} />
     </div>
   );
 }

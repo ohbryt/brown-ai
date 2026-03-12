@@ -7,7 +7,7 @@
     "path": "COMPANY.md",
     "name": "Brown Biotech Inc.",
     "description": "AI-powered longevity platform — combining endocrinology expertise with autonomous AI agents for metabolic health optimization and drug discovery in aging.",
-    "brandColor": "#059669",
+    "brandColor": "#92400e",
     "requireBoardApprovalForNewAgents": true
   },
   "agents": [

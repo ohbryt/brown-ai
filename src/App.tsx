@@ -78,10 +78,10 @@ const sharedAgents: Agent[] = [
    B2C HEALTH SERVICES
    ═══════════════════════════════════════════ */
 const healthServices = [
-  { icon: Activity, title: "Metabolic Panel AI", desc: "혈액 검사 업로드 → AI가 대사 패널, 인슐린 저항성, 지질대사를 분석하여 맞춤형 인사이트 제공", color: "from-emerald-500 to-teal-500" },
-  { icon: ScanLine, title: "Hormone Mapping", desc: "갑상선, 코르티솔, 성호르몬, 성장호르몬 — 전체 내분비 축 분석 및 최적 범위 가이드", color: "from-cyan-500 to-blue-500" },
+  { icon: Activity, title: "Metabolic Panel AI", desc: "혈액 검사 업로드 → AI가 대사 패널, 인슐린 저항성, 지질대사를 분석하여 맞춤형 인사이트 제공", color: "from-amber-700 to-amber-600" },
+  { icon: ScanLine, title: "Hormone Mapping", desc: "갑상선, 코르티솔, 성호르몬, 성장호르몬 — 전체 내분비 축 분석 및 최적 범위 가이드", color: "from-rose to-amber-700" },
   { icon: Hourglass, title: "Biological Age", desc: "에피제네틱 클럭, 텔로미어, 노화 바이오마커를 종합하여 실제 생물학적 나이 측정 및 추적", color: "from-violet-500 to-purple-500" },
-  { icon: Sparkles, title: "Longevity Protocol", desc: "영양, 운동(FitFlow 연동), 수면을 통합한 과학 기반 대사 최적화 프로토콜 자동 생성", color: "from-lime-500 to-emerald-500" },
+  { icon: Sparkles, title: "Longevity Protocol", desc: "영양, 운동(FitFlow 연동), 수면을 통합한 과학 기반 대사 최적화 프로토콜 자동 생성", color: "from-caramel to-brand" },
 ];
 
 /* ═══════════════════════════════════════════
@@ -186,8 +186,8 @@ function WaitlistModal({ open, onClose, plan }: { open: boolean; onClose: () => 
         <button onClick={onClose} className="absolute top-4 right-4 text-text-muted hover:text-text-primary transition"><X size={18} /></button>
         {submitted ? (
           <div className="text-center py-4">
-            <div className="w-14 h-14 rounded-full bg-emerald-500/10 flex items-center justify-center mx-auto mb-4">
-              <Check size={28} className="text-emerald-400" />
+            <div className="w-14 h-14 rounded-full bg-amber-700/10 flex items-center justify-center mx-auto mb-4">
+              <Check size={28} className="text-amber-500" />
             </div>
             <h3 className="text-xl font-bold mb-2">Waitlist 등록 완료!</h3>
             <p className="text-sm text-text-secondary mb-1">{email}</p>
@@ -247,7 +247,7 @@ export function App() {
             <span className="font-bold text-lg tracking-tight">Brown Biotech</span>
           </div>
           <div className="hidden md:flex items-center gap-1 text-sm">
-            <button onClick={() => { setActiveTab("health"); document.getElementById("bu-section")?.scrollIntoView({ behavior: "smooth" }); }} className={`px-3 py-1.5 rounded-lg transition ${activeTab === "health" ? "bg-emerald-500/10 text-emerald-400" : "text-text-secondary hover:text-text-primary"}`}>
+            <button onClick={() => { setActiveTab("health"); document.getElementById("bu-section")?.scrollIntoView({ behavior: "smooth" }); }} className={`px-3 py-1.5 rounded-lg transition ${activeTab === "health" ? "bg-amber-700/10 text-amber-500" : "text-text-secondary hover:text-text-primary"}`}>
               Health
             </button>
             <button onClick={() => { setActiveTab("discovery"); document.getElementById("bu-section")?.scrollIntoView({ behavior: "smooth" }); }} className={`px-3 py-1.5 rounded-lg transition ${activeTab === "discovery" ? "bg-violet-500/10 text-violet-400" : "text-text-secondary hover:text-text-primary"}`}>
@@ -288,18 +288,18 @@ export function App() {
 
           {/* Two BU Cards */}
           <div className="grid sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
-            <button onClick={() => { setActiveTab("health"); document.getElementById("bu-section")?.scrollIntoView({ behavior: "smooth" }); }} className="group text-left p-5 rounded-2xl border border-emerald-500/20 bg-emerald-500/5 hover:border-emerald-500/40 hover:bg-emerald-500/10 transition">
+            <button onClick={() => { setActiveTab("health"); document.getElementById("bu-section")?.scrollIntoView({ behavior: "smooth" }); }} className="group text-left p-5 rounded-2xl border border-amber-700/20 bg-amber-700/5 hover:border-amber-700/40 hover:bg-amber-700/10 transition">
               <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-white">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-700 to-amber-600 flex items-center justify-center text-white">
                   <HeartPulse size={20} />
                 </div>
                 <div>
-                  <h3 className="font-bold text-emerald-400">Brown Biotech Health</h3>
-                  <p className="text-[10px] text-emerald-400/60 font-medium uppercase tracking-wider">B2C · Consumer</p>
+                  <h3 className="font-bold text-amber-500">Brown Biotech Health</h3>
+                  <p className="text-[10px] text-amber-500/60 font-medium uppercase tracking-wider">B2C · Consumer</p>
                 </div>
               </div>
               <p className="text-sm text-text-secondary">개인 맞춤형 대사 건강 분석, 생물학적 나이 추적, 장수 프로토콜 설계</p>
-              <div className="mt-3 flex items-center gap-1 text-xs text-emerald-400 group-hover:gap-2 transition-all">
+              <div className="mt-3 flex items-center gap-1 text-xs text-amber-500 group-hover:gap-2 transition-all">
                 자세히 보기 <ArrowRight size={12} />
               </div>
             </button>
@@ -346,7 +346,7 @@ export function App() {
             <div className="inline-flex rounded-xl border border-border-dim bg-surface-card p-1 gap-1">
               <button
                 onClick={() => setActiveTab("health")}
-                className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition ${activeTab === "health" ? "bg-emerald-500/15 text-emerald-400 shadow-sm" : "text-text-muted hover:text-text-secondary"}`}
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold transition ${activeTab === "health" ? "bg-amber-700/15 text-amber-500 shadow-sm" : "text-text-muted hover:text-text-secondary"}`}
               >
                 <HeartPulse size={16} /> Brown Biotech Health
                 <span className="text-[10px] opacity-60">B2C</span>
@@ -366,7 +366,7 @@ export function App() {
             <div className="space-y-16">
               {/* Tagline */}
               <div className="text-center">
-                <p className="text-xs text-emerald-400 font-semibold uppercase tracking-widest mb-2">For Individuals</p>
+                <p className="text-xs text-amber-500 font-semibold uppercase tracking-widest mb-2">For Individuals</p>
                 <h2 className="text-3xl sm:text-4xl font-bold mb-3">AI 대사 건강 플랫폼</h2>
                 <p className="text-text-secondary max-w-lg mx-auto">
                   혈액 검사부터 맞춤 장수 프로토콜까지 — 6개 전문 AI 에이전트가 당신의 건강을 최적화합니다.
@@ -378,7 +378,7 @@ export function App() {
                 {healthServices.map((s) => {
                   const Icon = s.icon;
                   return (
-                    <div key={s.title} className="bg-surface-card border border-border-dim rounded-2xl p-6 hover:border-emerald-500/20 transition">
+                    <div key={s.title} className="bg-surface-card border border-border-dim rounded-2xl p-6 hover:border-amber-700/20 transition">
                       <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${s.color} flex items-center justify-center text-white mb-4`}>
                         <Icon size={24} />
                       </div>
@@ -402,8 +402,8 @@ export function App() {
                     const Icon = item.icon;
                     return (
                       <div key={item.num} className="text-center">
-                        <div className="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mx-auto mb-3">
-                          <Icon size={22} className="text-emerald-400" />
+                        <div className="w-12 h-12 rounded-xl bg-amber-700/10 border border-amber-700/20 flex items-center justify-center mx-auto mb-3">
+                          <Icon size={22} className="text-amber-500" />
                         </div>
                         <div className="text-[10px] text-text-muted font-mono mb-1">Step {item.num}</div>
                         <h4 className="font-semibold text-sm mb-1">{item.title}</h4>
@@ -419,7 +419,7 @@ export function App() {
                 <h3 className="text-xl font-bold text-center mb-2">Health AI Team</h3>
                 <p className="text-sm text-text-muted text-center mb-6">6 Specialized Agents · Click to see details</p>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                  {healthAgents.map((a) => <AgentCard key={a.slug} agent={a} accentColor="from-emerald-400 to-teal-400" />)}
+                  {healthAgents.map((a) => <AgentCard key={a.slug} agent={a} accentColor="from-amber-600 to-amber-500" />)}
                 </div>
               </div>
 
@@ -445,17 +445,17 @@ export function App() {
                     </div>
                   </a>
                   {/* FitFlow */}
-                  <a href="https://fitflow-website.vercel.app" target="_blank" rel="noopener" className="group flex flex-col sm:flex-row items-center gap-5 bg-surface-card border border-border-dim rounded-2xl p-6 hover:border-emerald-500/20 transition">
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-lime to-emerald flex items-center justify-center shrink-0">
+                  <a href="https://fitflow-website.vercel.app" target="_blank" rel="noopener" className="group flex flex-col sm:flex-row items-center gap-5 bg-surface-card border border-border-dim rounded-2xl p-6 hover:border-amber-700/20 transition">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-caramel to-brand flex items-center justify-center shrink-0">
                       <HeartPulse size={28} className="text-white" />
                     </div>
                     <div className="flex-1 text-center sm:text-left">
                       <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
                         <h4 className="text-lg font-bold">FitFlow</h4>
-                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-medium">Fitness App</span>
+                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-700/10 text-amber-500 font-medium">Fitness App</span>
                       </div>
                       <p className="text-sm text-text-secondary">대사 최적화 운동이 FitFlow로 자동 전송. Zone 2 유산소, 저항 운동, HIIT — 바이오마커 맞춤 설계.</p>
-                      <div className="mt-2 flex items-center justify-center sm:justify-start gap-1 text-xs text-emerald-400 group-hover:gap-2 transition-all">
+                      <div className="mt-2 flex items-center justify-center sm:justify-start gap-1 text-xs text-amber-500 group-hover:gap-2 transition-all">
                         FitFlow 다운로드 <ExternalLink size={10} />
                       </div>
                     </div>
@@ -568,7 +568,7 @@ export function App() {
           </div>
           <div className="mt-8 text-center">
             <div className="inline-flex items-center gap-6 text-sm text-text-muted">
-              <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-emerald-400" /> Health: 6 agents</span>
+              <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-amber-500" /> Health: 6 agents</span>
               <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-violet-400" /> Discovery: 5 agents</span>
               <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-brand-light" /> Shared: 5 agents</span>
               <span className="font-semibold text-text-secondary">= 16 Total</span>
@@ -581,15 +581,15 @@ export function App() {
       <section id="pricing" className="py-20">
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-12">
-            <p className="text-xs text-emerald-400 font-semibold uppercase tracking-widest mb-2">Brown Biotech Health Pricing</p>
+            <p className="text-xs text-amber-500 font-semibold uppercase tracking-widest mb-2">Brown Biotech Health Pricing</p>
             <h2 className="text-3xl font-bold mb-3">개인 건강 관리 플랜</h2>
             <p className="text-text-secondary text-sm">무료로 시작하세요. Drug Discovery는 별도 파트너십으로 운영됩니다.</p>
           </div>
           <div className="grid sm:grid-cols-3 gap-5">
             {healthPlans.map((p) => (
-              <div key={p.name} className={`relative rounded-2xl p-6 border transition ${p.highlight ? "bg-emerald-500/5 border-emerald-500/30 shadow-lg shadow-emerald-500/10" : "bg-surface-card border-border-dim"}`}>
+              <div key={p.name} className={`relative rounded-2xl p-6 border transition ${p.highlight ? "bg-amber-700/5 border-amber-700/30 shadow-lg shadow-amber-700/10" : "bg-surface-card border-border-dim"}`}>
                 {p.highlight && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-emerald-500 text-white text-[10px] font-semibold">RECOMMENDED</div>
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-amber-700 text-white text-[10px] font-semibold">RECOMMENDED</div>
                 )}
                 <h3 className="text-lg font-bold mb-1">{p.name}</h3>
                 <p className="text-xs text-text-muted mb-4">{p.desc}</p>
@@ -600,11 +600,11 @@ export function App() {
                 <ul className="space-y-2 mb-6">
                   {p.features.map((f) => (
                     <li key={f} className="flex items-start gap-2 text-sm text-text-secondary">
-                      <Check size={14} className="text-emerald-400 mt-0.5 shrink-0" /><span>{f}</span>
+                      <Check size={14} className="text-amber-500 mt-0.5 shrink-0" /><span>{f}</span>
                     </li>
                   ))}
                 </ul>
-                <button onClick={() => openWaitlist(p.name)} className={`w-full py-2.5 rounded-xl text-sm font-semibold transition ${p.highlight ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white hover:shadow-lg hover:shadow-emerald-500/25" : "border border-border-dim text-text-secondary hover:text-text-primary hover:border-emerald-500/30"}`}>
+                <button onClick={() => openWaitlist(p.name)} className={`w-full py-2.5 rounded-xl text-sm font-semibold transition ${p.highlight ? "bg-gradient-to-r from-amber-700 to-amber-600 text-white hover:shadow-lg hover:shadow-amber-700/25" : "border border-border-dim text-text-secondary hover:text-text-primary hover:border-amber-700/30"}`}>
                   {p.cta}
                 </button>
               </div>
@@ -648,7 +648,7 @@ export function App() {
             <div className="flex items-center gap-4 text-xs text-text-muted">
               <a href="https://biostatx.vercel.app" target="_blank" rel="noopener" className="hover:text-text-secondary transition">BioStatX</a>
               <a href="https://fitflow-website.vercel.app" target="_blank" rel="noopener" className="hover:text-text-secondary transition">FitFlow</a>
-              <span className="text-emerald-400/60">Health</span>
+              <span className="text-amber-500/60">Health</span>
               <span className="text-violet-400/60">Discovery</span>
               <a href="https://github.com/ohbryt" target="_blank" rel="noopener" className="hover:text-text-secondary transition">GitHub</a>
             </div>

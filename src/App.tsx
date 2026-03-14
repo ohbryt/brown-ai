@@ -107,9 +107,50 @@ const discoveryPipeline = [
 
 /* ── Pricing ── */
 const healthPlans = [
-  { name: "Basic", price: "Free", period: "", desc: "기본 대사 건강 점수", features: ["기본 혈액 검사 분석", "대사 건강 점수", "일반 식단/운동 가이드", "커뮤니티 접근"], cta: "Get Started", highlight: false },
-  { name: "Pro", price: "$49", period: "/month", desc: "개인 맞춤형 장수 관리", features: ["정밀 바이오마커 분석", "호르몬 패턴 매핑", "생물학적 나이 측정/추적", "맞춤 영양/운동/수면 프로토콜", "FitFlow 앱 연동", "월간 AI 리포트"], cta: "Start Free Trial", highlight: true },
-  { name: "Premium", price: "$149", period: "/month", desc: "전문가급 종합 건강 최적화", features: ["Pro의 모든 기능", "유전체(SNP) 분석 연동", "약물/보충제 상호작용 체크", "실시간 웨어러블 데이터 분석", "1:1 AI 건강 컨설팅", "API 접근"], cta: "Start Free Trial", highlight: false },
+  {
+    name: "Basic", price: "Free", period: "", desc: "대사 건강의 첫 걸음 — 무료로 시작",
+    features: [
+      "기본 혈액 검사 AI 분석 (공복혈당, HbA1c, 지질패널)",
+      "대사 건강 점수 산출 (100점 만점)",
+      "일반 식단/운동 가이드 (한국인 기준)",
+      "커뮤니티 포럼 접근 & Q&A",
+      "월 1회 건강 리포트 이메일",
+    ],
+    details: "혈액검사 결과 사진을 업로드하면 AI가 자동으로 수치를 추출하고, 대사 건강 점수를 산출합니다. 인슐린 저항성, 지질대사, 염증 지표를 종합 평가합니다.",
+    agents: "Metabolic Analyst",
+    cta: "Get Started", highlight: false,
+  },
+  {
+    name: "Pro", price: "$49", period: "/month", desc: "6개 AI 에이전트 — 개인 맞춤형 장수 관리",
+    features: [
+      "정밀 바이오마커 분석 (인슐린, CRP, 호모시스테인 등 30+)",
+      "호르몬 패턴 매핑 (갑상선·코르티솔·성호르몬)",
+      "생물학적 나이 측정 & 월별 추적 그래프",
+      "맞춤 영양/운동/수면 프로토콜 (AI 자동 생성)",
+      "FitFlow 앱 연동 (Zone 2·HIIT 자동 전송)",
+      "Longevity Lab 주간 리서치 브리핑",
+      "월간 종합 AI 리포트 + 트렌드 분석",
+    ],
+    details: "6개 전문 AI 에이전트가 동시에 작동합니다. 혈액검사 업로드 → 대사 분석 → 호르몬 매핑 → 생물학적 나이 측정 → 맞춤 프로토콜 생성 → FitFlow 운동 전송까지 자동 파이프라인.",
+    agents: "6개 Health AI 에이전트 전체",
+    cta: "Start Free Trial", highlight: true,
+  },
+  {
+    name: "Premium", price: "$149", period: "/month", desc: "전문가급 종합 건강 최적화 + 유전체 연동",
+    features: [
+      "Pro의 모든 기능 포함",
+      "유전체(SNP) 분석 연동 (약물유전체학·영양유전체학)",
+      "약물/보충제 상호작용 AI 체크",
+      "실시간 웨어러블 데이터 분석 (Apple Watch·Garmin)",
+      "PaperMind 논문 분석 무제한 이용",
+      "1:1 AI 건강 컨설팅 (월 4회)",
+      "API 접근 (개발자용 바이오마커 데이터)",
+      "우선 고객 지원 & 신기능 얼리 액세스",
+    ],
+    details: "유전체 데이터와 바이오마커를 통합 분석하여 약물 반응 예측, 개인 맞춤 보충제 추천, 실시간 웨어러블 모니터링까지. 기업 임직원 건강 관리에도 활용 가능합니다.",
+    agents: "전체 에이전트 + Genomics Analyst",
+    cta: "Start Free Trial", highlight: false,
+  },
 ];
 
 /* ── Paperclip features ── */
@@ -546,6 +587,7 @@ export function App() {
               Paperclip
             </button>
             <span className="w-px h-4 bg-gray-200 mx-2" />
+            <a href="#ceo" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">CEO</a>
             <a href="#products" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Products</a>
             <a href="#team" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Team</a>
             <a href="#pricing" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Pricing</a>
@@ -651,136 +693,6 @@ export function App() {
               자세히 보기 <ArrowRight size={12} />
             </div>
           </button>
-        </div>
-      </section>
-
-      {/* ── CEO / FOUNDER ── */}
-      <section id="ceo" className="py-20 bg-surface-raised">
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <span className="section-badge bg-amber-50 text-brand border border-amber-200 mb-4">
-              <Award size={12} /> Founder & CEO
-            </span>
-            <h2 className="heading-serif text-4xl sm:text-5xl mb-3">Chang-Myung Oh, M.D., Ph.D.</h2>
-            <p className="text-text-secondary max-w-xl mx-auto">내분비학 전문의이자 대사·노화 연구자. 임상 의학과 AI를 융합하여 장수 과학의 새로운 패러다임을 만듭니다.</p>
-          </div>
-
-          <div className="grid lg:grid-cols-3 gap-8">
-            {/* Left — Bio Card */}
-            <div className="lg:col-span-1">
-              <div className="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm text-center card-lift">
-                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-brand-light to-brand flex items-center justify-center text-white mx-auto mb-5">
-                  <span className="heading-serif text-3xl font-bold">MD</span>
-                </div>
-                <h3 className="text-xl font-bold mb-1">오창명</h3>
-                <p className="text-sm text-text-muted mb-4">Chang-Myung Oh, M.D., Ph.D.</p>
-
-                <div className="flex justify-center gap-3 mb-5">
-                  <a href="https://scholar.google.com/citations?user=hcYYWNAAAAAJ&hl=en" target="_blank" rel="noopener" className="w-9 h-9 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 hover:bg-blue-100 transition" title="Google Scholar">
-                    <GraduationCap size={16} />
-                  </a>
-                  <a href="https://orcid.org/0000-0001-6681-4478" target="_blank" rel="noopener" className="w-9 h-9 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 hover:bg-emerald-100 transition" title="ORCID">
-                    <Globe size={16} />
-                  </a>
-                </div>
-
-                <div className="space-y-2.5 text-left">
-                  <div className="flex items-center gap-2.5 text-sm">
-                    <MapPin size={14} className="text-text-muted shrink-0" />
-                    <span className="text-text-secondary">GIST, Gwangju, South Korea</span>
-                  </div>
-                  <div className="flex items-center gap-2.5 text-sm">
-                    <Stethoscope size={14} className="text-text-muted shrink-0" />
-                    <span className="text-text-secondary">Endocrinology & Metabolism</span>
-                  </div>
-                  <div className="flex items-center gap-2.5 text-sm">
-                    <Microscope size={14} className="text-text-muted shrink-0" />
-                    <span className="text-text-secondary">Aging · Serotonin · Metabolism</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right — Career & Research */}
-            <div className="lg:col-span-2 space-y-6">
-              {/* Career Timeline */}
-              <div className="bg-white border border-gray-100 rounded-3xl p-7 shadow-sm">
-                <h4 className="font-bold text-sm mb-5 flex items-center gap-2">
-                  <GraduationCap size={16} className="text-brand" /> Career Timeline
-                </h4>
-                <div className="space-y-3">
-                  {[
-                    { year: "2025 –", role: "Professor", org: "Department of BMSE, GIST", highlight: true },
-                    { year: "2023 – 2025", role: "Associate Professor", org: "Department of BMSE, GIST", highlight: false },
-                    { year: "2019 – 2023", role: "Assistant Professor", org: "Department of BMSE, GIST", highlight: false },
-                    { year: "2017 – 2019", role: "Post-Doc.", org: "Lab of Integrative Systems Physiology, EPFL, Switzerland", highlight: false },
-                    { year: "2016 – 2019", role: "Clinical Assistant Professor", org: "Dept. of Endocrinology, CHA Medical University", highlight: false },
-                    { year: "2015 – 2016", role: "Clinical & Research Fellow", org: "Endocrinology & Metabolism, Seoul National University Hospital", highlight: false },
-                    { year: "2011 – 2015", role: "Ph.D.", org: "GSMSE, KAIST", highlight: false },
-                    { year: "2006 – 2011", role: "Intern & Resident", org: "Internal Medicine, Severance Hospital (Yonsei Univ.)", highlight: false },
-                  ].map((item) => (
-                    <div key={item.year} className={`flex items-start gap-3 px-4 py-2.5 rounded-xl ${item.highlight ? "bg-amber-50 border border-amber-100" : "bg-gray-50"}`}>
-                      <span className="text-[11px] font-mono text-text-muted whitespace-nowrap mt-0.5 w-24 shrink-0">{item.year}</span>
-                      <div className="min-w-0">
-                        <span className={`text-sm font-semibold ${item.highlight ? "text-brand" : ""}`}>{item.role}</span>
-                        <p className="text-xs text-text-muted truncate">{item.org}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Key Publications */}
-              <div className="bg-white border border-gray-100 rounded-3xl p-7 shadow-sm">
-                <h4 className="font-bold text-sm mb-5 flex items-center gap-2">
-                  <BookOpen size={16} className="text-violet-600" /> Selected Publications
-                </h4>
-                <div className="space-y-3">
-                  {[
-                    { journal: "Nature Communications", title: "Regulation of systemic energy homeostasis by serotonin in adipose tissues", year: "2015", color: "bg-red-50 text-red-600 border-red-100" },
-                    { journal: "Science Translational Medicine", title: "Inhibiting de novo ceramide synthesis restores mitochondrial and protein homeostasis in muscle aging", year: "2023", color: "bg-blue-50 text-blue-600 border-blue-100" },
-                    { journal: "Nature Communications", title: "Cross-talks between metabolic and translational controls during beige adipocyte differentiation", year: "2025", color: "bg-red-50 text-red-600 border-red-100" },
-                    { journal: "Exp. & Mol. Medicine", title: "Mitochondria-associated programmed cell death as a therapeutic target for age-related disease", year: "2023", color: "bg-emerald-50 text-emerald-600 border-emerald-100" },
-                    { journal: "Exp. & Mol. Medicine", title: "Inhibition of serotonin-Htr2b signaling in skeletal muscle mitigates obesity-induced insulin resistance", year: "2025", color: "bg-emerald-50 text-emerald-600 border-emerald-100" },
-                    { journal: "Communications Biology", title: "Spatial profiling of non-small cell lung cancer provides insights into tumorigenesis and immunotherapy response", year: "2024", color: "bg-amber-50 text-amber-700 border-amber-100" },
-                  ].map((pub) => (
-                    <div key={pub.title} className="flex items-start gap-3 p-3 rounded-xl bg-gray-50/60 hover:bg-gray-50 transition">
-                      <span className={`text-[9px] px-2 py-0.5 rounded-full font-bold border shrink-0 mt-0.5 ${pub.color}`}>{pub.journal}</span>
-                      <div className="min-w-0">
-                        <p className="text-xs text-text-primary leading-relaxed line-clamp-2">{pub.title}</p>
-                        <span className="text-[10px] text-text-muted">{pub.year}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Research Highlights */}
-              <div className="grid sm:grid-cols-3 gap-4">
-                <div className="bg-white border border-gray-100 rounded-2xl p-5 text-center shadow-sm card-lift">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white mx-auto mb-3">
-                    <Dna size={22} />
-                  </div>
-                  <div className="text-2xl font-extrabold text-brand mb-1">15+</div>
-                  <p className="text-xs text-text-muted">Years in Aging Research</p>
-                </div>
-                <div className="bg-white border border-gray-100 rounded-2xl p-5 text-center shadow-sm card-lift">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-400 to-purple-600 flex items-center justify-center text-white mx-auto mb-3">
-                    <BookOpen size={22} />
-                  </div>
-                  <div className="text-2xl font-extrabold text-violet-700 mb-1">80+</div>
-                  <p className="text-xs text-text-muted">Peer-reviewed Publications</p>
-                </div>
-                <div className="bg-white border border-gray-100 rounded-2xl p-5 text-center shadow-sm card-lift">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center text-white mx-auto mb-3">
-                    <Globe size={22} />
-                  </div>
-                  <div className="text-2xl font-extrabold text-blue-700 mb-1">KAIST · EPFL</div>
-                  <p className="text-xs text-text-muted">Ph.D. & Post-Doc Training</p>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -1159,35 +1071,152 @@ export function App() {
         </div>
       </section>
 
-      {/* ── PRICING ── */}
-      <section id="pricing" className="py-24">
+      {/* ── CEO / FOUNDER ── */}
+      <section id="ceo" className="py-24">
         <div className="max-w-5xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <span className="section-badge bg-amber-50 text-brand border border-amber-200 mb-4">
+              <Award size={12} /> Founder & CEO
+            </span>
+            <h2 className="heading-serif text-4xl sm:text-5xl mb-3">Chang-Myung Oh, M.D., Ph.D.</h2>
+            <p className="text-text-secondary max-w-xl mx-auto">내분비학 전문의이자 대사·노화 연구자. 임상 의학과 AI를 융합하여 장수 과학의 새로운 패러다임을 만듭니다.</p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-8">
+            {/* Left — Bio Card */}
+            <div className="lg:col-span-1">
+              <div className="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm text-center card-lift">
+                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-brand-light to-brand flex items-center justify-center text-white mx-auto mb-5">
+                  <span className="heading-serif text-3xl font-bold">MD</span>
+                </div>
+                <h3 className="text-xl font-bold mb-1">오창명</h3>
+                <p className="text-sm text-text-muted mb-4">Chang-Myung Oh, M.D., Ph.D.</p>
+                <div className="flex justify-center gap-3 mb-5">
+                  <a href="https://scholar.google.com/citations?user=hcYYWNAAAAAJ&hl=en" target="_blank" rel="noopener" className="w-9 h-9 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 hover:bg-blue-100 transition" title="Google Scholar">
+                    <GraduationCap size={16} />
+                  </a>
+                  <a href="https://orcid.org/0000-0001-6681-4478" target="_blank" rel="noopener" className="w-9 h-9 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 hover:bg-emerald-100 transition" title="ORCID">
+                    <Globe size={16} />
+                  </a>
+                </div>
+                <div className="space-y-2.5 text-left">
+                  <div className="flex items-center gap-2.5 text-sm"><MapPin size={14} className="text-text-muted shrink-0" /><span className="text-text-secondary">GIST, Gwangju, South Korea</span></div>
+                  <div className="flex items-center gap-2.5 text-sm"><Stethoscope size={14} className="text-text-muted shrink-0" /><span className="text-text-secondary">Endocrinology & Metabolism</span></div>
+                  <div className="flex items-center gap-2.5 text-sm"><Microscope size={14} className="text-text-muted shrink-0" /><span className="text-text-secondary">Aging · Serotonin · Metabolism</span></div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right — Career & Research */}
+            <div className="lg:col-span-2 space-y-6">
+              <div className="bg-white border border-gray-100 rounded-3xl p-7 shadow-sm">
+                <h4 className="font-bold text-sm mb-5 flex items-center gap-2"><GraduationCap size={16} className="text-brand" /> Career Timeline</h4>
+                <div className="space-y-3">
+                  {[
+                    { year: "2025 –", role: "Professor", org: "Department of BMSE, GIST", highlight: true },
+                    { year: "2023 – 2025", role: "Associate Professor", org: "Department of BMSE, GIST", highlight: false },
+                    { year: "2019 – 2023", role: "Assistant Professor", org: "Department of BMSE, GIST", highlight: false },
+                    { year: "2017 – 2019", role: "Post-Doc.", org: "Lab of Integrative Systems Physiology, EPFL, Switzerland", highlight: false },
+                    { year: "2016 – 2019", role: "Clinical Assistant Professor", org: "Dept. of Endocrinology, CHA Medical University", highlight: false },
+                    { year: "2015 – 2016", role: "Clinical & Research Fellow", org: "Endocrinology & Metabolism, Seoul National University Hospital", highlight: false },
+                    { year: "2011 – 2015", role: "Ph.D.", org: "GSMSE, KAIST", highlight: false },
+                    { year: "2006 – 2011", role: "Intern & Resident", org: "Internal Medicine, Severance Hospital (Yonsei Univ.)", highlight: false },
+                  ].map((item) => (
+                    <div key={item.year} className={`flex items-start gap-3 px-4 py-2.5 rounded-xl ${item.highlight ? "bg-amber-50 border border-amber-100" : "bg-gray-50"}`}>
+                      <span className="text-[11px] font-mono text-text-muted whitespace-nowrap mt-0.5 w-24 shrink-0">{item.year}</span>
+                      <div className="min-w-0">
+                        <span className={`text-sm font-semibold ${item.highlight ? "text-brand" : ""}`}>{item.role}</span>
+                        <p className="text-xs text-text-muted truncate">{item.org}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="bg-white border border-gray-100 rounded-3xl p-7 shadow-sm">
+                <h4 className="font-bold text-sm mb-5 flex items-center gap-2"><BookOpen size={16} className="text-violet-600" /> Selected Publications</h4>
+                <div className="space-y-3">
+                  {[
+                    { journal: "Nature Communications", title: "Regulation of systemic energy homeostasis by serotonin in adipose tissues", year: "2015", color: "bg-red-50 text-red-600 border-red-100" },
+                    { journal: "Science Transl. Med.", title: "Inhibiting de novo ceramide synthesis restores mitochondrial and protein homeostasis in muscle aging", year: "2023", color: "bg-blue-50 text-blue-600 border-blue-100" },
+                    { journal: "Nature Communications", title: "Cross-talks between metabolic and translational controls during beige adipocyte differentiation", year: "2025", color: "bg-red-50 text-red-600 border-red-100" },
+                    { journal: "Exp. & Mol. Medicine", title: "Mitochondria-associated programmed cell death as a therapeutic target for age-related disease", year: "2023", color: "bg-emerald-50 text-emerald-600 border-emerald-100" },
+                    { journal: "Exp. & Mol. Medicine", title: "Inhibition of serotonin-Htr2b signaling in skeletal muscle mitigates obesity-induced insulin resistance", year: "2025", color: "bg-emerald-50 text-emerald-600 border-emerald-100" },
+                  ].map((pub) => (
+                    <div key={pub.title} className="flex items-start gap-3 p-3 rounded-xl bg-gray-50/60 hover:bg-gray-50 transition">
+                      <span className={`text-[9px] px-2 py-0.5 rounded-full font-bold border shrink-0 mt-0.5 ${pub.color}`}>{pub.journal}</span>
+                      <div className="min-w-0">
+                        <p className="text-xs text-text-primary leading-relaxed line-clamp-2">{pub.title}</p>
+                        <span className="text-[10px] text-text-muted">{pub.year}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid sm:grid-cols-3 gap-4">
+                <div className="bg-white border border-gray-100 rounded-2xl p-5 text-center shadow-sm card-lift">
+                  <div className="text-2xl font-extrabold text-brand mb-1">15+</div>
+                  <p className="text-xs text-text-muted">Years in Aging Research</p>
+                </div>
+                <div className="bg-white border border-gray-100 rounded-2xl p-5 text-center shadow-sm card-lift">
+                  <div className="text-2xl font-extrabold text-violet-700 mb-1">80+</div>
+                  <p className="text-xs text-text-muted">Peer-reviewed Publications</p>
+                </div>
+                <div className="bg-white border border-gray-100 rounded-2xl p-5 text-center shadow-sm card-lift">
+                  <div className="text-2xl font-extrabold text-blue-700 mb-1">KAIST · EPFL</div>
+                  <p className="text-xs text-text-muted">Ph.D. & Post-Doc Training</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── PRICING ── */}
+      <section id="pricing" className="py-24 bg-surface-raised">
+        <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-14">
             <span className="section-badge bg-amber-50 text-amber-700 border border-amber-200 mb-4">Pricing</span>
             <h2 className="heading-serif text-4xl mb-3">개인 건강 관리 플랜</h2>
-            <p className="text-text-secondary">무료로 시작하세요. Drug Discovery는 별도 파트너십으로 운영됩니다.</p>
+            <p className="text-text-secondary max-w-lg mx-auto">무료로 시작하여 AI 대사 건강 분석을 체험하세요. 업그레이드 시 6개 전문 AI 에이전트가 맞춤형 장수 프로토콜을 설계합니다.</p>
           </div>
-          <div className="grid sm:grid-cols-3 gap-6">
+
+          <div className="grid lg:grid-cols-3 gap-6">
             {healthPlans.map((p) => (
-              <div key={p.name} className={`relative rounded-3xl p-7 border card-lift ${p.highlight ? "bg-gradient-to-b from-amber-50 to-white border-amber-200 shadow-lg shadow-amber-500/8 ring-1 ring-amber-200" : "bg-white border-gray-100 shadow-sm"}`}>
+              <div key={p.name} className={`relative flex flex-col rounded-3xl p-7 border ${p.highlight ? "bg-gradient-to-b from-amber-50 to-white border-amber-200 shadow-lg shadow-amber-500/8 ring-1 ring-amber-200" : "bg-white border-gray-100 shadow-sm"}`}>
                 {p.highlight && (
                   <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-amber-500 to-brand text-white text-[10px] font-bold shadow-sm">RECOMMENDED</div>
                 )}
                 <h3 className="text-lg font-bold mb-1">{p.name}</h3>
-                <p className="text-xs text-text-muted mb-5">{p.desc}</p>
-                <div className="mb-6">
+                <p className="text-xs text-text-muted mb-4">{p.desc}</p>
+                <div className="mb-4">
                   <span className="text-4xl font-extrabold">{p.price}</span>
                   <span className="text-sm text-text-muted">{p.period}</span>
                 </div>
-                <ul className="space-y-2.5 mb-7">
+
+                {/* Detail description */}
+                <div className="mb-5 px-4 py-3 rounded-xl bg-gray-50 border border-gray-100">
+                  <p className="text-xs text-text-secondary leading-relaxed">{p.details}</p>
+                </div>
+
+                {/* Agent badge */}
+                <div className="flex items-center gap-2 mb-5 px-3 py-2 rounded-lg bg-amber-50/60 border border-amber-100">
+                  <Brain size={14} className="text-amber-600 shrink-0" />
+                  <span className="text-[11px] text-amber-800 font-medium">{p.agents}</span>
+                </div>
+
+                {/* Features */}
+                <ul className="space-y-2 mb-6 flex-1">
                   {p.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-sm text-text-secondary">
-                      <Check size={14} className="text-amber-600 mt-0.5 shrink-0" /><span>{f}</span>
+                    <li key={f} className="flex items-start gap-2 text-[13px] text-text-secondary leading-snug">
+                      <Check size={13} className="text-amber-600 mt-0.5 shrink-0" /><span>{f}</span>
                     </li>
                   ))}
                 </ul>
+
                 <button onClick={() => openWaitlist(p.name)}
-                  className={`w-full py-3 rounded-xl text-sm font-semibold transition ${p.highlight
+                  className={`w-full py-3.5 rounded-xl text-sm font-semibold transition ${p.highlight
                     ? "bg-gradient-to-r from-brand to-accent text-white shadow-md shadow-brand/15 hover:shadow-lg hover:shadow-brand/25"
                     : "border-2 border-gray-200 text-text-secondary hover:text-text-primary hover:border-amber-300 hover:bg-amber-50"
                   }`}>
@@ -1196,6 +1225,47 @@ export function App() {
               </div>
             ))}
           </div>
+
+          {/* Comparison highlights */}
+          <div className="mt-14 bg-white border border-gray-100 rounded-3xl p-8 shadow-sm">
+            <h3 className="font-bold text-center mb-8">플랜 비교</h3>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-gray-100">
+                    <th className="text-left py-3 pr-4 text-text-muted font-medium text-xs">기능</th>
+                    <th className="text-center py-3 px-4 text-text-muted font-medium text-xs">Basic</th>
+                    <th className="text-center py-3 px-4 font-medium text-xs text-amber-700">Pro</th>
+                    <th className="text-center py-3 px-4 text-text-muted font-medium text-xs">Premium</th>
+                  </tr>
+                </thead>
+                <tbody className="text-xs">
+                  {[
+                    { feature: "혈액검사 AI 분석", basic: "기본 패널", pro: "30+ 바이오마커", premium: "30+ 바이오마커" },
+                    { feature: "대사 건강 점수", basic: "✓", pro: "✓", premium: "✓" },
+                    { feature: "호르몬 패턴 매핑", basic: "—", pro: "✓", premium: "✓" },
+                    { feature: "생물학적 나이 측정", basic: "—", pro: "월별 추적", premium: "실시간 추적" },
+                    { feature: "맞춤 프로토콜 (영양/운동/수면)", basic: "일반 가이드", pro: "AI 맞춤 생성", premium: "AI 맞춤 생성" },
+                    { feature: "FitFlow 앱 연동", basic: "—", pro: "✓", premium: "✓" },
+                    { feature: "유전체(SNP) 분석", basic: "—", pro: "—", premium: "✓" },
+                    { feature: "약물/보충제 상호작용 체크", basic: "—", pro: "—", premium: "✓" },
+                    { feature: "웨어러블 실시간 분석", basic: "—", pro: "—", premium: "Apple·Garmin" },
+                    { feature: "PaperMind 논문 분석", basic: "—", pro: "—", premium: "무제한" },
+                    { feature: "1:1 AI 컨설팅", basic: "—", pro: "—", premium: "월 4회" },
+                    { feature: "AI 에이전트", basic: "1개", pro: "6개", premium: "7개 + Genomics" },
+                  ].map((row) => (
+                    <tr key={row.feature} className="border-b border-gray-50">
+                      <td className="py-2.5 pr-4 text-text-primary font-medium">{row.feature}</td>
+                      <td className="py-2.5 px-4 text-center text-text-muted">{row.basic}</td>
+                      <td className="py-2.5 px-4 text-center text-amber-700 font-medium">{row.pro}</td>
+                      <td className="py-2.5 px-4 text-center text-text-secondary">{row.premium}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
           <p className="text-center text-sm text-text-muted mt-8">
             Brown Biotech Discovery (B2B) 파트너십은 <a href="mailto:brownbio.ocm@gmail.com" className="text-violet-600 hover:underline font-medium">brownbio.ocm@gmail.com</a>으로 문의하세요.
           </p>

@@ -37,6 +37,10 @@ import {
   BookOpen,
   FileText,
   Beaker,
+  Award,
+  GraduationCap,
+  Stethoscope,
+  MapPin,
   type LucideIcon,
 } from "lucide-react";
 
@@ -650,14 +654,131 @@ export function App() {
         </div>
       </section>
 
-      {/* ── FOUNDER ── */}
-      <section className="py-10 bg-surface-raised">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <div className="inline-flex items-center gap-4 px-6 py-4 rounded-2xl bg-white border border-gray-100 shadow-sm">
-            <div className="w-14 h-14 rounded-full bg-gradient-to-br from-brand-light to-brand flex items-center justify-center text-white text-lg font-bold heading-serif">MD</div>
-            <div className="text-left">
-              <p className="font-semibold">Founded by MD/PhD Endocrinologist</p>
-              <p className="text-sm text-text-muted">Specialty: Aging & Metabolism · Clinical + AI Research</p>
+      {/* ── CEO / FOUNDER ── */}
+      <section id="ceo" className="py-20 bg-surface-raised">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <span className="section-badge bg-amber-50 text-brand border border-amber-200 mb-4">
+              <Award size={12} /> Founder & CEO
+            </span>
+            <h2 className="heading-serif text-4xl sm:text-5xl mb-3">Chang-Myung Oh, M.D., Ph.D.</h2>
+            <p className="text-text-secondary max-w-xl mx-auto">내분비학 전문의이자 대사·노화 연구자. 임상 의학과 AI를 융합하여 장수 과학의 새로운 패러다임을 만듭니다.</p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-8">
+            {/* Left — Bio Card */}
+            <div className="lg:col-span-1">
+              <div className="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm text-center card-lift">
+                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-brand-light to-brand flex items-center justify-center text-white mx-auto mb-5">
+                  <span className="heading-serif text-3xl font-bold">MD</span>
+                </div>
+                <h3 className="text-xl font-bold mb-1">오창명</h3>
+                <p className="text-sm text-text-muted mb-4">Chang-Myung Oh, M.D., Ph.D.</p>
+
+                <div className="flex justify-center gap-3 mb-5">
+                  <a href="https://scholar.google.com/citations?user=hcYYWNAAAAAJ&hl=en" target="_blank" rel="noopener" className="w-9 h-9 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-blue-600 hover:bg-blue-100 transition" title="Google Scholar">
+                    <GraduationCap size={16} />
+                  </a>
+                  <a href="https://orcid.org/0000-0001-6681-4478" target="_blank" rel="noopener" className="w-9 h-9 rounded-full bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 hover:bg-emerald-100 transition" title="ORCID">
+                    <Globe size={16} />
+                  </a>
+                </div>
+
+                <div className="space-y-2.5 text-left">
+                  <div className="flex items-center gap-2.5 text-sm">
+                    <MapPin size={14} className="text-text-muted shrink-0" />
+                    <span className="text-text-secondary">GIST, Gwangju, South Korea</span>
+                  </div>
+                  <div className="flex items-center gap-2.5 text-sm">
+                    <Stethoscope size={14} className="text-text-muted shrink-0" />
+                    <span className="text-text-secondary">Endocrinology & Metabolism</span>
+                  </div>
+                  <div className="flex items-center gap-2.5 text-sm">
+                    <Microscope size={14} className="text-text-muted shrink-0" />
+                    <span className="text-text-secondary">Aging · Serotonin · Metabolism</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right — Career & Research */}
+            <div className="lg:col-span-2 space-y-6">
+              {/* Career Timeline */}
+              <div className="bg-white border border-gray-100 rounded-3xl p-7 shadow-sm">
+                <h4 className="font-bold text-sm mb-5 flex items-center gap-2">
+                  <GraduationCap size={16} className="text-brand" /> Career Timeline
+                </h4>
+                <div className="space-y-3">
+                  {[
+                    { year: "2025 –", role: "Professor", org: "Department of BMSE, GIST", highlight: true },
+                    { year: "2023 – 2025", role: "Associate Professor", org: "Department of BMSE, GIST", highlight: false },
+                    { year: "2019 – 2023", role: "Assistant Professor", org: "Department of BMSE, GIST", highlight: false },
+                    { year: "2017 – 2019", role: "Post-Doc.", org: "Lab of Integrative Systems Physiology, EPFL, Switzerland", highlight: false },
+                    { year: "2016 – 2019", role: "Clinical Assistant Professor", org: "Dept. of Endocrinology, CHA Medical University", highlight: false },
+                    { year: "2015 – 2016", role: "Clinical & Research Fellow", org: "Endocrinology & Metabolism, Seoul National University Hospital", highlight: false },
+                    { year: "2011 – 2015", role: "Ph.D.", org: "GSMSE, KAIST", highlight: false },
+                    { year: "2006 – 2011", role: "Intern & Resident", org: "Internal Medicine, Severance Hospital (Yonsei Univ.)", highlight: false },
+                  ].map((item) => (
+                    <div key={item.year} className={`flex items-start gap-3 px-4 py-2.5 rounded-xl ${item.highlight ? "bg-amber-50 border border-amber-100" : "bg-gray-50"}`}>
+                      <span className="text-[11px] font-mono text-text-muted whitespace-nowrap mt-0.5 w-24 shrink-0">{item.year}</span>
+                      <div className="min-w-0">
+                        <span className={`text-sm font-semibold ${item.highlight ? "text-brand" : ""}`}>{item.role}</span>
+                        <p className="text-xs text-text-muted truncate">{item.org}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Key Publications */}
+              <div className="bg-white border border-gray-100 rounded-3xl p-7 shadow-sm">
+                <h4 className="font-bold text-sm mb-5 flex items-center gap-2">
+                  <BookOpen size={16} className="text-violet-600" /> Selected Publications
+                </h4>
+                <div className="space-y-3">
+                  {[
+                    { journal: "Nature Communications", title: "Regulation of systemic energy homeostasis by serotonin in adipose tissues", year: "2015", color: "bg-red-50 text-red-600 border-red-100" },
+                    { journal: "Science Translational Medicine", title: "Inhibiting de novo ceramide synthesis restores mitochondrial and protein homeostasis in muscle aging", year: "2023", color: "bg-blue-50 text-blue-600 border-blue-100" },
+                    { journal: "Nature Communications", title: "Cross-talks between metabolic and translational controls during beige adipocyte differentiation", year: "2025", color: "bg-red-50 text-red-600 border-red-100" },
+                    { journal: "Exp. & Mol. Medicine", title: "Mitochondria-associated programmed cell death as a therapeutic target for age-related disease", year: "2023", color: "bg-emerald-50 text-emerald-600 border-emerald-100" },
+                    { journal: "Exp. & Mol. Medicine", title: "Inhibition of serotonin-Htr2b signaling in skeletal muscle mitigates obesity-induced insulin resistance", year: "2025", color: "bg-emerald-50 text-emerald-600 border-emerald-100" },
+                    { journal: "Communications Biology", title: "Spatial profiling of non-small cell lung cancer provides insights into tumorigenesis and immunotherapy response", year: "2024", color: "bg-amber-50 text-amber-700 border-amber-100" },
+                  ].map((pub) => (
+                    <div key={pub.title} className="flex items-start gap-3 p-3 rounded-xl bg-gray-50/60 hover:bg-gray-50 transition">
+                      <span className={`text-[9px] px-2 py-0.5 rounded-full font-bold border shrink-0 mt-0.5 ${pub.color}`}>{pub.journal}</span>
+                      <div className="min-w-0">
+                        <p className="text-xs text-text-primary leading-relaxed line-clamp-2">{pub.title}</p>
+                        <span className="text-[10px] text-text-muted">{pub.year}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Research Highlights */}
+              <div className="grid sm:grid-cols-3 gap-4">
+                <div className="bg-white border border-gray-100 rounded-2xl p-5 text-center shadow-sm card-lift">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white mx-auto mb-3">
+                    <Dna size={22} />
+                  </div>
+                  <div className="text-2xl font-extrabold text-brand mb-1">15+</div>
+                  <p className="text-xs text-text-muted">Years in Aging Research</p>
+                </div>
+                <div className="bg-white border border-gray-100 rounded-2xl p-5 text-center shadow-sm card-lift">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-violet-400 to-purple-600 flex items-center justify-center text-white mx-auto mb-3">
+                    <BookOpen size={22} />
+                  </div>
+                  <div className="text-2xl font-extrabold text-violet-700 mb-1">80+</div>
+                  <p className="text-xs text-text-muted">Peer-reviewed Publications</p>
+                </div>
+                <div className="bg-white border border-gray-100 rounded-2xl p-5 text-center shadow-sm card-lift">
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center text-white mx-auto mb-3">
+                    <Globe size={22} />
+                  </div>
+                  <div className="text-2xl font-extrabold text-blue-700 mb-1">KAIST · EPFL</div>
+                  <p className="text-xs text-text-muted">Ph.D. & Post-Doc Training</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

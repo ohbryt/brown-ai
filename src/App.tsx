@@ -5,11 +5,13 @@ import {
   Atom,
   ArrowRight,
   BarChart3,
+  Box,
   Brain,
   Building2,
   Check,
   ChevronRight,
   ClipboardCheck,
+  Copy,
   Cpu,
   Database,
   Dna,
@@ -18,21 +20,30 @@ import {
   Globe,
   HeartPulse,
   Hourglass,
+  Layers,
   Microscope,
   Moon,
+  Package,
   Pill,
+  Puzzle,
   ScanLine,
   ShieldCheck,
   Sparkles,
+  Terminal,
   Users,
+  Workflow,
   X,
+  Zap,
+  BookOpen,
+  FileText,
+  Beaker,
   type LucideIcon,
 } from "lucide-react";
 
 /* ═══════════════════════════════════════════
-   TWO BUSINESS UNITS
+   THREE BUSINESS UNITS
    ═══════════════════════════════════════════ */
-type BU = "health" | "discovery";
+type BU = "health" | "discovery" | "paperclip";
 
 interface Agent {
   slug: string;
@@ -95,6 +106,28 @@ const healthPlans = [
   { name: "Basic", price: "Free", period: "", desc: "기본 대사 건강 점수", features: ["기본 혈액 검사 분석", "대사 건강 점수", "일반 식단/운동 가이드", "커뮤니티 접근"], cta: "Get Started", highlight: false },
   { name: "Pro", price: "$49", period: "/month", desc: "개인 맞춤형 장수 관리", features: ["정밀 바이오마커 분석", "호르몬 패턴 매핑", "생물학적 나이 측정/추적", "맞춤 영양/운동/수면 프로토콜", "FitFlow 앱 연동", "월간 AI 리포트"], cta: "Start Free Trial", highlight: true },
   { name: "Premium", price: "$149", period: "/month", desc: "전문가급 종합 건강 최적화", features: ["Pro의 모든 기능", "유전체(SNP) 분석 연동", "약물/보충제 상호작용 체크", "실시간 웨어러블 데이터 분석", "1:1 AI 건강 컨설팅", "API 접근"], cta: "Start Free Trial", highlight: false },
+];
+
+/* ── Paperclip features ── */
+const paperclipFeatures = [
+  { icon: Workflow, title: "AI Orchestration", desc: "LLM 파이프라인을 시각적으로 설계하고 자동 실행. 복잡한 워크플로우를 드래그앤드롭으로 구성.", color: "from-blue-500 to-indigo-600" },
+  { icon: Puzzle, title: "ClipMart Marketplace", desc: "커뮤니티가 만든 프롬프트 템플릿, 에이전트 플러그인을 검색하고 즉시 적용.", color: "from-indigo-500 to-blue-600" },
+  { icon: Layers, title: "Multi-Model Support", desc: "OpenAI, Anthropic, Google 등 모든 LLM을 하나의 인터페이스에서 비교하고 전환.", color: "from-cyan-500 to-blue-500" },
+  { icon: Zap, title: "Real-time Streaming", desc: "응답을 실시간 스트리밍으로 표시. 긴 생성 작업도 즉시 피드백.", color: "from-blue-400 to-indigo-500" },
+];
+
+const paperclipHowItWorks = [
+  { num: "1", title: "Install CLI", desc: "npm install -g paperclip 한 줄로 설치", icon: Terminal },
+  { num: "2", title: "Build Pipeline", desc: "YAML 또는 UI로 LLM 파이프라인 설계", icon: Workflow },
+  { num: "3", title: "Add Plugins", desc: "ClipMart에서 템플릿과 플러그인 추가", icon: Package },
+  { num: "4", title: "Deploy & Scale", desc: "로컬 또는 클라우드에서 자동 스케일링", icon: Zap },
+];
+
+const clipmartTemplates = [
+  { name: "Code Review Agent", category: "Development", downloads: "2.4k", desc: "PR 코드를 자동 리뷰하고 개선 제안" },
+  { name: "Research Synthesizer", category: "Research", downloads: "1.8k", desc: "논문을 분석하고 핵심 인사이트 추출" },
+  { name: "Data Pipeline Builder", category: "Data", downloads: "1.2k", desc: "ETL 파이프라인을 자연어로 생성" },
+  { name: "Content Writer", category: "Marketing", downloads: "3.1k", desc: "브랜드 톤에 맞는 마케팅 콘텐츠 생성" },
 ];
 
 /* ═══════════════════════════════════════════
@@ -317,6 +350,10 @@ export function App() {
               className={`px-3.5 py-1.5 rounded-full transition font-medium ${activeTab === "discovery" ? "bg-violet-50 text-violet-700" : "text-text-secondary hover:text-text-primary"}`}>
               Discovery
             </button>
+            <button onClick={() => { setActiveTab("paperclip"); document.getElementById("bu-section")?.scrollIntoView({ behavior: "smooth" }); }}
+              className={`px-3.5 py-1.5 rounded-full transition font-medium ${activeTab === "paperclip" ? "bg-blue-50 text-blue-700" : "text-text-secondary hover:text-text-primary"}`}>
+              Paperclip
+            </button>
             <span className="w-px h-4 bg-gray-200 mx-2" />
             <a href="#products" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Products</a>
             <a href="#team" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Team</a>
@@ -352,7 +389,7 @@ export function App() {
             <p className="text-lg text-text-secondary max-w-lg mb-8 leading-relaxed">
               내분비 전문의의 의학 전문성 + AI 에이전트의 자동화.
               <br className="hidden sm:inline" />
-              두 개의 사업부로 노화와 대사를 공략합니다.
+              세 개의 사업부로 노화, 대사, AI 인프라를 공략합니다.
             </p>
 
             <div className="flex flex-wrap gap-4">
@@ -372,7 +409,7 @@ export function App() {
         </div>
 
         {/* BU Cards */}
-        <div className="max-w-3xl mx-auto px-6 mt-20 grid sm:grid-cols-2 gap-6 relative z-10">
+        <div className="max-w-5xl mx-auto px-6 mt-20 grid sm:grid-cols-3 gap-6 relative z-10">
           <button onClick={() => { setActiveTab("health"); document.getElementById("bu-section")?.scrollIntoView({ behavior: "smooth" }); }}
             className="group text-left p-6 rounded-2xl bg-white border border-amber-100 shadow-sm card-lift">
             <div className="flex items-center gap-3 mb-3">
@@ -403,6 +440,23 @@ export function App() {
             </div>
             <p className="text-sm text-text-secondary leading-relaxed">AI 기반 노화/대사 신약 타겟 발굴, 화합물 스크리닝, 임상시험 설계</p>
             <div className="mt-3 flex items-center gap-1 text-xs text-violet-700 font-medium group-hover:gap-2 transition-all">
+              자세히 보기 <ArrowRight size={12} />
+            </div>
+          </button>
+
+          <button onClick={() => { setActiveTab("paperclip"); document.getElementById("bu-section")?.scrollIntoView({ behavior: "smooth" }); }}
+            className="group text-left p-6 rounded-2xl bg-white border border-blue-100 shadow-sm card-lift">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center text-white">
+                <Workflow size={22} />
+              </div>
+              <div>
+                <h3 className="font-bold text-blue-800">Paperclip AI</h3>
+                <p className="text-[10px] text-blue-600/70 font-semibold uppercase tracking-wider">Platform · AI Orchestration</p>
+              </div>
+            </div>
+            <p className="text-sm text-text-secondary leading-relaxed">LLM 파이프라인 오케스트레이션, ClipMart 마켓플레이스, 멀티모델 지원</p>
+            <div className="mt-3 flex items-center gap-1 text-xs text-blue-700 font-medium group-hover:gap-2 transition-all">
               자세히 보기 <ArrowRight size={12} />
             </div>
           </button>
@@ -439,6 +493,11 @@ export function App() {
                 className={`flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold transition ${activeTab === "discovery" ? "bg-violet-50 text-violet-700 shadow-sm" : "text-text-muted hover:text-text-secondary"}`}>
                 <FlaskConical size={16} /> Discovery
                 <span className="text-[10px] opacity-60 ml-1">B2B</span>
+              </button>
+              <button onClick={() => setActiveTab("paperclip")}
+                className={`flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold transition ${activeTab === "paperclip" ? "bg-blue-50 text-blue-700 shadow-sm" : "text-text-muted hover:text-text-secondary"}`}>
+                <Workflow size={16} /> Paperclip
+                <span className="text-[10px] opacity-60 ml-1">Platform</span>
               </button>
             </div>
           </div>
@@ -542,6 +601,70 @@ export function App() {
                       </div>
                     </div>
                   </a>
+                  {/* Longevity Lab */}
+                  <a href="https://longevity-lab.io" target="_blank" rel="noopener" className="group flex flex-col sm:flex-row items-center gap-5 bg-white border border-gray-100 rounded-2xl p-6 card-lift shadow-sm">
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center shrink-0">
+                      <Microscope size={30} className="text-white" />
+                    </div>
+                    <div className="flex-1 text-center sm:text-left">
+                      <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
+                        <h4 className="text-lg font-bold">Longevity Lab</h4>
+                        <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-semibold border border-emerald-100">Research</span>
+                      </div>
+                      <p className="text-sm text-text-secondary">최신 건강수명(healthspan) 논문을 분석하여 실생활 인사이트로 전하는 리서치 플랫폼.</p>
+                      <div className="mt-2 flex items-center justify-center sm:justify-start gap-1 text-xs text-emerald-600 font-medium group-hover:gap-2 transition-all">
+                        Longevity Lab 열기 <ExternalLink size={10} />
+                      </div>
+                    </div>
+                  </a>
+                  {/* PaperMind */}
+                  <a href="https://www.papermind.me" target="_blank" rel="noopener" className="group flex flex-col sm:flex-row items-center gap-5 bg-white border border-gray-100 rounded-2xl p-6 card-lift shadow-sm">
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-400 to-indigo-600 flex items-center justify-center shrink-0">
+                      <BookOpen size={30} className="text-white" />
+                    </div>
+                    <div className="flex-1 text-center sm:text-left">
+                      <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
+                        <h4 className="text-lg font-bold">PaperMind</h4>
+                        <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-purple-50 text-purple-700 font-semibold border border-purple-100">AI Insights</span>
+                      </div>
+                      <p className="text-sm text-text-secondary">Llama 3.3 70B 기반 무료 Med-Bio 논문 인사이트. 의료 전문가를 위한 AI 분석 서비스.</p>
+                      <div className="mt-2 flex items-center justify-center sm:justify-start gap-1 text-xs text-purple-600 font-medium group-hover:gap-2 transition-all">
+                        PaperMind 열기 <ExternalLink size={10} />
+                      </div>
+                    </div>
+                  </a>
+                  {/* Paperclip */}
+                  <a href="https://dist-chi-two-33.vercel.app" target="_blank" rel="noopener" className="group flex flex-col sm:flex-row items-center gap-5 bg-white border border-gray-100 rounded-2xl p-6 card-lift shadow-sm">
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center shrink-0">
+                      <Workflow size={30} className="text-white" />
+                    </div>
+                    <div className="flex-1 text-center sm:text-left">
+                      <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
+                        <h4 className="text-lg font-bold">Paperclip</h4>
+                        <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 font-semibold border border-blue-100">AI Orchestration</span>
+                      </div>
+                      <p className="text-sm text-text-secondary">LLM 파이프라인 오케스트레이션 플랫폼. ClipMart 마켓플레이스, 멀티모델 지원.</p>
+                      <div className="mt-2 flex items-center justify-center sm:justify-start gap-1 text-xs text-blue-600 font-medium group-hover:gap-2 transition-all">
+                        Paperclip 열기 <ExternalLink size={10} />
+                      </div>
+                    </div>
+                  </a>
+                  {/* Brown Biotech Website */}
+                  <a href="https://brown-biotech-website.vercel.app" target="_blank" rel="noopener" className="group flex flex-col sm:flex-row items-center gap-5 bg-white border border-gray-100 rounded-2xl p-6 card-lift shadow-sm">
+                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-light to-brand flex items-center justify-center shrink-0">
+                      <Dna size={30} className="text-white" />
+                    </div>
+                    <div className="flex-1 text-center sm:text-left">
+                      <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
+                        <h4 className="text-lg font-bold">Brown Biotech</h4>
+                        <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-amber-50 text-brand font-semibold border border-amber-100">Drug Discovery</span>
+                      </div>
+                      <p className="text-sm text-text-secondary">AI 기반 신약 발굴 — 타겟 분자부터 리드 후보까지 며칠 만에 달성.</p>
+                      <div className="mt-2 flex items-center justify-center sm:justify-start gap-1 text-xs text-brand font-medium group-hover:gap-2 transition-all">
+                        Brown Biotech 열기 <ExternalLink size={10} />
+                      </div>
+                    </div>
+                  </a>
                 </div>
               </div>
             </div>
@@ -633,6 +756,145 @@ export function App() {
               </div>
             </div>
           )}
+
+          {/* ─── PAPERCLIP TAB ─── */}
+          {activeTab === "paperclip" && (
+            <div className="space-y-20">
+              {/* Tagline */}
+              <div className="text-center">
+                <span className="section-badge bg-blue-50 text-blue-700 border border-blue-200 mb-4">AI Infrastructure</span>
+                <h2 className="heading-serif text-4xl sm:text-5xl mb-4">AI Orchestration Platform</h2>
+                <p className="text-text-secondary max-w-lg mx-auto text-lg">
+                  LLM 파이프라인을 설계하고, ClipMart에서 템플릿을 공유하고, 멀티모델로 AI를 오케스트레이션합니다.
+                </p>
+              </div>
+
+              {/* Features */}
+              <div className="grid sm:grid-cols-2 gap-6">
+                {paperclipFeatures.map((s) => {
+                  const Icon = s.icon;
+                  return (
+                    <div key={s.title} className="bg-white border border-gray-100 rounded-2xl p-7 card-lift shadow-sm">
+                      <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${s.color} flex items-center justify-center text-white mb-5`}>
+                        <Icon size={26} />
+                      </div>
+                      <h3 className="text-lg font-bold mb-2">{s.title}</h3>
+                      <p className="text-sm text-text-secondary leading-relaxed">{s.desc}</p>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* How it works */}
+              <div>
+                <h3 className="heading-serif text-3xl text-center mb-10">How It Works</h3>
+                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {paperclipHowItWorks.map((item) => {
+                    const Icon = item.icon;
+                    return (
+                      <div key={item.num} className="text-center bg-white border border-gray-100 rounded-2xl p-6 card-lift shadow-sm">
+                        <div className="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center mx-auto mb-4">
+                          <Icon size={24} className="text-blue-600" />
+                        </div>
+                        <div className="text-[10px] text-text-muted font-mono mb-1.5">Step {item.num}</div>
+                        <h4 className="font-bold text-sm mb-1.5">{item.title}</h4>
+                        <p className="text-xs text-text-secondary leading-relaxed">{item.desc}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* Terminal Install */}
+              <div className="max-w-2xl mx-auto">
+                <h3 className="heading-serif text-3xl text-center mb-8">Quick Install</h3>
+                <div className="bg-gray-900 rounded-2xl p-6 shadow-xl border border-gray-800">
+                  <div className="flex items-center gap-2 mb-4">
+                    <div className="w-3 h-3 rounded-full bg-red-500/80" />
+                    <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
+                    <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                    <span className="ml-2 text-xs text-gray-500 font-mono">terminal</span>
+                  </div>
+                  <div className="font-mono text-sm space-y-2">
+                    <div className="flex items-center gap-2">
+                      <span className="text-green-400">$</span>
+                      <span className="text-gray-100">npm install -g paperclip</span>
+                      <button
+                        onClick={() => navigator.clipboard.writeText("npm install -g paperclip")}
+                        className="ml-auto text-gray-500 hover:text-gray-300 transition p-1"
+                        title="Copy"
+                      >
+                        <Copy size={14} />
+                      </button>
+                    </div>
+                    <div className="text-gray-500">
+                      <span className="text-blue-400">→</span> Installing paperclip@latest...
+                    </div>
+                    <div className="text-gray-500">
+                      <span className="text-green-400">✓</span> <span className="text-gray-300">Paperclip installed successfully</span>
+                    </div>
+                    <div className="flex items-center gap-2 mt-3 pt-3 border-t border-gray-700">
+                      <span className="text-green-400">$</span>
+                      <span className="text-gray-100">paperclip init my-project</span>
+                    </div>
+                    <div className="text-gray-500">
+                      <span className="text-blue-400">→</span> Scaffolding project...
+                    </div>
+                    <div className="text-gray-500">
+                      <span className="text-green-400">✓</span> <span className="text-gray-300">Ready! Run `paperclip dev` to start</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* ClipMart Marketplace */}
+              <div>
+                <h3 className="heading-serif text-3xl text-center mb-2">ClipMart Marketplace</h3>
+                <p className="text-sm text-text-muted text-center mb-8">커뮤니티가 만든 템플릿과 플러그인</p>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  {clipmartTemplates.map((t) => (
+                    <div key={t.name} className="bg-white border border-gray-100 rounded-2xl p-5 card-lift shadow-sm">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                          <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center">
+                            <Package size={18} className="text-blue-600" />
+                          </div>
+                          <div>
+                            <h4 className="text-sm font-bold">{t.name}</h4>
+                            <span className="text-[10px] text-text-muted">{t.category}</span>
+                          </div>
+                        </div>
+                        <span className="text-[10px] px-2.5 py-1 rounded-full bg-blue-50 text-blue-600 font-semibold border border-blue-100">
+                          ↓ {t.downloads}
+                        </span>
+                      </div>
+                      <p className="text-xs text-text-secondary leading-relaxed">{t.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Paperclip CTA */}
+              <div className="text-center bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 rounded-3xl p-10">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center mx-auto mb-5">
+                  <Workflow size={28} className="text-white" />
+                </div>
+                <h3 className="heading-serif text-3xl mb-3">Start Building with Paperclip</h3>
+                <p className="text-text-secondary mb-6 max-w-md mx-auto">
+                  오픈소스 AI 오케스트레이션 플랫폼으로
+                  <br />LLM 파이프라인을 더 빠르게 구축하세요.
+                </p>
+                <div className="flex flex-wrap justify-center gap-4">
+                  <a href="https://dist-chi-two-33.vercel.app" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold shadow-lg shadow-blue-500/15 hover:shadow-xl hover:shadow-blue-500/25 transition text-sm">
+                    Visit Paperclip <ExternalLink size={14} />
+                  </a>
+                  <a href="https://github.com/paperclipai/paperclip" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border-2 border-blue-200 text-blue-700 font-semibold hover:bg-blue-50 transition text-sm">
+                    GitHub <ArrowRight size={14} />
+                  </a>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
@@ -643,7 +905,7 @@ export function App() {
             <span className="section-badge bg-amber-50 text-brand border border-amber-200 mb-4">Platform</span>
             <h2 className="heading-serif text-4xl mb-3">Shared Platform Team</h2>
             <p className="text-text-secondary max-w-md mx-auto">
-              두 사업부를 지원하는 공통 인프라 팀.
+              세 사업부를 지원하는 공통 인프라 팀.
               HIPAA 준수 데이터 파이프라인, AI/ML 모델, 규제 컴플라이언스.
             </p>
           </div>
@@ -654,8 +916,9 @@ export function App() {
             <div className="inline-flex items-center gap-6 text-sm text-text-muted bg-white rounded-full px-6 py-3 shadow-sm border border-gray-100">
               <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-amber-500" /> Health: 6</span>
               <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-violet-500" /> Discovery: 5</span>
+              <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-blue-500" /> Paperclip: Platform</span>
               <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-brand-light" /> Shared: 5</span>
-              <span className="font-bold text-text-primary">= 16 Total</span>
+              <span className="font-bold text-text-primary">= 16 Agents + 7 Products</span>
             </div>
           </div>
         </div>
@@ -712,7 +975,10 @@ export function App() {
             {[
               { name: "BioStatX", desc: "Biomedical Statistics", url: "https://biostatx.vercel.app" },
               { name: "FitFlow", desc: "Fitness App", url: "https://fitflow-website.vercel.app" },
-              { name: "Paperclip", desc: "AI Orchestration", url: "https://github.com/paperclipai/paperclip" },
+              { name: "Paperclip", desc: "AI Orchestration", url: "https://dist-chi-two-33.vercel.app" },
+              { name: "Longevity Lab", desc: "Research Platform", url: "https://longevity-lab.io" },
+              { name: "PaperMind", desc: "Med-Bio Insights", url: "https://www.papermind.me" },
+              { name: "Brown Biotech", desc: "Drug Discovery", url: "https://brown-biotech-website.vercel.app" },
               { name: "Agent Hub", desc: "AI Agent Catalog", url: "https://agent-hub-alpha-nine.vercel.app" },
             ].map((t) => (
               <a key={t.name} href={t.url} target="_blank" rel="noopener" className="flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-gray-100 shadow-sm hover:shadow-md hover:border-amber-200 transition text-xs font-medium">
@@ -735,16 +1001,20 @@ export function App() {
               </div>
               <span className="heading-serif text-lg">Brown Biotech Inc.</span>
             </div>
-            <div className="flex items-center gap-5 text-sm text-text-muted">
+            <div className="flex flex-wrap items-center gap-4 text-sm text-text-muted">
               <a href="https://biostatx.vercel.app" target="_blank" rel="noopener" className="hover:text-text-primary transition">BioStatX</a>
               <a href="https://fitflow-website.vercel.app" target="_blank" rel="noopener" className="hover:text-text-primary transition">FitFlow</a>
+              <a href="https://longevity-lab.io" target="_blank" rel="noopener" className="hover:text-text-primary transition">Longevity Lab</a>
+              <a href="https://www.papermind.me" target="_blank" rel="noopener" className="hover:text-text-primary transition">PaperMind</a>
+              <a href="https://dist-chi-two-33.vercel.app" target="_blank" rel="noopener" className="hover:text-text-primary transition">Paperclip</a>
               <span className="text-amber-600 font-medium">Health</span>
               <span className="text-violet-600 font-medium">Discovery</span>
+              <span className="text-blue-600 font-medium">Paperclip</span>
               <a href="https://github.com/ohbryt" target="_blank" rel="noopener" className="hover:text-text-primary transition">GitHub</a>
             </div>
           </div>
           <p className="mt-4 text-center text-xs text-text-muted">
-            Founded by MD/PhD Endocrinologist · Aging & Metabolism · 16 AI Agents
+            Founded by MD/PhD Endocrinologist · Aging & Metabolism · 16 AI Agents · 7 Products
           </p>
         </div>
       </footer>

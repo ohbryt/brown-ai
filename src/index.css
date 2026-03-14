@@ -41,6 +41,14 @@ body {
   font-weight: 400;
 }
 
+/* ── Gradient text ── */
+.text-gradient-warm {
+  background: linear-gradient(135deg, #d4a373, #92400e, #b45309);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 /* ── Hero soft glow ── */
 .hero-glow {
   position: absolute;
@@ -84,10 +92,15 @@ body {
   0%, 100% { opacity: 0.5; }
   50% { opacity: 1; }
 }
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 .animate-float { animation: float 6s ease-in-out infinite; }
 .animate-float-delay { animation: float 6s ease-in-out 2s infinite; }
 .animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
 .animate-pulse-soft { animation: pulse-soft 3s ease-in-out infinite; }
+.animate-fade-in-up { animation: fade-in-up 0.7s ease-out both; }
 
 /* ── Card lift on hover ── */
 .card-lift {
@@ -96,6 +109,15 @@ body {
 .card-lift:hover {
   transform: translateY(-4px);
   box-shadow: 0 16px 48px rgba(146, 64, 14, 0.08), 0 4px 16px rgba(146, 64, 14, 0.04);
+}
+
+/* ── Ecosystem card ── */
+.ecosystem-card {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.ecosystem-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 64px rgba(146, 64, 14, 0.1), 0 8px 24px rgba(146, 64, 14, 0.06);
 }
 
 /* ── Section badge pill ── */
@@ -109,4 +131,14 @@ body {
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+/* ── Scroll offset for fixed nav ── */
+[id] {
+  scroll-margin-top: 80px;
+}
+
+/* ── Newsletter input placeholder ── */
+.newsletter-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
 }

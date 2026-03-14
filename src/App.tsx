@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Activity,
   Apple,
@@ -129,6 +129,192 @@ const clipmartTemplates = [
   { name: "Data Pipeline Builder", category: "Data", downloads: "1.2k", desc: "ETL 파이프라인을 자연어로 생성" },
   { name: "Content Writer", category: "Marketing", downloads: "3.1k", desc: "브랜드 톤에 맞는 마케팅 콘텐츠 생성" },
 ];
+
+/* ── Product detail data for expandable cards ── */
+interface ProductInfo {
+  slug: string;
+  name: string;
+  badge: string;
+  desc: string;
+  url: string;
+  icon: LucideIcon;
+  gradient: string;
+  badgeBg: string;
+  badgeText: string;
+  badgeBorder: string;
+  accentText: string;
+  ringColor: string;
+  accentColor: string;
+  features: string[];
+  useCase: { title: string; description: string };
+  highlights: { label: string; value: string }[];
+}
+
+const products: ProductInfo[] = [
+  {
+    slug: "biostatx", name: "BioStatX", badge: "Analytics Engine",
+    desc: "바이오메디컬 통계 플랫폼 — T-Test, ANOVA, Kaplan-Meier 등 11개 도구.",
+    url: "https://biostatx.vercel.app", icon: BarChart3,
+    gradient: "from-orange-400 to-amber-500", badgeBg: "bg-orange-50", badgeText: "text-orange-600", badgeBorder: "border-orange-100", accentText: "text-orange-600", ringColor: "#f59e0b", accentColor: "#f59e0b",
+    features: ["T-Test / Paired T-Test 분석", "One-way & Two-way ANOVA", "Kaplan-Meier 생존 분석 & Log-rank", "ROC Curve + AUC 계산", "상관관계 & 회귀 분석", "Chi-Square 적합도 검정"],
+    useCase: { title: "임상시험 생존 분석", description: "Phase II 항노화 약물 임상시험 데이터를 업로드하면, Kaplan-Meier 곡선이 자동 생성되고 Log-rank test로 대조군 대비 유의미한 생존 개선 여부를 즉시 판정합니다." },
+    highlights: [{ label: "통계 도구", value: "11개" }, { label: "지원 분석", value: "생존·회귀·비교" }, { label: "가격", value: "무료" }],
+  },
+  {
+    slug: "fitflow", name: "FitFlow", badge: "Fitness App",
+    desc: "대사 최적화 운동이 FitFlow로 자동 전송. Zone 2, 저항 운동, HIIT.",
+    url: "https://fitflow-website.vercel.app", icon: HeartPulse,
+    gradient: "from-amber-400 to-amber-600", badgeBg: "bg-amber-50", badgeText: "text-amber-700", badgeBorder: "border-amber-100", accentText: "text-amber-700", ringColor: "#d97706", accentColor: "#d97706",
+    features: ["VO2max 기반 Zone 2 유산소 프로그램", "대사 맞춤형 저항 운동 처방", "HIIT 인터벌 자동 설계", "Apple Watch / Garmin 웨어러블 연동", "주간 대사 리포트 & 진행 추적"],
+    useCase: { title: "대사 맞춤 운동 처방", description: "혈액검사에서 인슐린 저항성이 감지되면, AI가 자동으로 Zone 2 유산소 60% + 저항운동 40% 비율의 주간 운동 프로그램을 생성하고 FitFlow 앱에 푸시합니다." },
+    highlights: [{ label: "운동 유형", value: "Zone2·HIIT·저항" }, { label: "웨어러블", value: "Apple·Garmin" }, { label: "AI 연동", value: "Health BU" }],
+  },
+  {
+    slug: "longevity-lab", name: "Longevity Lab", badge: "Research",
+    desc: "최신 건강수명(healthspan) 논문을 분석하여 실생활 인사이트로 전하는 리서치 플랫폼.",
+    url: "https://longevity-lab.io", icon: Microscope,
+    gradient: "from-emerald-400 to-teal-600", badgeBg: "bg-emerald-50", badgeText: "text-emerald-700", badgeBorder: "border-emerald-100", accentText: "text-emerald-600", ringColor: "#10b981", accentColor: "#10b981",
+    features: ["최신 노화/대사 논문 AI 큐레이션", "한국어 인사이트 요약 리포트", "주간 리서치 브리핑 뉴스레터", "건강수명 토픽별 아카이브", "연구 트렌드 시각화 대시보드"],
+    useCase: { title: "NAD+ 보충제 메타분석", description: "최근 발표된 NAD+ 보충제 메타분석 논문 10편을 자동 수집 → 핵심 발견(효과 크기, 복용량, 부작용)을 한국어 인사이트로 요약하여 주간 브리핑에 포함합니다." },
+    highlights: [{ label: "논문 소스", value: "PubMed·bioRxiv" }, { label: "업데이트", value: "주간" }, { label: "언어", value: "한국어" }],
+  },
+  {
+    slug: "papermind", name: "PaperMind", badge: "AI Insights",
+    desc: "Llama 3.3 70B 기반 무료 Med-Bio 논문 인사이트. 의료 전문가를 위한 AI 분석 서비스.",
+    url: "https://www.papermind.me", icon: BookOpen,
+    gradient: "from-purple-400 to-indigo-600", badgeBg: "bg-purple-50", badgeText: "text-purple-700", badgeBorder: "border-purple-100", accentText: "text-purple-600", ringColor: "#8b5cf6", accentColor: "#8b5cf6",
+    features: ["논문 PDF 업로드 → AI 즉시 분석", "핵심 발견 · 방법론 · 한계점 자동 추출", "임상 적용 가능성 평가", "Llama 3.3 70B 오픈소스 모델 사용", "의료 전문가 무료 이용"],
+    useCase: { title: "논문 핵심 분석", description: "30페이지 임상시험 논문 PDF를 업로드하면 2분 내에: ① 핵심 발견 3줄 요약, ② 연구 방법론 평가, ③ 한계점 및 바이어스 분석, ④ 임상 현장 적용 제안을 생성합니다." },
+    highlights: [{ label: "AI 모델", value: "Llama 3.3 70B" }, { label: "분석 시간", value: "~2분" }, { label: "가격", value: "무료" }],
+  },
+  {
+    slug: "paperclip", name: "Paperclip", badge: "AI Orchestration",
+    desc: "LLM 파이프라인 오케스트레이션 플랫폼. ClipMart 마켓플레이스, 멀티모델 지원.",
+    url: "https://dist-chi-two-33.vercel.app", icon: Workflow,
+    gradient: "from-blue-400 to-indigo-600", badgeBg: "bg-blue-50", badgeText: "text-blue-700", badgeBorder: "border-blue-100", accentText: "text-blue-600", ringColor: "#3b82f6", accentColor: "#3b82f6",
+    features: ["드래그앤드롭 LLM 파이프라인 빌더", "ClipMart 마켓플레이스 (템플릿·플러그인)", "OpenAI / Anthropic / Google 멀티모델", "실시간 스트리밍 응답", "CLI + YAML 기반 워크플로우"],
+    useCase: { title: "코드리뷰 자동화 파이프라인", description: "GitHub PR → GPT-4로 코드 분석 → Claude로 리팩토링 제안 → Slack 알림 전송하는 3단계 파이프라인을 ClipMart 템플릿에서 원클릭으로 설치하고 바로 실행합니다." },
+    highlights: [{ label: "지원 LLM", value: "GPT·Claude·Gemini" }, { label: "템플릿", value: "ClipMart" }, { label: "설치", value: "npm i -g" }],
+  },
+  {
+    slug: "brown-biotech", name: "Brown Biotech", badge: "Drug Discovery",
+    desc: "AI 기반 신약 발굴 — 타겟 분자부터 리드 후보까지 며칠 만에 달성.",
+    url: "https://brown-biotech-website.vercel.app", icon: Dna,
+    gradient: "from-brand-light to-brand", badgeBg: "bg-amber-50", badgeText: "text-brand", badgeBorder: "border-amber-100", accentText: "text-brand", ringColor: "#92400e", accentColor: "#92400e",
+    features: ["AI 타겟 발굴 & 검증", "가상 화합물 스크리닝 & 분자 도킹", "ADMET 독성/약동학 예측", "약물 재창출 (Drug Repurposing)", "FDA 임상시험 설계 자동화"],
+    useCase: { title: "노화 타겟 리드 후보 발굴", description: "mTOR 경로의 새로운 억제 타겟을 AI로 발굴 → 100만 화합물 가상 스크리닝 → ADMET 필터링 → 72시간 내에 리드 후보 3개를 도출하고 합성 가능성까지 평가합니다." },
+    highlights: [{ label: "발굴 속도", value: "72시간" }, { label: "스크리닝", value: "100만+ 화합물" }, { label: "파이프라인", value: "타겟→리드" }],
+  },
+];
+
+/* ═══════════════════════════════════════════
+   PRODUCT CARD — expandable with detail panel
+   ═══════════════════════════════════════════ */
+function ProductCard({ product, isExpanded, onToggle }: { product: ProductInfo; isExpanded: boolean; onToggle: () => void }) {
+  const Icon = product.icon;
+  return (
+    <div className="flex flex-col">
+      {/* Collapsed card */}
+      <button
+        onClick={onToggle}
+        className={`group flex flex-col sm:flex-row items-center gap-5 bg-white border rounded-2xl p-6 text-left transition-all duration-300 shadow-sm cursor-pointer ${
+          isExpanded
+            ? "border-2 shadow-lg scale-[1.01]"
+            : "border-gray-100 hover:shadow-md hover:-translate-y-1"
+        }`}
+        style={isExpanded ? { borderColor: product.ringColor, boxShadow: `0 0 0 1px ${product.ringColor}22, 0 8px 32px rgba(0,0,0,0.06)` } : {}}
+      >
+        <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${product.gradient} flex items-center justify-center shrink-0`}>
+          <Icon size={30} className="text-white" />
+        </div>
+        <div className="flex-1 text-center sm:text-left">
+          <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
+            <h4 className="text-lg font-bold">{product.name}</h4>
+            <span className={`text-[10px] px-2.5 py-0.5 rounded-full ${product.badgeBg} ${product.badgeText} font-semibold border ${product.badgeBorder}`}>{product.badge}</span>
+          </div>
+          <p className="text-sm text-text-secondary">{product.desc}</p>
+          <div className={`mt-2 flex items-center justify-center sm:justify-start gap-1 text-xs ${product.accentText} font-medium`}>
+            {isExpanded ? "닫기 ↑" : "자세히 보기 ↓"}
+          </div>
+        </div>
+      </button>
+    </div>
+  );
+}
+
+function ProductDetailPanel({ product, isOpen }: { product: ProductInfo | null; isOpen: boolean }) {
+  if (!product) return null;
+  return (
+    <div className={`product-detail-enter col-span-full ${isOpen ? "open" : ""}`}>
+      <div className="product-detail-inner">
+        <div
+          className="detail-pointer bg-white border border-gray-100 rounded-2xl p-8 mt-3 shadow-md"
+          style={{ "--pointer-left": "50%", "--accent-color": product.accentColor } as React.CSSProperties}
+        >
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Features */}
+            <div>
+              <h4 className="font-bold text-sm mb-4 flex items-center gap-2">
+                <span className={`w-6 h-6 rounded-lg bg-gradient-to-br ${product.gradient} flex items-center justify-center`}>
+                  <Check size={12} className="text-white" />
+                </span>
+                주요 기능
+              </h4>
+              <ul className="space-y-2.5">
+                {product.features.map((f) => (
+                  <li key={f} className="flex items-start gap-2 text-sm text-text-secondary">
+                    <Check size={13} className={`${product.accentText} mt-0.5 shrink-0`} />
+                    <span>{f}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Use Case Example */}
+            <div>
+              <h4 className="font-bold text-sm mb-4 flex items-center gap-2">
+                <span className={`w-6 h-6 rounded-lg bg-gradient-to-br ${product.gradient} flex items-center justify-center`}>
+                  <Sparkles size={12} className="text-white" />
+                </span>
+                사용 예시
+              </h4>
+              <div className="example-block rounded-xl p-5" style={{ "--accent-color": product.accentColor } as React.CSSProperties}>
+                <h5 className="font-semibold text-sm mb-2">{product.useCase.title}</h5>
+                <p className="text-xs text-text-secondary leading-relaxed">{product.useCase.description}</p>
+              </div>
+            </div>
+
+            {/* Highlights + CTA */}
+            <div className="flex flex-col">
+              <h4 className="font-bold text-sm mb-4 flex items-center gap-2">
+                <span className={`w-6 h-6 rounded-lg bg-gradient-to-br ${product.gradient} flex items-center justify-center`}>
+                  <BarChart3 size={12} className="text-white" />
+                </span>
+                하이라이트
+              </h4>
+              <div className="space-y-3 mb-6">
+                {product.highlights.map((h) => (
+                  <div key={h.label} className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-gray-50 border border-gray-100">
+                    <span className="text-xs text-text-muted">{h.label}</span>
+                    <span className="text-sm font-bold">{h.value}</span>
+                  </div>
+                ))}
+              </div>
+              <a
+                href={product.url}
+                target="_blank"
+                rel="noopener"
+                className={`mt-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r ${product.gradient} text-white font-semibold text-sm shadow-md hover:shadow-lg transition`}
+              >
+                {product.name} 열기 <ExternalLink size={14} />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 /* ═══════════════════════════════════════════
    SVG HERO ILLUSTRATION
@@ -326,6 +512,7 @@ export function App() {
   const [activeTab, setActiveTab] = useState<BU>("health");
   const [modalOpen, setModalOpen] = useState(false);
   const [modalPlan, setModalPlan] = useState("");
+  const [expandedProduct, setExpandedProduct] = useState<string | null>(null);
 
   const openWaitlist = (plan: string) => { setModalPlan(plan); setModalOpen(true); };
 
@@ -564,107 +751,34 @@ export function App() {
                 </div>
               </div>
 
-              {/* Products */}
+              {/* Products — Expandable Cards */}
               <div id="products">
                 <h3 className="heading-serif text-3xl text-center mb-2">Our Products</h3>
-                <p className="text-sm text-text-muted text-center mb-8">Brown Biotech 생태계를 구성하는 제품들</p>
+                <p className="text-sm text-text-muted text-center mb-8">클릭하여 각 제품의 상세 기능과 사용 예시를 확인하세요</p>
                 <div className="grid sm:grid-cols-2 gap-5">
-                  {/* BioStatX */}
-                  <a href="https://biostatx.vercel.app" target="_blank" rel="noopener" className="group flex flex-col sm:flex-row items-center gap-5 bg-white border border-gray-100 rounded-2xl p-6 card-lift shadow-sm">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-400 to-amber-500 flex items-center justify-center shrink-0">
-                      <BarChart3 size={30} className="text-white" />
-                    </div>
-                    <div className="flex-1 text-center sm:text-left">
-                      <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
-                        <h4 className="text-lg font-bold">BioStatX</h4>
-                        <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-orange-50 text-orange-600 font-semibold border border-orange-100">Analytics Engine</span>
-                      </div>
-                      <p className="text-sm text-text-secondary">바이오메디컬 통계 플랫폼 — T-Test, ANOVA, Kaplan-Meier 등 11개 도구.</p>
-                      <div className="mt-2 flex items-center justify-center sm:justify-start gap-1 text-xs text-orange-600 font-medium group-hover:gap-2 transition-all">
-                        BioStatX 열기 <ExternalLink size={10} />
-                      </div>
-                    </div>
-                  </a>
-                  {/* FitFlow */}
-                  <a href="https://fitflow-website.vercel.app" target="_blank" rel="noopener" className="group flex flex-col sm:flex-row items-center gap-5 bg-white border border-gray-100 rounded-2xl p-6 card-lift shadow-sm">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-brand flex items-center justify-center shrink-0">
-                      <HeartPulse size={30} className="text-white" />
-                    </div>
-                    <div className="flex-1 text-center sm:text-left">
-                      <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
-                        <h4 className="text-lg font-bold">FitFlow</h4>
-                        <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-700 font-semibold border border-amber-100">Fitness App</span>
-                      </div>
-                      <p className="text-sm text-text-secondary">대사 최적화 운동이 FitFlow로 자동 전송. Zone 2, 저항 운동, HIIT.</p>
-                      <div className="mt-2 flex items-center justify-center sm:justify-start gap-1 text-xs text-amber-700 font-medium group-hover:gap-2 transition-all">
-                        FitFlow 다운로드 <ExternalLink size={10} />
-                      </div>
-                    </div>
-                  </a>
-                  {/* Longevity Lab */}
-                  <a href="https://longevity-lab.io" target="_blank" rel="noopener" className="group flex flex-col sm:flex-row items-center gap-5 bg-white border border-gray-100 rounded-2xl p-6 card-lift shadow-sm">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center shrink-0">
-                      <Microscope size={30} className="text-white" />
-                    </div>
-                    <div className="flex-1 text-center sm:text-left">
-                      <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
-                        <h4 className="text-lg font-bold">Longevity Lab</h4>
-                        <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 font-semibold border border-emerald-100">Research</span>
-                      </div>
-                      <p className="text-sm text-text-secondary">최신 건강수명(healthspan) 논문을 분석하여 실생활 인사이트로 전하는 리서치 플랫폼.</p>
-                      <div className="mt-2 flex items-center justify-center sm:justify-start gap-1 text-xs text-emerald-600 font-medium group-hover:gap-2 transition-all">
-                        Longevity Lab 열기 <ExternalLink size={10} />
-                      </div>
-                    </div>
-                  </a>
-                  {/* PaperMind */}
-                  <a href="https://www.papermind.me" target="_blank" rel="noopener" className="group flex flex-col sm:flex-row items-center gap-5 bg-white border border-gray-100 rounded-2xl p-6 card-lift shadow-sm">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-400 to-indigo-600 flex items-center justify-center shrink-0">
-                      <BookOpen size={30} className="text-white" />
-                    </div>
-                    <div className="flex-1 text-center sm:text-left">
-                      <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
-                        <h4 className="text-lg font-bold">PaperMind</h4>
-                        <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-purple-50 text-purple-700 font-semibold border border-purple-100">AI Insights</span>
-                      </div>
-                      <p className="text-sm text-text-secondary">Llama 3.3 70B 기반 무료 Med-Bio 논문 인사이트. 의료 전문가를 위한 AI 분석 서비스.</p>
-                      <div className="mt-2 flex items-center justify-center sm:justify-start gap-1 text-xs text-purple-600 font-medium group-hover:gap-2 transition-all">
-                        PaperMind 열기 <ExternalLink size={10} />
-                      </div>
-                    </div>
-                  </a>
-                  {/* Paperclip */}
-                  <a href="https://dist-chi-two-33.vercel.app" target="_blank" rel="noopener" className="group flex flex-col sm:flex-row items-center gap-5 bg-white border border-gray-100 rounded-2xl p-6 card-lift shadow-sm">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center shrink-0">
-                      <Workflow size={30} className="text-white" />
-                    </div>
-                    <div className="flex-1 text-center sm:text-left">
-                      <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
-                        <h4 className="text-lg font-bold">Paperclip</h4>
-                        <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-blue-50 text-blue-700 font-semibold border border-blue-100">AI Orchestration</span>
-                      </div>
-                      <p className="text-sm text-text-secondary">LLM 파이프라인 오케스트레이션 플랫폼. ClipMart 마켓플레이스, 멀티모델 지원.</p>
-                      <div className="mt-2 flex items-center justify-center sm:justify-start gap-1 text-xs text-blue-600 font-medium group-hover:gap-2 transition-all">
-                        Paperclip 열기 <ExternalLink size={10} />
-                      </div>
-                    </div>
-                  </a>
-                  {/* Brown Biotech Website */}
-                  <a href="https://brown-biotech-website.vercel.app" target="_blank" rel="noopener" className="group flex flex-col sm:flex-row items-center gap-5 bg-white border border-gray-100 rounded-2xl p-6 card-lift shadow-sm">
-                    <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-light to-brand flex items-center justify-center shrink-0">
-                      <Dna size={30} className="text-white" />
-                    </div>
-                    <div className="flex-1 text-center sm:text-left">
-                      <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
-                        <h4 className="text-lg font-bold">Brown Biotech</h4>
-                        <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-amber-50 text-brand font-semibold border border-amber-100">Drug Discovery</span>
-                      </div>
-                      <p className="text-sm text-text-secondary">AI 기반 신약 발굴 — 타겟 분자부터 리드 후보까지 며칠 만에 달성.</p>
-                      <div className="mt-2 flex items-center justify-center sm:justify-start gap-1 text-xs text-brand font-medium group-hover:gap-2 transition-all">
-                        Brown Biotech 열기 <ExternalLink size={10} />
-                      </div>
-                    </div>
-                  </a>
+                  {products.map((p, idx) => {
+                    const isExpanded = expandedProduct === p.slug;
+                    const rowEnd = idx % 2 === 1 || idx === products.length - 1;
+                    const pairSlug = idx % 2 === 0 && idx + 1 < products.length ? products[idx + 1].slug : null;
+                    const showPanelAfter = rowEnd && (isExpanded || (pairSlug === null && isExpanded) || expandedProduct === (idx % 2 === 1 ? products[idx - 1]?.slug : null) || (idx % 2 === 1 && expandedProduct === products[idx]?.slug));
+                    const rowStart = idx % 2 === 0 ? idx : idx - 1;
+                    const rowProducts = products.slice(rowStart, rowStart + 2);
+                    const expandedInRow = rowProducts.find(rp => rp.slug === expandedProduct);
+                    const isRowEnd = idx % 2 === 1 || idx === products.length - 1;
+
+                    return (
+                      <React.Fragment key={p.slug}>
+                        <ProductCard
+                          product={p}
+                          isExpanded={isExpanded}
+                          onToggle={() => setExpandedProduct(isExpanded ? null : p.slug)}
+                        />
+                        {isRowEnd && expandedInRow && (
+                          <ProductDetailPanel product={expandedInRow} isOpen={true} />
+                        )}
+                      </React.Fragment>
+                    );
+                  })}
                 </div>
               </div>
             </div>

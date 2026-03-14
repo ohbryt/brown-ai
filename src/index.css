@@ -142,3 +142,48 @@ body {
 .newsletter-input::placeholder {
   color: rgba(255, 255, 255, 0.5);
 }
+
+/* ── Product detail panel expand ── */
+.product-detail-enter {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+}
+.product-detail-enter.open {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+.product-detail-inner {
+  overflow: hidden;
+}
+
+/* ── Product card selected state ── */
+.product-card-selected {
+  ring: 2px;
+  box-shadow: 0 0 0 2px var(--ring-color, #3b82f6), 0 8px 32px rgba(0,0,0,0.06);
+}
+
+/* ── Example block code style ── */
+.example-block {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-left: 3px solid var(--accent-color, #3b82f6);
+}
+
+/* ── Pointer arrow for detail panel ── */
+.detail-pointer {
+  position: relative;
+}
+.detail-pointer::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: var(--pointer-left, 25%);
+  width: 16px;
+  height: 16px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-right: none;
+  border-bottom: none;
+  transform: rotate(45deg);
+}

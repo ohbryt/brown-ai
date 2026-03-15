@@ -1272,30 +1272,6 @@ export function App() {
         </div>
       </section>
 
-      {/* ── TECH STACK ── */}
-      <section className="py-14 bg-surface-raised">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <p className="text-[10px] text-text-muted uppercase tracking-widest font-semibold mb-5">Powered By</p>
-          <div className="flex flex-wrap justify-center gap-3">
-            {[
-              { name: "BioStatX", desc: "Biomedical Statistics", url: "https://biostatx.vercel.app" },
-              { name: "FitFlow", desc: "Fitness App", url: "https://fitflow-website.vercel.app" },
-              { name: "Paperclip", desc: "AI Orchestration", url: "https://dist-chi-two-33.vercel.app" },
-              { name: "Longevity Lab", desc: "Research Platform", url: "https://longevity-lab.io" },
-              { name: "PaperMind", desc: "Med-Bio Insights", url: "https://www.papermind.me" },
-              { name: "Brown Biotech", desc: "Drug Discovery", url: "https://brown-biotech-website.vercel.app" },
-              { name: "Agent Hub", desc: "AI Agent Catalog", url: "https://agent-hub-alpha-nine.vercel.app" },
-            ].map((t) => (
-              <a key={t.name} href={t.url} target="_blank" rel="noopener" className="flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-gray-100 shadow-sm hover:shadow-md hover:border-amber-200 transition text-xs font-medium">
-                <Globe size={12} className="text-text-muted" />
-                <span className="font-semibold">{t.name}</span>
-                <span className="text-text-muted">{t.desc}</span>
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── FOOTER ── */}
       <footer className="py-10 border-t border-gray-100">
         <div className="max-w-6xl mx-auto px-6">

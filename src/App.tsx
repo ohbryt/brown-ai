@@ -17,6 +17,7 @@ import {
   Dna,
   ExternalLink,
   FlaskConical,
+  Github,
   Globe,
   HeartPulse,
   Hourglass,
@@ -588,6 +589,7 @@ export function App() {
             </button>
             <span className="w-px h-4 bg-gray-200 mx-2" />
             <a href="#ceo" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">CEO</a>
+            <a href="#research" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Research</a>
             <a href="#products" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Products</a>
             <a href="#team" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Team</a>
             <a href="#pricing" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Pricing</a>
@@ -1405,6 +1407,107 @@ export function App() {
                   <div className="text-2xl font-extrabold text-blue-700 mb-1">KAIST · EPFL</div>
                   <p className="text-xs text-text-muted">Ph.D. & Post-Doc Training</p>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── RESEARCH SPOTLIGHT ── */}
+      <section id="research" className="py-24">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-14">
+            <span className="section-badge bg-violet-50 text-violet-700 border border-violet-200 mb-4">
+              <Microscope size={12} /> Research Spotlight
+            </span>
+            <h2 className="heading-serif text-4xl sm:text-5xl mb-3">최신 연구 하이라이트</h2>
+            <p className="text-text-secondary max-w-xl mx-auto">Brown AI 플랫폼이 추적하는 대사·노화 분야 최신 연구</p>
+          </div>
+
+          {/* Featured Paper Card */}
+          <div className="bg-white border border-gray-100 rounded-3xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow duration-500">
+            {/* Top gradient bar */}
+            <div className="h-1.5 bg-gradient-to-r from-violet-500 via-rose-400 to-amber-400" />
+
+            <div className="p-8 sm:p-10">
+              <div className="flex flex-wrap items-center gap-3 mb-5">
+                <span className="text-[10px] px-3 py-1 rounded-full font-bold bg-violet-50 text-violet-700 border border-violet-100">Nature Metabolism</span>
+                <span className="text-[10px] px-3 py-1 rounded-full font-bold bg-gray-50 text-text-muted border border-gray-200">2026</span>
+                <span className="text-[10px] px-3 py-1 rounded-full font-bold bg-emerald-50 text-emerald-600 border border-emerald-100">Original Article</span>
+              </div>
+
+              <h3 className="text-xl sm:text-2xl font-bold text-text-primary leading-snug mb-3">
+                Defining the vascular niche of human adipose tissue across metabolic states
+              </h3>
+
+              <p className="text-sm text-text-secondary leading-relaxed mb-6 max-w-3xl">
+                AlZaim I, Hassan MN, Schröter M, <em>et al.</em> — 인간 지방 조직의 혈관 미세환경을 단일세포 수준에서 매핑하여,
+                대사 상태(정상체중·비만·당뇨)에 따른 내피세포 이질성과 혈관-지방세포 상호작용의 변화를 규명한 연구입니다.
+                비만 환경에서 내피세포가 EndMT(내피-중간엽 전이)를 거치며 지방 조직 기능 장애를 촉진하는 메커니즘을 밝혔습니다.
+              </p>
+
+              {/* Key Findings Grid */}
+              <div className="grid sm:grid-cols-3 gap-4 mb-8">
+                {[
+                  { icon: Dna, label: "Single-cell Atlas", desc: "인간 지방 조직 혈관 세포의 포괄적 단일세포 전사체 지도 구축", color: "text-violet-600 bg-violet-50" },
+                  { icon: Activity, label: "Metabolic States", desc: "정상체중 · 비만 · 2형 당뇨 — 3가지 대사 상태 비교 분석", color: "text-rose-600 bg-rose-50" },
+                  { icon: FlaskConical, label: "Drug Targets", desc: "EndMT 경로 및 SREBF1/YAP 시그널링 — 새로운 치료 타겟 제시", color: "text-amber-600 bg-amber-50" },
+                ].map((f) => (
+                  <div key={f.label} className="rounded-2xl border border-gray-100 p-5 bg-gray-50/40">
+                    <div className={`w-9 h-9 rounded-xl ${f.color} flex items-center justify-center mb-3`}>
+                      <f.icon size={18} />
+                    </div>
+                    <h4 className="text-sm font-bold mb-1">{f.label}</h4>
+                    <p className="text-xs text-text-muted leading-relaxed">{f.desc}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Relevance to Brown AI */}
+              <div className="rounded-2xl bg-gradient-to-r from-amber-50/80 to-violet-50/60 border border-amber-100 p-6">
+                <h4 className="text-sm font-bold mb-3 flex items-center gap-2">
+                  <Sparkles size={14} className="text-amber-600" />
+                  Brown AI 플랫폼 연계
+                </h4>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  {[
+                    { tool: "Longevity Lab", desc: "이 논문의 단일세포 데이터를 기반으로 비만-노화 연관 바이오마커 탐색" },
+                    { tool: "PaperMind", desc: "EndMT 관련 3,200+ 참조 문헌의 핵심 인사이트를 30초 내 요약" },
+                    { tool: "Drug Discovery", desc: "SREBF1/YAP 타겟 기반 기존 약물 재창출 후보 스크리닝" },
+                    { tool: "BioStatX", desc: "scRNA-seq 클러스터링 및 차등발현 유전자 분석 자동화" },
+                  ].map((r) => (
+                    <div key={r.tool} className="flex items-start gap-2.5">
+                      <ChevronRight size={14} className="text-amber-500 mt-0.5 shrink-0" />
+                      <div>
+                        <span className="text-xs font-bold text-text-primary">{r.tool}</span>
+                        <p className="text-[11px] text-text-muted leading-relaxed">{r.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* DOI & Links */}
+              <div className="mt-6 flex flex-wrap items-center gap-5">
+                <a
+                  href="https://doi.org/10.1038/s42255-026-01475-2"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-violet-700 hover:text-violet-900 transition"
+                >
+                  <ExternalLink size={14} />
+                  DOI: 10.1038/s42255-026-01475-2
+                </a>
+                <a
+                  href="https://github.com/Kalucka-Lab/SAT_Atlas"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-gray-700 hover:text-gray-900 transition"
+                >
+                  <Github size={14} />
+                  Code &amp; Data
+                </a>
+                <span className="text-[11px] text-text-muted">Nat Metab (2026) · Kalucka Lab</span>
               </div>
             </div>
           </div>

@@ -775,6 +775,143 @@ export function App() {
                 </div>
               </div>
 
+              {/* Health App Showcase */}
+              <div>
+                <h3 className="heading-serif text-3xl text-center mb-4">Health App Preview</h3>
+                <p className="text-sm text-text-muted text-center mb-10">혈액검사 업로드부터 맞춤 프로토콜까지 — 실제 앱 화면을 확인하세요</p>
+
+                <div className="grid lg:grid-cols-2 gap-8">
+                  {/* App Mockup — Phone Frame */}
+                  <div className="flex justify-center">
+                    <div className="w-[300px] bg-gray-900 rounded-[40px] p-3 shadow-2xl">
+                      <div className="bg-white rounded-[32px] overflow-hidden">
+                        {/* Status bar */}
+                        <div className="bg-gradient-to-r from-amber-500 to-brand px-6 py-3 flex items-center justify-between">
+                          <span className="text-white text-[10px] font-bold">Brown Health</span>
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-white/80 text-[9px]">100%</span>
+                            <div className="w-5 h-2.5 border border-white/80 rounded-sm p-[1px]"><div className="w-full h-full bg-white/80 rounded-[1px]" /></div>
+                          </div>
+                        </div>
+
+                        {/* Dashboard */}
+                        <div className="px-5 py-4 space-y-4">
+                          <div>
+                            <p className="text-[10px] text-text-muted">안녕하세요, 오창명님</p>
+                            <p className="text-sm font-bold">대사 건강 대시보드</p>
+                          </div>
+
+                          {/* Health Score */}
+                          <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-4 border border-amber-100">
+                            <div className="flex items-center justify-between mb-2">
+                              <span className="text-[10px] text-text-muted font-semibold">대사 건강 점수</span>
+                              <span className="text-[9px] px-2 py-0.5 bg-emerald-100 text-emerald-700 rounded-full font-bold">양호</span>
+                            </div>
+                            <div className="flex items-end gap-3">
+                              <span className="text-3xl font-extrabold text-brand">78</span>
+                              <span className="text-xs text-text-muted mb-1">/100</span>
+                              <span className="text-[10px] text-emerald-600 font-bold ml-auto mb-1">+3 ↑</span>
+                            </div>
+                            <div className="w-full h-2 bg-amber-100 rounded-full mt-2 overflow-hidden">
+                              <div className="w-[78%] h-full bg-gradient-to-r from-amber-400 to-brand rounded-full" />
+                            </div>
+                          </div>
+
+                          {/* Biomarkers */}
+                          <div>
+                            <p className="text-[10px] font-semibold mb-2">주요 바이오마커</p>
+                            <div className="space-y-1.5">
+                              {[
+                                { name: "공복혈당", value: "92 mg/dL", status: "정상", color: "text-emerald-600 bg-emerald-50" },
+                                { name: "HbA1c", value: "5.4%", status: "정상", color: "text-emerald-600 bg-emerald-50" },
+                                { name: "HOMA-IR", value: "2.8", status: "경계", color: "text-amber-600 bg-amber-50" },
+                                { name: "hsCRP", value: "0.9 mg/L", status: "정상", color: "text-emerald-600 bg-emerald-50" },
+                              ].map((m) => (
+                                <div key={m.name} className="flex items-center justify-between py-1.5 px-3 rounded-lg bg-gray-50">
+                                  <span className="text-[10px] text-text-secondary">{m.name}</span>
+                                  <div className="flex items-center gap-2">
+                                    <span className="text-[10px] font-bold">{m.value}</span>
+                                    <span className={`text-[8px] px-1.5 py-0.5 rounded-full font-bold ${m.color}`}>{m.status}</span>
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Today's Protocol */}
+                          <div className="bg-violet-50 rounded-xl p-3 border border-violet-100">
+                            <p className="text-[10px] font-semibold text-violet-800 mb-2">오늘의 프로토콜</p>
+                            <div className="space-y-1">
+                              <div className="flex items-center gap-2 text-[9px]">
+                                <span className="w-4 h-4 rounded bg-amber-100 flex items-center justify-center text-[8px]">🏃</span>
+                                <span className="text-text-secondary">Zone 2 유산소 45분</span>
+                                <span className="ml-auto text-emerald-600 font-bold">FitFlow →</span>
+                              </div>
+                              <div className="flex items-center gap-2 text-[9px]">
+                                <span className="w-4 h-4 rounded bg-emerald-100 flex items-center justify-center text-[8px]">🥗</span>
+                                <span className="text-text-secondary">지중해식 저탄수 식단</span>
+                              </div>
+                              <div className="flex items-center gap-2 text-[9px]">
+                                <span className="w-4 h-4 rounded bg-violet-100 flex items-center justify-center text-[8px]">😴</span>
+                                <span className="text-text-secondary">수면 7.5h 목표 · 22:30 취침</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Bottom nav */}
+                        <div className="flex items-center justify-around py-3 border-t border-gray-100 bg-white">
+                          <div className="text-center"><div className="text-[10px]">🏠</div><span className="text-[8px] text-brand font-bold">홈</span></div>
+                          <div className="text-center"><div className="text-[10px]">📊</div><span className="text-[8px] text-text-muted">분석</span></div>
+                          <div className="text-center"><div className="text-[10px]">🍎</div><span className="text-[8px] text-text-muted">영양</span></div>
+                          <div className="text-center"><div className="text-[10px]">👤</div><span className="text-[8px] text-text-muted">프로필</span></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right — Feature Highlights */}
+                  <div className="space-y-5 flex flex-col justify-center">
+                    <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm card-lift">
+                      <div className="flex items-start gap-4">
+                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white shrink-0">
+                          <Activity size={18} />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-sm mb-1">혈액검사 AI 분석</h4>
+                          <p className="text-xs text-text-secondary leading-relaxed">검사 결과 사진을 업로드하면 AI가 30+ 바이오마커를 자동 추출. 인슐린 저항성, 지질대사, 염증, 호르몬 패턴을 종합 분석하여 대사 건강 점수 100점 만점으로 산출합니다.</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm card-lift">
+                      <div className="flex items-start gap-4">
+                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-400 to-purple-600 flex items-center justify-center text-white shrink-0">
+                          <Hourglass size={18} />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-sm mb-1">생물학적 나이 추적</h4>
+                          <p className="text-xs text-text-secondary leading-relaxed">에피제네틱 클럭, 텔로미어 길이, 노화 바이오마커를 종합하여 생물학적 나이를 측정합니다. 월별 추적 그래프로 당신의 노화 속도가 빨라지는지 느려지는지 확인하세요.</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm card-lift">
+                      <div className="flex items-start gap-4">
+                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-400 to-indigo-600 flex items-center justify-center text-white shrink-0">
+                          <Sparkles size={18} />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-sm mb-1">AI 맞춤 프로토콜</h4>
+                          <p className="text-xs text-text-secondary leading-relaxed">6개 전문 AI 에이전트가 영양, 운동, 수면 프로토콜을 자동 생성합니다. Zone 2 유산소는 FitFlow로 자동 전송되고, 매주 당신의 진행 상황에 맞게 프로토콜이 최적화됩니다.</p>
+                        </div>
+                      </div>
+                    </div>
+                    <a href="https://fitflow-website.vercel.app" target="_blank" rel="noopener" className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-brand to-accent text-white font-semibold text-sm shadow-md hover:shadow-lg transition">
+                      FitFlow 앱 체험하기 <ExternalLink size={14} />
+                    </a>
+                  </div>
+                </div>
+              </div>
+
               {/* Health Agents */}
               <div>
                 <h3 className="heading-serif text-3xl text-center mb-2">Health AI Team</h3>
@@ -852,29 +989,130 @@ export function App() {
                 </div>
               </div>
 
-              {/* Pipeline */}
+              {/* Pipeline — Visual Graphic */}
               <div>
-                <h3 className="heading-serif text-3xl text-center mb-8">Discovery Pipeline</h3>
-                <div className="space-y-3">
-                  {discoveryPipeline.map((item) => {
-                    const Icon = item.icon;
-                    return (
-                      <div key={item.step} className="flex items-start gap-4 p-5 rounded-2xl bg-white border border-gray-100 card-lift shadow-sm">
-                        <div className="w-12 h-12 rounded-xl bg-violet-50 border border-violet-100 flex items-center justify-center text-violet-600 shrink-0">
-                          <Icon size={20} />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex items-center gap-2 mb-1">
-                            <span className="text-xs text-text-muted font-mono">{item.step}</span>
-                            <ChevronRight size={10} className="text-text-muted" />
-                            <h4 className="font-bold text-sm">{item.title}</h4>
-                          </div>
-                          <p className="text-sm text-text-secondary">{item.desc}</p>
-                        </div>
-                        <span className="hidden sm:inline text-[10px] px-3 py-1 rounded-full bg-violet-50 text-violet-600 font-medium border border-violet-100 shrink-0">{item.agent}</span>
+                <h3 className="heading-serif text-3xl text-center mb-4">Discovery Pipeline</h3>
+                <p className="text-sm text-text-muted text-center mb-10">타겟 발굴부터 FDA 제출까지 — AI가 가속하는 6단계 파이프라인</p>
+
+                {/* SVG Pipeline Graphic */}
+                <div className="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm mb-8">
+                  <svg viewBox="0 0 900 320" fill="none" className="w-full h-auto">
+                    {/* Connection arrows */}
+                    <path d="M155,90 L215,90" stroke="#C4B5FD" strokeWidth="2" strokeDasharray="6 3" markerEnd="url(#arrowV)" />
+                    <path d="M365,90 L425,90" stroke="#C4B5FD" strokeWidth="2" strokeDasharray="6 3" markerEnd="url(#arrowV)" />
+                    <path d="M575,90 L635,90" stroke="#C4B5FD" strokeWidth="2" strokeDasharray="6 3" markerEnd="url(#arrowV)" />
+                    <path d="M300,140 L300,180" stroke="#C4B5FD" strokeWidth="2" strokeDasharray="6 3" markerEnd="url(#arrowV)" />
+                    <path d="M510,140 L510,180" stroke="#C4B5FD" strokeWidth="2" strokeDasharray="6 3" markerEnd="url(#arrowV)" />
+                    <path d="M370,240 L440,240" stroke="#C4B5FD" strokeWidth="2" strokeDasharray="6 3" markerEnd="url(#arrowV)" />
+
+                    {/* Stage 1: Target ID */}
+                    <rect x="20" y="40" width="130" height="100" rx="16" fill="#F5F3FF" stroke="#DDD6FE" strokeWidth="1.5" />
+                    <text x="85" y="72" textAnchor="middle" fill="#7C3AED" fontSize="24">🔬</text>
+                    <text x="85" y="95" textAnchor="middle" fill="#5B21B6" fontSize="11" fontWeight="700">Target ID</text>
+                    <text x="85" y="112" textAnchor="middle" fill="#8B5CF6" fontSize="8">PubMed · ChEMBL</text>
+                    <text x="85" y="125" textAnchor="middle" fill="#8B5CF6" fontSize="8">AI 타겟 스캐닝</text>
+
+                    {/* Stage 2: Compound Screening */}
+                    <rect x="220" y="40" width="150" height="100" rx="16" fill="#F5F3FF" stroke="#DDD6FE" strokeWidth="1.5" />
+                    <text x="295" y="72" textAnchor="middle" fill="#7C3AED" fontSize="24">⚗️</text>
+                    <text x="295" y="95" textAnchor="middle" fill="#5B21B6" fontSize="11" fontWeight="700">Virtual Screening</text>
+                    <text x="295" y="112" textAnchor="middle" fill="#8B5CF6" fontSize="8">분자 도킹 · ADMET</text>
+                    <text x="295" y="125" textAnchor="middle" fill="#8B5CF6" fontSize="8">100만+ 화합물 스크리닝</text>
+
+                    {/* Stage 3: Drug Repurposing */}
+                    <rect x="430" y="40" width="150" height="100" rx="16" fill="#EDE9FE" stroke="#C4B5FD" strokeWidth="1.5" />
+                    <text x="505" y="72" textAnchor="middle" fill="#6D28D9" fontSize="24">💊</text>
+                    <text x="505" y="95" textAnchor="middle" fill="#5B21B6" fontSize="11" fontWeight="700">Drug Repurposing</text>
+                    <text x="505" y="112" textAnchor="middle" fill="#7C3AED" fontSize="8">FDA 승인 약물 재창출</text>
+                    <text x="505" y="125" textAnchor="middle" fill="#7C3AED" fontSize="8">빠른 임상 경로 탐색</text>
+
+                    {/* Stage 4: Lead Candidate */}
+                    <rect x="640" y="40" width="140" height="100" rx="16" fill="#EDE9FE" stroke="#C4B5FD" strokeWidth="1.5" />
+                    <text x="710" y="72" textAnchor="middle" fill="#6D28D9" fontSize="24">🧬</text>
+                    <text x="710" y="95" textAnchor="middle" fill="#5B21B6" fontSize="11" fontWeight="700">Lead Candidate</text>
+                    <text x="710" y="112" textAnchor="middle" fill="#7C3AED" fontSize="8">SAR 최적화</text>
+                    <text x="710" y="125" textAnchor="middle" fill="#7C3AED" fontSize="8">72시간 내 리드 도출</text>
+
+                    {/* Stage 5: Genomic Validation (bottom row) */}
+                    <rect x="220" y="190" width="150" height="100" rx="16" fill="#FEFCE8" stroke="#FDE68A" strokeWidth="1.5" />
+                    <text x="295" y="222" textAnchor="middle" fill="#92400E" fontSize="24">🧪</text>
+                    <text x="295" y="245" textAnchor="middle" fill="#92400E" fontSize="11" fontWeight="700">Genomic Validation</text>
+                    <text x="295" y="262" textAnchor="middle" fill="#B45309" fontSize="8">약물유전체학 분석</text>
+                    <text x="295" y="275" textAnchor="middle" fill="#B45309" fontSize="8">반응군 예측 · 부작용 최소화</text>
+
+                    {/* Stage 6: Clinical & FDA */}
+                    <rect x="440" y="190" width="150" height="100" rx="16" fill="#ECFDF5" stroke="#A7F3D0" strokeWidth="1.5" />
+                    <text x="515" y="222" textAnchor="middle" fill="#065F46" fontSize="24">📋</text>
+                    <text x="515" y="245" textAnchor="middle" fill="#065F46" fontSize="11" fontWeight="700">Clinical & FDA</text>
+                    <text x="515" y="262" textAnchor="middle" fill="#047857" fontSize="8">임상시험 설계 · IND/NDA</text>
+                    <text x="515" y="275" textAnchor="middle" fill="#047857" fontSize="8">규제 컴플라이언스 패키지</text>
+
+                    {/* Timeline badge */}
+                    <rect x="680" y="220" width="180" height="50" rx="25" fill="url(#pipeline-grad)" />
+                    <text x="770" y="242" textAnchor="middle" fill="white" fontSize="11" fontWeight="700">타겟 → 리드 후보</text>
+                    <text x="770" y="258" textAnchor="middle" fill="rgba(255,255,255,0.8)" fontSize="10">72시간 · AI 가속</text>
+
+                    <defs>
+                      <marker id="arrowV" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                        <path d="M0,0 L8,3 L0,6" fill="#C4B5FD" />
+                      </marker>
+                      <linearGradient id="pipeline-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#8B5CF6" />
+                        <stop offset="100%" stopColor="#6D28D9" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+
+                {/* Pipeline example scenario */}
+                <div className="bg-gradient-to-br from-violet-50 to-purple-50 border border-violet-100 rounded-2xl p-7">
+                  <h4 className="font-bold text-sm mb-4 flex items-center gap-2">
+                    <Sparkles size={16} className="text-violet-600" /> 실제 사용 시나리오
+                  </h4>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <h5 className="font-semibold text-sm text-violet-800 mb-2">mTOR 억제제 리드 발굴</h5>
+                      <div className="space-y-2 text-xs text-text-secondary leading-relaxed">
+                        <p><span className="font-mono text-violet-600">01</span> AI가 PubMed 5만 논문 + ChEMBL 데이터를 스캔하여 mTOR 경로의 새로운 억제 타겟 3개 발굴</p>
+                        <p><span className="font-mono text-violet-600">02</span> 100만 화합물 가상 스크리닝 → 분자 도킹 → ADMET 독성 필터링</p>
+                        <p><span className="font-mono text-violet-600">03</span> 기존 FDA 승인 약물 중 재창출 가능 후보 5개 추가 탐색</p>
+                        <p><span className="font-mono text-violet-600">04</span> 72시간 내 리드 후보 3개 도출 + 합성 가능성 평가 리포트</p>
                       </div>
-                    );
-                  })}
+                    </div>
+                    <div className="bg-white rounded-xl p-5 border border-violet-100">
+                      <h5 className="font-semibold text-sm mb-3">파이프라인 성과 지표</h5>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-xs text-text-muted">타겟 발굴 속도</span>
+                          <div className="flex items-center gap-2">
+                            <div className="w-24 h-2 bg-gray-100 rounded-full overflow-hidden"><div className="w-[90%] h-full bg-violet-500 rounded-full" /></div>
+                            <span className="text-xs font-bold text-violet-700">90% ↑</span>
+                          </div>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-xs text-text-muted">스크리닝 비용 절감</span>
+                          <div className="flex items-center gap-2">
+                            <div className="w-24 h-2 bg-gray-100 rounded-full overflow-hidden"><div className="w-[75%] h-full bg-violet-500 rounded-full" /></div>
+                            <span className="text-xs font-bold text-violet-700">75% ↓</span>
+                          </div>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-xs text-text-muted">리드 도출 기간</span>
+                          <div className="flex items-center gap-2">
+                            <div className="w-24 h-2 bg-gray-100 rounded-full overflow-hidden"><div className="w-[95%] h-full bg-violet-500 rounded-full" /></div>
+                            <span className="text-xs font-bold text-violet-700">72h</span>
+                          </div>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-xs text-text-muted">ADMET 예측 정확도</span>
+                          <div className="flex items-center gap-2">
+                            <div className="w-24 h-2 bg-gray-100 rounded-full overflow-hidden"><div className="w-[88%] h-full bg-emerald-500 rounded-full" /></div>
+                            <span className="text-xs font-bold text-emerald-700">88%</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
 

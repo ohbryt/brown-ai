@@ -601,37 +601,37 @@ export function App() {
       </nav>
 
       {/* ── HERO ── */}
-      <section className="relative pt-32 pb-20 overflow-hidden">
+      <section className="relative pt-32 pb-20 overflow-hidden bg-gradient-to-b from-[#07070d] via-[#0f0f18] to-[#15111a] text-white">
         <div className="hero-glow top-[-200px] left-1/2 -translate-x-1/2" />
         <div className="blob-warm w-[500px] h-[500px] -top-20 -right-40" />
         <div className="blob-cool w-[400px] h-[400px] top-40 -left-40" />
 
         <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center relative z-10">
           {/* Left: Text */}
-          <div>
-            <div className="section-badge bg-amber-50 text-amber-800 border border-amber-200 mb-8">
+          <div className="text-white">
+            <div className="section-badge bg-white/10 text-white border border-white/10 mb-8">
               <Sparkles size={12} /> Founded by MD/PhD Endocrinologist
             </div>
 
             <h1 className="heading-serif text-5xl sm:text-6xl lg:text-7xl leading-[1.05] mb-6">
-              <span className="bg-gradient-to-r from-brand via-accent to-caramel bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#ffd88a] via-[#f0b45f] to-[#b86c1b] bg-clip-text text-transparent">
                 Live Longer.
               </span>
               <br />
-              <span className="text-text-primary">Age Smarter.</span>
+              <span className="text-white">Age Smarter.</span>
             </h1>
 
-            <p className="text-lg text-text-secondary max-w-lg mb-8 leading-relaxed">
+            <p className="text-lg text-white/72 max-w-lg mb-8 leading-relaxed">
               내분비 전문의의 의학 전문성 + AI 에이전트의 자동화.
               <br className="hidden sm:inline" />
               세 개의 사업부로 노화, 대사, AI 인프라를 공략합니다.
             </p>
 
             <div className="flex flex-wrap gap-4">
-              <button onClick={() => openWaitlist("Basic")} className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-brand to-accent text-white font-semibold shadow-lg shadow-brand/15 hover:shadow-xl hover:shadow-brand/25 transition-all">
+              <button onClick={() => openWaitlist("Basic")} className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-brand to-accent text-white font-semibold shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-black/30 transition-all">
                 Get Started Free <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </button>
-              <a href="#bu-section" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border-2 border-brand/15 text-brand font-semibold hover:bg-brand/5 transition">
+              <a href="#bu-section" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border-2 border-white/15 text-white font-semibold hover:bg-white/5 transition">
                 Learn More
               </a>
             </div>

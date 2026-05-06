@@ -610,7 +610,7 @@ export function App() {
           {/* Left: Text */}
           <div className="text-white max-w-xl">
             <div className="section-badge bg-white/10 text-white border border-white/10 mb-6 sm:mb-8">
-              <Sparkles size={12} /> Founded by MD/PhD Endocrinologist
+              <Sparkles size={12} /> Clinical oversight · AI assisted
             </div>
 
             <h1 className="heading-serif text-[3rem] sm:text-6xl lg:text-7xl leading-[0.98] tracking-tight mb-4 sm:mb-6">
@@ -622,17 +622,15 @@ export function App() {
             </h1>
 
             <p className="text-base sm:text-lg text-white/72 max-w-lg mb-6 sm:mb-8 leading-relaxed">
-              내분비 전문의의 의학 전문성 + AI 에이전트의 자동화.
-              <span className="hidden sm:inline"><br />세 개의 사업부로 노화, 대사, AI 인프라를 공략합니다.</span>
-              <span className="sm:hidden"> 세 개의 사업부로 노화, 대사, AI 인프라를 공략합니다.</span>
+              내분비 전문성과 AI 자동화를 결합해 노화·대사·인프라를 하나의 흐름으로 정리합니다.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <button onClick={() => openWaitlist("Basic")} className="group inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-full bg-gradient-to-r from-brand to-accent text-white font-semibold shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-black/30 transition-all w-full sm:w-auto">
-                Get Started Free <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                Request a Brief <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </button>
               <a href="#bu-section" className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-full border-2 border-white/15 text-white font-semibold hover:bg-white/5 transition w-full sm:w-auto">
-                Learn More
+                Explore Services
               </a>
             </div>
           </div>
@@ -649,15 +647,15 @@ export function App() {
             <div className="flex items-center justify-between gap-4 mb-4">
               <div>
                 <p className="text-[10px] uppercase tracking-[0.22em] text-white/45">Service snapshot</p>
-                <p className="text-sm font-semibold text-white">Three lanes. One clear route.</p>
+                <p className="text-sm font-semibold text-white">Three lanes. One route.</p>
               </div>
               <a href="#bu-section" className="text-xs font-semibold text-[#ffd88a] hover:text-[#ffe7b0] transition">View details</a>
             </div>
             <div className="grid gap-3">
               {[
-                ["peptide-service", "Peptide projects, quotes, consults."],
-                ["biostatx", "Biostatistics and decision-ready analysis."],
-                ["genox-site", "Discovery and partnership scoping."],
+                ["peptide-service", "Peptides, quotes, consults."],
+                ["biostatx", "Biostatistics and decision-ready reporting."],
+                ["genox-site", "Discovery and partner scoping."],
               ].map(([lane, desc]) => (
                 <div key={lane} className="flex items-center justify-between gap-3 rounded-2xl border border-white/8 bg-black/20 px-4 py-3">
                   <div>

@@ -1099,12 +1099,12 @@ export function App() {
                   </h4>
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-              <h5 className="font-semibold text-sm text-violet-800 mb-2">Multi-step discovery signal stack</h5>
+                      <h5 className="font-semibold text-sm text-violet-800 mb-2">Partner discovery stack</h5>
                       <div className="space-y-2 text-xs text-text-secondary leading-relaxed">
-                        <p><span className="font-mono text-violet-600">01</span> 타겟 선정 → MolXProt-style affinity modeling → 우선순위 스코어링</p>
-                        <p><span className="font-mono text-violet-600">02</span> de novo design → 활성 최적화 → 후보 분자 랭킹</p>
-                        <p><span className="font-mono text-violet-600">03</span> XAI/인과추론으로 설명 가능한 근거 확보</p>
-                        <p><span className="font-mono text-violet-600">04</span> 멀티오믹스 + 규제 패키지로 파트너 전달</p>
+                        <p><span className="font-mono text-violet-600">01</span> Target → affinity model → ranked shortlist</p>
+                        <p><span className="font-mono text-violet-600">02</span> De novo design → optimization → hit expansion</p>
+                        <p><span className="font-mono text-violet-600">03</span> XAI + causal checks for explainable delivery</p>
+                        <p><span className="font-mono text-violet-600">04</span> Multi-omics + regulatory pack for partner handoff</p>
                       </div>
                     </div>
                     <div className="bg-white rounded-xl p-5 border border-violet-100">

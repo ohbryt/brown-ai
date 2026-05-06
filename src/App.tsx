@@ -98,12 +98,12 @@ const healthServices = [
 
 /* ── Discovery pipeline ── */
 const discoveryPipeline = [
-  { step: "01", title: "Target Identification", desc: "PubMed, ChEMBL, UniProt에서 노화/대사 관련 유효 타겟 AI 스캐닝", icon: Microscope, agent: "Drug Discovery Lead" },
-  { step: "02", title: "Compound Screening", desc: "가상 스크리닝 — 분자 도킹, ADMET 예측, 구조-활성 관계 분석", icon: Atom, agent: "Computational Chemist" },
-  { step: "03", title: "Drug Repurposing", desc: "기존 FDA 승인 약물의 노화/대사 새 적응증 탐색 (빠른 임상 경로)", icon: Pill, agent: "Drug Discovery Lead" },
-  { step: "04", title: "Genomic Validation", desc: "약물유전체학 분석으로 반응군 예측 및 부작용 최소화", icon: Dna, agent: "Genomics Analyst" },
-  { step: "05", title: "Clinical Trial Design", desc: "최적 엔드포인트, 피험자 선정 기준, FDA 제출 전략 설계", icon: ClipboardCheck, agent: "Clinical Trials Analyst" },
-  { step: "06", title: "Regulatory Filing", desc: "IND/NDA 문서, IRB 프로토콜, 규제 컴플라이언스 패키지 작성", icon: ShieldCheck, agent: "Compliance Officer" },
+  { step: "01", title: "Target Discovery", desc: "PubMed, ChEMBL, UniProt에서 노화·대사·암 관련 타겟을 먼저 좁히고 우선순위를 매깁니다.", icon: Microscope, agent: "Drug Discovery Lead" },
+  { step: "02", title: "Affinity Modeling", desc: "MolXProt-style cross-attention GNN으로 단백질-리간드 결합 친화도를 예측합니다.", icon: Atom, agent: "Computational Chemist" },
+  { step: "03", title: "De Novo Design", desc: "기하 딥러닝 + hierarchical VAE/RL로 새 분자를 설계하고 활성 최적화를 진행합니다.", icon: FlaskConical, agent: "Drug Discovery Lead" },
+  { step: "04", title: "Explainability Check", desc: "XAI 평가 프레임워크로 예측 근거를 점검하고, 파트너에게 설명 가능한 결과만 남깁니다.", icon: ShieldCheck, agent: "Compliance Officer" },
+  { step: "05", title: "Causal Validation", desc: "CADS-style 인과추론으로 필수 유전자를 식별하고 약물 시너지 가능성을 검증합니다.", icon: Dna, agent: "Genomics Analyst" },
+  { step: "06", title: "Translation Pack", desc: "멀티오믹스·임상·규제 데이터를 묶어 공동연구/라이선싱용 패키지로 정리합니다.", icon: ClipboardCheck, agent: "Clinical Trials Analyst" },
 ];
 
 /* ── Pricing ── */
@@ -158,7 +158,7 @@ const healthPlans = [
 const paperclipFeatures = [
   { icon: Workflow, title: "AI Orchestration", desc: "LLM 파이프라인을 시각적으로 설계하고 자동 실행. 복잡한 워크플로우를 드래그앤드롭으로 구성.", color: "from-blue-500 to-indigo-600" },
   { icon: Puzzle, title: "ClipMart Marketplace", desc: "커뮤니티가 만든 프롬프트 템플릿, 에이전트 플러그인을 검색하고 즉시 적용.", color: "from-indigo-500 to-blue-600" },
-  { icon: Layers, title: "Multi-Model Support", desc: "OpenAI, Anthropic, Google 등 모든 LLM을 하나의 인터페이스에서 비교하고 전환.", color: "from-cyan-500 to-blue-500" },
+  { icon: Layers, title: "Multi-Model Support", desc: "OpenAI, Anthropic, Google, 그리고 로컬 LLM까지 하나의 인터페이스에서 비교하고 전환.", color: "from-cyan-500 to-blue-500" },
   { icon: Zap, title: "Real-time Streaming", desc: "응답을 실시간 스트리밍으로 표시. 긴 생성 작업도 즉시 피드백.", color: "from-blue-400 to-indigo-500" },
 ];
 
@@ -235,7 +235,7 @@ const products: ProductInfo[] = [
   },
   {
     slug: "paperclip", name: "Paperclip", badge: "AI Orchestration",
-    desc: "LLM 파이프라인 오케스트레이션 플랫폼. ClipMart 마켓플레이스, 멀티모델 지원.",
+    desc: "LLM 파이프라인 오케스트레이션 플랫폼. ClipMart 마켓플레이스, 멀티모델 지원, 로컬 친화 워크플로우.",
     url: "https://dist-chi-two-33.vercel.app", icon: Workflow,
     gradient: "from-blue-400 to-indigo-600", badgeBg: "bg-blue-50", badgeText: "text-blue-700", badgeBorder: "border-blue-100", accentText: "text-blue-600", ringColor: "#3b82f6", accentColor: "#3b82f6",
     features: ["드래그앤드롭 LLM 파이프라인 빌더", "ClipMart 마켓플레이스 (템플릿·플러그인)", "OpenAI / Anthropic / Google 멀티모델", "실시간 스트리밍 응답", "CLI + YAML 기반 워크플로우"],
@@ -244,7 +244,7 @@ const products: ProductInfo[] = [
   },
   {
     slug: "brown-biotech", name: "Brown Biotech", badge: "Drug Discovery",
-    desc: "AI 기반 신약 발굴 — 타겟 분자부터 리드 후보까지 며칠 만에 달성.",
+    desc: "AI 기반 신약 발굴 — 타겟 분자부터 리드 후보까지, 최신 affinity modeling과 de novo design으로 압축.",
     url: "https://brown-biotech-website.vercel.app", icon: Dna,
     gradient: "from-brand-light to-brand", badgeBg: "bg-amber-50", badgeText: "text-brand", badgeBorder: "border-amber-100", accentText: "text-brand", ringColor: "#92400e", accentColor: "#92400e",
     features: ["AI 타겟 발굴 & 검증", "가상 화합물 스크리닝 & 분자 도킹", "ADMET 독성/약동학 예측", "약물 재창출 (Drug Repurposing)", "FDA 임상시험 설계 자동화"],
@@ -1099,12 +1099,12 @@ export function App() {
                   </h4>
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <h5 className="font-semibold text-sm text-violet-800 mb-2">mTOR 억제제 리드 발굴</h5>
+              <h5 className="font-semibold text-sm text-violet-800 mb-2">Multi-step discovery signal stack</h5>
                       <div className="space-y-2 text-xs text-text-secondary leading-relaxed">
-                        <p><span className="font-mono text-violet-600">01</span> AI가 PubMed 5만 논문 + ChEMBL 데이터를 스캔하여 mTOR 경로의 새로운 억제 타겟 3개 발굴</p>
-                        <p><span className="font-mono text-violet-600">02</span> 100만 화합물 가상 스크리닝 → 분자 도킹 → ADMET 독성 필터링</p>
-                        <p><span className="font-mono text-violet-600">03</span> 기존 FDA 승인 약물 중 재창출 가능 후보 5개 추가 탐색</p>
-                        <p><span className="font-mono text-violet-600">04</span> 72시간 내 리드 후보 3개 도출 + 합성 가능성 평가 리포트</p>
+                        <p><span className="font-mono text-violet-600">01</span> 타겟 선정 → MolXProt-style affinity modeling → 우선순위 스코어링</p>
+                        <p><span className="font-mono text-violet-600">02</span> de novo design → 활성 최적화 → 후보 분자 랭킹</p>
+                        <p><span className="font-mono text-violet-600">03</span> XAI/인과추론으로 설명 가능한 근거 확보</p>
+                        <p><span className="font-mono text-violet-600">04</span> 멀티오믹스 + 규제 패키지로 파트너 전달</p>
                       </div>
                     </div>
                     <div className="bg-white rounded-xl p-5 border border-violet-100">

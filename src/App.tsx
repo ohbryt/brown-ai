@@ -244,7 +244,7 @@ const products: ProductInfo[] = [
   },
   {
     slug: "brown-biotech", name: "Brown Biotech", badge: "Drug Discovery",
-    desc: "AI 기반 신약 발굴 — 타겟 분자부터 리드 후보까지, 최신 affinity modeling과 de novo design으로 압축.",
+    desc: "AI-guided target discovery, affinity modeling, and translational planning.",
     url: "https://brown-biotech-website.vercel.app", icon: Dna,
     gradient: "from-brand-light to-brand", badgeBg: "bg-amber-50", badgeText: "text-brand", badgeBorder: "border-amber-100", accentText: "text-brand", ringColor: "#92400e", accentColor: "#92400e",
     features: ["AI 타겟 발굴 & 검증", "가상 화합물 스크리닝 & 분자 도킹", "ADMET 독성/약동학 예측", "약물 재창출 (Drug Repurposing)", "FDA 임상시험 설계 자동화"],
@@ -1158,10 +1158,9 @@ export function App() {
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-400 to-purple-600 flex items-center justify-center mx-auto mb-5">
                   <Building2 size={28} className="text-white" />
                 </div>
-                <h3 className="heading-serif text-3xl mb-3">파트너십 문의</h3>
+                <h3 className="heading-serif text-3xl mb-3">Partner discovery</h3>
                 <p className="text-text-secondary mb-6 max-w-md mx-auto">
-                  제약사, 바이오텍, 연구기관을 위한 맞춤 AI 파이프라인.
-                  <br />라이선싱, 공동연구, 전용 에이전트 배정.
+                  Target discovery, affinity modeling, and partner-ready translation.
                 </p>
                 <button onClick={() => openWaitlist("discovery")} className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-violet-500 to-purple-600 text-white font-semibold shadow-lg shadow-violet-500/15 hover:shadow-xl hover:shadow-violet-500/25 transition text-sm">
                   Contact Us <ArrowRight size={14} />

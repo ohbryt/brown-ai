@@ -756,9 +756,9 @@ export function App() {
               {/* Tagline */}
               <div className="text-center">
                 <span className="section-badge bg-amber-50 text-amber-700 border border-amber-200 mb-4">For Individuals</span>
-                <h2 className="heading-serif text-4xl sm:text-5xl mb-4">AI 대사 건강 플랫폼</h2>
+                <h2 className="heading-serif text-4xl sm:text-5xl mb-4">AI Health Platform</h2>
                 <p className="text-text-secondary max-w-lg mx-auto text-lg">
-                  혈액 검사부터 맞춤 장수 프로토콜까지 — 6개 전문 AI 에이전트가 당신의 건강을 최적화합니다.
+                  혈액 검사, 바이오마커, 프로토콜을 한 흐름으로 정리해 더 빠른 결정을 돕습니다.
                 </p>
               </div>
 
@@ -780,7 +780,7 @@ export function App() {
 
               {/* How it works */}
               <div>
-                <h3 className="heading-serif text-3xl text-center mb-10">How It Works</h3>
+                <h3 className="heading-serif text-3xl text-center mb-10">Process</h3>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                   {[
                     { num: "1", title: "데이터 업로드", desc: "혈액 검사, 웨어러블 데이터, 건강 기록", icon: Database },
@@ -951,8 +951,8 @@ export function App() {
 
               {/* Products — Expandable Cards */}
               <div id="products">
-                <h3 className="heading-serif text-3xl text-center mb-2">Our Products</h3>
-                <p className="text-sm text-text-muted text-center mb-8">클릭하여 각 제품의 상세 기능과 사용 예시를 확인하세요</p>
+                <h3 className="heading-serif text-3xl text-center mb-2">Product Suite</h3>
+                <p className="text-sm text-text-muted text-center mb-8">각 제품의 핵심만 빠르게 확인하세요</p>
                 <div className="grid sm:grid-cols-2 gap-5">
                   {products.map((p, idx) => {
                     const isExpanded = expandedProduct === p.slug;
@@ -1200,7 +1200,7 @@ export function App() {
 
               {/* How it works */}
               <div>
-                <h3 className="heading-serif text-3xl text-center mb-10">How It Works</h3>
+                <h3 className="heading-serif text-3xl text-center mb-10">Process</h3>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                   {paperclipHowItWorks.map((item) => {
                     const Icon = item.icon;

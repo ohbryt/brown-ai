@@ -9,7 +9,7 @@ type IntakeBody = {
 };
 
 const NOTION_VERSION = "2022-06-28";
-const DEFAULT_DB_ID = "201ef22d-4086-47c6-a33d-707150572c05";
+const DEFAULT_DB_ID = "201ef22d-4086-47c6-a33c-707150572c05";
 const ALLOWED_LANES = new Set([
   "ai-automation-service",
   "business-pipeline",
@@ -18,6 +18,7 @@ const ALLOWED_LANES = new Set([
   "peptide-service",
 ]);
 const ALLOWED_PRIORITIES = new Set(["hot", "warm", "cold"]);
+const TELEGRAM_API_BASE = "https://api.telegram.org";
 
 function text(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
@@ -66,7 +67,7 @@ function inferSummary(payload: IntakeBody, serviceLane: string) {
   return parts.join(" · ");
 }
 
-function inferNextStep(serviceLane: string, priority: string, message: string) {
+function inferNextStep(serviceLane: string, priority: string) {
   if (priority === "hot") return "Book a call and confirm the smallest viable next step today.";
   if (serviceLane === "ai-automation-service") return "Review the workflow, estimate effort, and decide whether to scope a paid proof-of-work.";
   return "Review the request, confirm fit, and route to the correct owner.";
@@ -74,6 +75,75 @@ function inferNextStep(serviceLane: string, priority: string, message: string) {
 
 function humanApprovalNeeded(message: string) {
   return containsAny(message, ["money", "legal", "contract", "deploy", "deployment", "launch", "medical", "clinical", "claim"]);
+}
+
+function telegramAlertText(params: {
+  title: string;
+  serviceLane: string;
+  priority: string;
+  owner: string;
+  approvalNeeded: boolean;
+  name: string;
+  email: string;
+  company: string;
+  source: string;
+  nextStep: string;
+  message: string;
+  notionUrl?: string;
+}) {
+  const lines = [
+    `Brown Biotech intake · ${params.priority.toUpperCase()}${params.approvalNeeded ? " · APPROVAL" : ""}`,
+    params.title,
+    `Service lane: ${params.serviceLane}`,
+    `Owner: ${params.owner}`,
+    `Source: ${params.source}`,
+    `Name: ${params.name || "-"}`,
+    `Email: ${params.email || "-"}`,
+    `Company: ${params.company || "-"}`,
+    `Next step: ${params.nextStep}`,
+    `Message: ${excerpt(params.message, 240) || "-"}`,
+  ];
+
+  if (params.notionUrl) {
+    lines.push(`Notion: ${params.notionUrl}`);
+  }
+
+  return lines.join("\n");
+}
+
+async function sendTelegramAlert(message: string) {
+  const botToken = process.env.TELEGRAM_BOT_TOKEN || process.env.BROWN_BIOTECH_TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID || process.env.BROWN_BIOTECH_TELEGRAM_CHAT_ID;
+  const threadId = process.env.TELEGRAM_THREAD_ID || process.env.BROWN_BIOTECH_TELEGRAM_THREAD_ID;
+
+  if (!botToken || !chatId) {
+    return { sent: false as const, reason: "missing-telegram-config" };
+  }
+
+  const body = new URLSearchParams({
+    chat_id: chatId,
+    text: message,
+    disable_web_page_preview: "true",
+  });
+
+  if (threadId) {
+    body.set("message_thread_id", threadId);
+  }
+
+  const resp = await fetch(`${TELEGRAM_API_BASE}/bot${botToken}/sendMessage`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+    },
+    body,
+  });
+
+  const textResp = await resp.text();
+  if (!resp.ok) {
+    return { sent: false as const, reason: textResp };
+  }
+
+  return { sent: true as const, reason: textResp };
 }
 
 export default async function handler(req: any, res: any) {
@@ -104,7 +174,7 @@ export default async function handler(req: any, res: any) {
   const priority = inferPriority(payload);
   const serviceLane = ALLOWED_LANES.has(requestedLane) ? requestedLane : "business-pipeline";
   const owner = inferOwner(serviceLane);
-  const nextStep = inferNextStep(serviceLane, priority, message);
+  const nextStep = inferNextStep(serviceLane, priority);
   const approvalNeeded = humanApprovalNeeded(message);
   const title = `${serviceLane} inquiry · ${company || name || email || "website"}`;
 
@@ -175,6 +245,24 @@ export default async function handler(req: any, res: any) {
     notionPage = { raw: textResp };
   }
 
+  const telegramMessage = telegramAlertText({
+    title,
+    serviceLane,
+    priority,
+    owner,
+    approvalNeeded,
+    name,
+    email,
+    company,
+    source,
+    nextStep,
+    message,
+    notionUrl: notionPage.url,
+  });
+
+  const [telegramResult] = await Promise.allSettled([sendTelegramAlert(telegramMessage)]);
+  const telegramAlert = telegramResult.status === "fulfilled" ? telegramResult.value : { sent: false as const, reason: String(telegramResult.reason) };
+
   return res.status(200).json({
     ok: true,
     id: notionPage.id,
@@ -183,5 +271,6 @@ export default async function handler(req: any, res: any) {
     priority,
     owner,
     approvalNeeded,
+    telegram: telegramAlert,
   });
 }

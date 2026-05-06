@@ -601,19 +601,19 @@ export function App() {
       </nav>
 
       {/* ── HERO ── */}
-      <section className="relative pt-32 pb-20 overflow-hidden bg-gradient-to-b from-[#07070d] via-[#0f0f18] to-[#15111a] text-white">
+      <section className="relative pt-28 sm:pt-32 pb-16 sm:pb-20 overflow-hidden bg-gradient-to-b from-[#07070d] via-[#0f0f18] to-[#15111a] text-white">
         <div className="hero-glow top-[-200px] left-1/2 -translate-x-1/2" />
         <div className="blob-warm w-[500px] h-[500px] -top-20 -right-40" />
         <div className="blob-cool w-[400px] h-[400px] top-40 -left-40" />
 
-        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center relative z-10">
+        <div className="max-w-7xl mx-auto px-5 sm:px-6 grid lg:grid-cols-2 gap-10 sm:gap-12 items-center relative z-10">
           {/* Left: Text */}
-          <div className="text-white">
-            <div className="section-badge bg-white/10 text-white border border-white/10 mb-8">
+          <div className="text-white max-w-xl">
+            <div className="section-badge bg-white/10 text-white border border-white/10 mb-6 sm:mb-8">
               <Sparkles size={12} /> Founded by MD/PhD Endocrinologist
             </div>
 
-            <h1 className="heading-serif text-5xl sm:text-6xl lg:text-7xl leading-[1.05] mb-6">
+            <h1 className="heading-serif text-[3rem] sm:text-6xl lg:text-7xl leading-[0.98] tracking-tight mb-4 sm:mb-6">
               <span className="bg-gradient-to-r from-[#ffd88a] via-[#f0b45f] to-[#b86c1b] bg-clip-text text-transparent">
                 Live Longer.
               </span>
@@ -621,17 +621,17 @@ export function App() {
               <span className="text-white">Age Smarter.</span>
             </h1>
 
-            <p className="text-lg text-white/72 max-w-lg mb-8 leading-relaxed">
+            <p className="text-base sm:text-lg text-white/72 max-w-lg mb-6 sm:mb-8 leading-relaxed">
               내분비 전문의의 의학 전문성 + AI 에이전트의 자동화.
-              <br className="hidden sm:inline" />
-              세 개의 사업부로 노화, 대사, AI 인프라를 공략합니다.
+              <span className="hidden sm:inline"><br />세 개의 사업부로 노화, 대사, AI 인프라를 공략합니다.</span>
+              <span className="sm:hidden"> 세 개의 사업부로 노화, 대사, AI 인프라를 공략합니다.</span>
             </p>
 
-            <div className="flex flex-wrap gap-4">
-              <button onClick={() => openWaitlist("Basic")} className="group inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-brand to-accent text-white font-semibold shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-black/30 transition-all">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <button onClick={() => openWaitlist("Basic")} className="group inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-full bg-gradient-to-r from-brand to-accent text-white font-semibold shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-black/30 transition-all w-full sm:w-auto">
                 Get Started Free <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </button>
-              <a href="#bu-section" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border-2 border-white/15 text-white font-semibold hover:bg-white/5 transition">
+              <a href="#bu-section" className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-full border-2 border-white/15 text-white font-semibold hover:bg-white/5 transition w-full sm:w-auto">
                 Learn More
               </a>
             </div>
@@ -643,8 +643,36 @@ export function App() {
           </div>
         </div>
 
+        {/* Mobile-first service snapshot */}
+        <div className="max-w-5xl mx-auto px-5 sm:px-6 mt-10 sm:mt-20 relative z-10 lg:hidden">
+          <div className="rounded-3xl border border-white/10 bg-white/6 backdrop-blur-xl p-4 sm:p-5 shadow-xl shadow-black/15">
+            <div className="flex items-center justify-between gap-4 mb-4">
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.22em] text-white/45">Service snapshot</p>
+                <p className="text-sm font-semibold text-white">Three lanes. One clear route.</p>
+              </div>
+              <a href="#bu-section" className="text-xs font-semibold text-[#ffd88a] hover:text-[#ffe7b0] transition">View details</a>
+            </div>
+            <div className="grid gap-3">
+              {[
+                ["peptide-service", "Peptide projects, quotes, consults."],
+                ["biostatx", "Biostatistics and decision-ready analysis."],
+                ["genox-site", "Discovery and partnership scoping."],
+              ].map(([lane, desc]) => (
+                <div key={lane} className="flex items-center justify-between gap-3 rounded-2xl border border-white/8 bg-black/20 px-4 py-3">
+                  <div>
+                    <div className="text-sm font-semibold text-white">{lane}</div>
+                    <div className="text-xs text-white/58">{desc}</div>
+                  </div>
+                  <ArrowRight size={14} className="text-white/50 shrink-0" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* BU Cards */}
-        <div className="max-w-5xl mx-auto px-6 mt-20 grid sm:grid-cols-3 gap-6 relative z-10">
+        <div className="hidden lg:grid max-w-5xl mx-auto px-6 mt-20 sm:grid-cols-3 gap-6 relative z-10">
           <button onClick={() => { setActiveTab("health"); document.getElementById("bu-section")?.scrollIntoView({ behavior: "smooth" }); }}
             className="group text-left p-6 rounded-2xl bg-white border border-amber-100 shadow-sm card-lift">
             <div className="flex items-center gap-3 mb-3">

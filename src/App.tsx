@@ -953,6 +953,20 @@ export function App() {
               <div id="products">
                 <h3 className="heading-serif text-3xl text-center mb-2">Product Suite</h3>
                 <p className="text-sm text-text-muted text-center mb-8">각 제품의 핵심만 빠르게 확인하세요</p>
+                <div className="mb-8 bg-gradient-to-br from-violet-50 to-fuchsia-50 border border-violet-100 rounded-3xl p-7 shadow-sm">
+                  <div className="max-w-3xl mx-auto text-center">
+                    <span className="section-badge bg-white text-violet-700 border border-violet-200 mb-4">Service Lane</span>
+                    <h4 className="heading-serif text-3xl mb-3">AI Automation Service</h4>
+                    <p className="text-text-secondary mb-5 max-w-2xl mx-auto">
+                      We build AI automation systems that remove repetitive workflows, connect your tools, and deliver a clear handoff your team can keep using.
+                    </p>
+                    <div className="flex flex-wrap justify-center gap-3 text-xs text-violet-700 font-medium">
+                      <span className="px-3 py-1.5 rounded-full bg-white border border-violet-100">Discovery calls</span>
+                      <span className="px-3 py-1.5 rounded-full bg-white border border-violet-100">Claude Code prompts</span>
+                      <span className="px-3 py-1.5 rounded-full bg-white border border-violet-100">N8N / MCP delivery</span>
+                    </div>
+                  </div>
+                </div>
                 <div className="grid sm:grid-cols-2 gap-5">
                   {products.map((p, idx) => {
                     const isExpanded = expandedProduct === p.slug;

@@ -495,54 +495,130 @@ function AgentCard({ agent, accentColor }: { agent: Agent; accentColor: string }
    WAITLIST MODAL — light theme
    ═══════════════════════════════════════════ */
 function WaitlistModal({ open, onClose, plan }: { open: boolean; onClose: () => void; plan: string }) {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [company, setCompany] = useState("");
+  const [serviceLane, setServiceLane] = useState(plan === "ai-automation-service" ? "ai-automation-service" : plan === "discovery" ? "business-pipeline" : "business-pipeline");
+  const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
   if (!open) return null;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const modalTitle =
+    plan === "discovery"
+      ? "파트너십 문의"
+      : plan === "ai-automation-service"
+        ? "AI Automation Service — Request a Brief"
+        : `${plan} — Request a Brief`;
+
+  const modalCopy =
+    plan === "discovery"
+      ? "Drug Discovery 파이프라인에 관심이 있으시면 아래 정보를 남겨주세요."
+      : plan === "ai-automation-service"
+        ? "반복 업무를 줄이고 싶은 팀이라면, 이 짧은 브리프 폼으로 바로 intake에 들어갑니다."
+        : "아래 정보를 남겨주시면 필요한 다음 단계를 바로 정리하겠습니다.";
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email) return;
-    setSubmitted(true);
+    if (!email || !name) return;
+    setSubmitting(true);
+    setError("");
+    try {
+      const response = await fetch("/api/intake", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          company,
+          message,
+          source: "website",
+          serviceLane,
+          plan,
+        }),
+      });
+      if (!response.ok) {
+        const text = await response.text();
+        throw new Error(text || "Request failed");
+      }
+      setSubmitted(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to submit request.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" onClick={onClose}>
       <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" />
-      <div className="relative bg-white border border-gray-100 rounded-3xl p-8 w-full max-w-md shadow-2xl" onClick={(e) => e.stopPropagation()}>
+      <div className="relative bg-white border border-gray-100 rounded-3xl p-8 w-full max-w-lg shadow-2xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
         <button onClick={onClose} className="absolute top-4 right-4 text-text-muted hover:text-text-primary transition"><X size={18} /></button>
         {submitted ? (
           <div className="text-center py-6">
             <div className="w-16 h-16 rounded-full bg-amber-50 flex items-center justify-center mx-auto mb-4">
               <Check size={28} className="text-amber-600" />
             </div>
-            <h3 className="text-xl font-bold mb-2">Waitlist 등록 완료!</h3>
-            <p className="text-sm text-text-secondary mb-1">{email}</p>
-            <p className="text-xs text-text-muted">런칭 시 가장 먼저 알려드리겠습니다.</p>
+            <h3 className="text-xl font-bold mb-2">Request received</h3>
+            <p className="text-sm text-text-secondary mb-1">{name}</p>
+            <p className="text-xs text-text-muted">We’ve placed this into the Brown Biotech intake queue.</p>
           </div>
         ) : (
           <>
-            <div className="mb-6">
-              <h3 className="heading-serif text-2xl mb-1">
-                {plan === "discovery" ? "파트너십 문의" : `${plan} 플랜 — Waitlist`}
-              </h3>
-              <p className="text-sm text-text-secondary">
-                {plan === "discovery"
-                  ? "Drug Discovery 파이프라인에 관심이 있으시면 이메일을 남겨주세요."
-                  : "현재 사전 등록 중입니다. 이메일을 남겨주시면 런칭 시 가장 먼저 초대해드립니다."}
-              </p>
+            <div className="mb-6 pr-8">
+              <h3 className="heading-serif text-2xl mb-1">{modalTitle}</h3>
+              <p className="text-sm text-text-secondary">{modalCopy}</p>
             </div>
             <form onSubmit={handleSubmit} className="space-y-3">
+              <div className="grid sm:grid-cols-2 gap-3">
+                <input
+                  type="text"
+                  required
+                  placeholder="Your name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-text-primary placeholder:text-text-muted text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition"
+                />
+                <input
+                  type="email"
+                  required
+                  placeholder="you@example.com"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-text-primary placeholder:text-text-muted text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition"
+                />
+              </div>
               <input
-                type="email"
-                required
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                type="text"
+                placeholder="Company / lab / team"
+                value={company}
+                onChange={(e) => setCompany(e.target.value)}
                 className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-text-primary placeholder:text-text-muted text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition"
               />
-              <button type="submit" className="w-full py-3 rounded-xl bg-gradient-to-r from-brand to-accent text-white font-semibold text-sm shadow-md shadow-brand/15 hover:shadow-lg hover:shadow-brand/25 transition">
-                {plan === "discovery" ? "문의하기" : "Waitlist 등록"}
+              <select
+                value={serviceLane}
+                onChange={(e) => setServiceLane(e.target.value)}
+                className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-text-primary text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition"
+              >
+                <option value="ai-automation-service">AI Automation Service</option>
+                <option value="business-pipeline">Business Pipeline</option>
+                <option value="genox-site">Genox Site</option>
+                <option value="biostatx">BioStatX</option>
+                <option value="peptide-service">Peptide Service</option>
+              </select>
+              <textarea
+                rows={4}
+                placeholder="What do you want to remove, automate, or scope first?"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-text-primary placeholder:text-text-muted text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition resize-none"
+              />
+              {error && <p className="text-sm text-red-600">{error}</p>}
+              <button type="submit" disabled={submitting} className="w-full py-3 rounded-xl bg-gradient-to-r from-brand to-accent text-white font-semibold text-sm shadow-md shadow-brand/15 hover:shadow-lg hover:shadow-brand/25 transition disabled:opacity-60 disabled:cursor-not-allowed">
+                {submitting ? "Sending..." : plan === "discovery" ? "Send inquiry" : "Request brief"}
               </button>
+              <p className="text-[11px] text-text-muted text-center">This goes straight into the Brown Biotech intake queue.</p>
             </form>
           </>
         )}
@@ -594,7 +670,7 @@ export function App() {
             <a href="#team" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Team</a>
             <a href="#pricing" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Pricing</a>
           </div>
-          <button onClick={() => openWaitlist("Basic")} className="hidden sm:inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-brand to-accent text-white text-sm font-semibold shadow-sm shadow-brand/10 hover:shadow-md hover:shadow-brand/20 transition">
+          <button onClick={() => openWaitlist("ai-automation-service")} className="hidden sm:inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-brand to-accent text-white text-sm font-semibold shadow-sm shadow-brand/10 hover:shadow-md hover:shadow-brand/20 transition">
             Get Started
           </button>
         </div>
@@ -626,7 +702,7 @@ export function App() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <button onClick={() => openWaitlist("Basic")} className="group inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-full bg-gradient-to-r from-brand to-accent text-white font-semibold shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-black/30 transition-all w-full sm:w-auto">
+              <button onClick={() => openWaitlist("ai-automation-service")} className="group inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-full bg-gradient-to-r from-brand to-accent text-white font-semibold shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-black/30 transition-all w-full sm:w-auto">
                 Request a Brief <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </button>
               <a href="#bu-section" className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-full border-2 border-white/15 text-white font-semibold hover:bg-white/5 transition w-full sm:w-auto">

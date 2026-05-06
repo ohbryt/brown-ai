@@ -1101,10 +1101,10 @@ export function App() {
                     <div>
                       <h5 className="font-semibold text-sm text-violet-800 mb-2">Partner discovery stack</h5>
                       <div className="space-y-2 text-xs text-text-secondary leading-relaxed">
-                        <p><span className="font-mono text-violet-600">01</span> Target → affinity model → ranked shortlist</p>
-                        <p><span className="font-mono text-violet-600">02</span> De novo design → optimization → hit expansion</p>
-                        <p><span className="font-mono text-violet-600">03</span> XAI + causal checks for explainable delivery</p>
-                        <p><span className="font-mono text-violet-600">04</span> Multi-omics + regulatory pack for partner handoff</p>
+                        <p><span className="font-mono text-violet-600">01</span> Target → affinity shortlist</p>
+                        <p><span className="font-mono text-violet-600">02</span> De novo design → optimization → expansion</p>
+                        <p><span className="font-mono text-violet-600">03</span> Explainability + causal validation</p>
+                        <p><span className="font-mono text-violet-600">04</span> Multi-omics → regulatory handoff</p>
                       </div>
                     </div>
                     <div className="bg-white rounded-xl p-5 border border-violet-100">
@@ -1163,7 +1163,7 @@ export function App() {
                   Target discovery, affinity modeling, and partner-ready translation.
                 </p>
                 <button onClick={() => openWaitlist("discovery")} className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-violet-500 to-purple-600 text-white font-semibold shadow-lg shadow-violet-500/15 hover:shadow-xl hover:shadow-violet-500/25 transition text-sm">
-                  Contact Us <ArrowRight size={14} />
+                  Request Partner Brief <ArrowRight size={14} />
                 </button>
               </div>
             </div>

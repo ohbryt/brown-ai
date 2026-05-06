@@ -958,7 +958,7 @@ export function App() {
                     <span className="section-badge bg-white text-violet-700 border border-violet-200 mb-4">Service Lane</span>
                     <h4 className="heading-serif text-3xl mb-3">AI Automation Service</h4>
                     <p className="text-text-secondary mb-5 max-w-2xl mx-auto">
-                      We build AI automation systems that remove repetitive workflows, connect your tools, and deliver a clear handoff your team can keep using.
+                      We design tailored AI automation systems that eliminate repetitive work, connect your tools, and leave your team with a reliable handoff.
                     </p>
                     <div className="flex flex-wrap justify-center gap-3 text-xs text-violet-700 font-medium">
                       <span className="px-3 py-1.5 rounded-full bg-white border border-violet-100">Discovery calls</span>

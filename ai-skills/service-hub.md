@@ -19,6 +19,12 @@ Return:
 4. primary CTA for each lane
 5. a short routing paragraph
 
+## Suggested lane copy
+- **peptide-service** — Primary lane for peptide projects, quotes, and consults. CTA: Request a Brief
+- **biostatx** — Decision-ready statistics and reporting. CTA: Request a Brief
+- **genox-site** — Discovery scoping and partner fit. CTA: Request a Brief
+- **Routing line:** Three lanes. One intake. Primary lane first. Human review always.
+
 ## Rules
 - Use three lanes max.
 - Make one lane feel primary if needed.

@@ -21,6 +21,12 @@ Return:
 5. one paragraph of supporting proof or process
 6. a short implementation note for the designer/dev
 
+## Suggested copy
+- **Hero headline:** Biotech services, scoped with precision.
+- **Subheadline:** 브라운 바이오텍 주식회사는 peptide-service를 중심으로, biostatistics와 discovery scoping을 하나의 intake 흐름으로 정리합니다.
+- **Service snapshot:** Three lanes. One intake. Primary lane first. Human review always.
+- **Proof/process line:** Research support only. High-stakes decisions stay human-reviewed.
+
 ## Rules
 - Keep the hero short.
 - Show only one primary CTA.

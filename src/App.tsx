@@ -367,9 +367,9 @@ function ProductDetailPanel({ product, isOpen }: { product: ProductInfo | null; 
    ═══════════════════════════════════════════ */
 function HeroIllustration() {
   const lanes = [
-    { n: "01", title: "peptide-service", desc: "Peptide projects, quotes, consults.", accent: "from-[#ffd88a] to-[#d88a2c]" },
-    { n: "02", title: "biostatx", desc: "Biostatistics and decision-ready reporting.", accent: "from-white/25 to-white/10" },
-    { n: "03", title: "genox-site", desc: "Discovery and partner scoping.", accent: "from-white/25 to-white/10" },
+    { n: "01", title: "peptide-service", desc: "Primary lane for peptide projects, quotes, and consults.", accent: "from-[#ffd88a] to-[#d88a2c]" },
+    { n: "02", title: "biostatx", desc: "Decision-ready statistics and reporting.", accent: "from-white/25 to-white/10" },
+    { n: "03", title: "genox-site", desc: "Discovery scoping and partner fit.", accent: "from-white/25 to-white/10" },
   ];
 
   return (
@@ -378,8 +378,8 @@ function HeroIllustration() {
       <div className="relative flex items-start justify-between gap-4 border-b border-white/10 pb-4">
         <div>
           <p className="text-[10px] uppercase tracking-[0.28em] text-[#ffd88a]/82">Service snapshot</p>
-          <p className="mt-1 text-lg font-semibold text-white leading-tight">Three lanes. One clear route.</p>
-          <p className="mt-1 text-sm text-white/70">Concise, scoped, human-reviewed.</p>
+          <p className="mt-1 text-lg font-semibold text-white leading-tight">Three lanes. One intake.</p>
+          <p className="mt-1 text-sm text-white/70">Primary lane first. Human review always.</p>
         </div>
         <span className="shrink-0 rounded-full border border-[#ffd88a]/18 bg-white/5 px-2.5 py-1 text-[11px] font-semibold text-[#ffe0a3] shadow-sm shadow-black/20">Human review</span>
       </div>
@@ -422,7 +422,7 @@ function HeroIllustration() {
 
       <div className="relative mt-4 flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.035] px-3 py-2 text-xs text-white/75">
         <Check size={12} className="text-[#ffd88a]" />
-        Research support only. High-stakes decisions still get human review.
+        Research support only. High-stakes decisions stay human-reviewed.
       </div>
     </div>
   );
@@ -469,7 +469,7 @@ function WaitlistModal({ open, onClose, plan }: { open: boolean; onClose: () => 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
-  const [serviceLane, setServiceLane] = useState(plan === "ai-automation-service" ? "ai-automation-service" : plan === "discovery" ? "business-pipeline" : "business-pipeline");
+  const [serviceLane, setServiceLane] = useState(plan === "discovery" ? "genox-site" : "peptide-service");
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -478,17 +478,17 @@ function WaitlistModal({ open, onClose, plan }: { open: boolean; onClose: () => 
 
   const modalTitle =
     plan === "discovery"
-      ? "파트너십 문의"
-      : plan === "ai-automation-service"
-        ? "AI Automation Service — Request a Brief"
+      ? "Partner Inquiry — Request a Brief"
+      : plan === "peptide-service"
+        ? "Peptide Service — Request a Brief"
         : `${plan} — Request a Brief`;
 
   const modalCopy =
     plan === "discovery"
-      ? "Drug Discovery 파이프라인에 관심이 있으시면 아래 정보를 남겨주세요."
-      : plan === "ai-automation-service"
-        ? "반복 업무를 줄이고 싶은 팀이라면, 이 짧은 브리프 폼으로 바로 intake에 들어갑니다."
-        : "아래 정보를 남겨주시면 필요한 다음 단계를 바로 정리하겠습니다.";
+      ? "Discovery and partner-fit requests go here. Tell us what you are exploring and we will route the next step."
+      : plan === "peptide-service"
+        ? "Peptide projects, quotes, and consults start here. Keep it short and we will scope the next step."
+        : "Tell us what you want to remove, automate, or scope first.";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -572,11 +572,10 @@ function WaitlistModal({ open, onClose, plan }: { open: boolean; onClose: () => 
                 onChange={(e) => setServiceLane(e.target.value)}
                 className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-text-primary text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition"
               >
-                <option value="ai-automation-service">AI Automation Service</option>
-                <option value="business-pipeline">Business Pipeline</option>
-                <option value="genox-site">Genox Site</option>
-                <option value="biostatx">BioStatX</option>
                 <option value="peptide-service">Peptide Service</option>
+                <option value="biostatx">BioStatX</option>
+                <option value="genox-site">Genox Site</option>
+                <option value="general">General / Other</option>
               </select>
               <textarea
                 rows={4}
@@ -641,7 +640,7 @@ export function App() {
             <a href="#team" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Team</a>
             <a href="#pricing" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Pricing</a>
           </div>
-          <button onClick={() => openWaitlist("ai-automation-service")} className="hidden sm:inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-brand to-accent text-white text-sm font-semibold shadow-sm shadow-brand/10 hover:shadow-md hover:shadow-brand/20 transition">
+          <button onClick={() => openWaitlist("peptide-service")} className="hidden sm:inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-brand to-accent text-white text-sm font-semibold shadow-sm shadow-brand/10 hover:shadow-md hover:shadow-brand/20 transition">
             Get Started
           </button>
         </div>
@@ -657,27 +656,27 @@ export function App() {
           {/* Left: Text */}
           <div className="text-white max-w-xl">
             <div className="section-badge bg-white/10 text-white border border-white/10 mb-6 sm:mb-8">
-              <Sparkles size={12} /> Clinical oversight · AI assisted
+              <Sparkles size={12} /> Decision-ready biotech · Human review
             </div>
 
             <h1 className="heading-serif text-[3rem] sm:text-6xl lg:text-7xl leading-[0.98] tracking-tight mb-4 sm:mb-6">
               <span className="bg-gradient-to-r from-[#ffd88a] via-[#f0b45f] to-[#b86c1b] bg-clip-text text-transparent">
-                Live Longer.
+                Biotech services,
               </span>
               <br />
-              <span className="text-white">Age Smarter.</span>
+              <span className="text-white">scoped with precision.</span>
             </h1>
 
             <p className="text-base sm:text-lg text-white/72 max-w-lg mb-6 sm:mb-8 leading-relaxed">
-              내분비 전문성과 AI 자동화를 결합해 노화·대사·인프라를 하나의 흐름으로 정리합니다.
+              브라운 바이오텍 주식회사는 peptide-service를 중심으로, biostatistics와 discovery scoping을 하나의 intake 흐름으로 정리합니다.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <button onClick={() => openWaitlist("ai-automation-service")} className="group inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-full bg-gradient-to-r from-brand to-accent text-white font-semibold shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-black/30 transition-all w-full sm:w-auto">
+              <button onClick={() => openWaitlist("peptide-service")} className="group inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-full bg-gradient-to-r from-brand to-accent text-white font-semibold shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-black/30 transition-all w-full sm:w-auto">
                 Request a Brief <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </button>
               <a href="#bu-section" className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-full border-2 border-white/15 text-white font-semibold hover:bg-white/5 transition w-full sm:w-auto">
-                Explore Services
+                View Service Hub
               </a>
             </div>
           </div>
@@ -695,16 +694,16 @@ export function App() {
             <div className="relative flex items-start justify-between gap-4 border-b border-white/10 pb-4">
               <div>
                 <p className="text-[10px] uppercase tracking-[0.28em] text-[#ffd88a]/82">Service snapshot</p>
-                <p className="mt-1 text-base sm:text-lg font-semibold text-white leading-tight">Three lanes. One clear route.</p>
-                <p className="mt-1 text-xs sm:text-sm text-white/70">Concise, scoped, human-reviewed.</p>
+                <p className="mt-1 text-base sm:text-lg font-semibold text-white leading-tight">Three lanes. One intake.</p>
+                <p className="mt-1 text-xs sm:text-sm text-white/70">Primary lane first. Human review always.</p>
               </div>
               <a href="#bu-section" className="shrink-0 rounded-full border border-[#ffd88a]/18 bg-white/5 px-3 py-1.5 text-xs font-semibold text-[#ffe0a3] shadow-sm shadow-black/20 transition hover:bg-white/10">View details</a>
             </div>
             <div className="relative grid gap-3 mt-4">
               {[
-                ["peptide-service", "Peptide projects, quotes, consults.", "Primary lane"],
-                ["biostatx", "Biostatistics and decision-ready reporting.", "Analysis"],
-                ["genox-site", "Discovery and partner scoping.", "Scope"],
+                ["peptide-service", "Primary lane for peptide projects, quotes, and consults.", "Primary lane"],
+                ["biostatx", "Decision-ready statistics and reporting.", "Analysis"],
+                ["genox-site", "Discovery scoping and partner fit.", "Scope"],
               ].map(([lane, desc, tag], idx) => (
                 <div key={lane} className={`rounded-2xl border p-3.5 ${idx === 0 ? "border-[#ffd88a]/24 bg-[#fff1cf]/8 shadow-[0_0_0_1px_rgba(255,216,138,0.05)]" : "border-white/10 bg-white/[0.035]"} backdrop-blur-sm`}>
                   <div className="flex items-start justify-between gap-3">
@@ -734,7 +733,7 @@ export function App() {
             </div>
             <div className="relative mt-4 flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.035] px-3 py-2 text-xs text-white/75">
               <Check size={12} className="text-[#ffd88a]" />
-              Research support only. High-stakes decisions still get human review.
+              Research support only. High-stakes decisions stay human-reviewed.
             </div>
           </div>
         </div>

@@ -366,93 +366,63 @@ function ProductDetailPanel({ product, isOpen }: { product: ProductInfo | null; 
    SVG HERO ILLUSTRATION
    ═══════════════════════════════════════════ */
 function HeroIllustration() {
+  const lanes = [
+    { n: "01", title: "peptide-service", desc: "Peptide projects, quotes, consults.", accent: "from-[#ffd88a] to-[#d88a2c]" },
+    { n: "02", title: "biostatx", desc: "Biostatistics and decision-ready reporting.", accent: "from-white/25 to-white/10" },
+    { n: "03", title: "genox-site", desc: "Discovery and partner scoping.", accent: "from-white/25 to-white/10" },
+  ];
+
   return (
-    <div className="relative w-full max-w-md mx-auto animate-float-slow">
-      <svg viewBox="0 0 500 500" fill="none" className="w-full h-auto drop-shadow-xl">
-        {/* Outer rings */}
-        <circle cx="250" cy="250" r="230" stroke="url(#ring1)" strokeWidth="1" opacity="0.2" />
-        <circle cx="250" cy="250" r="195" stroke="url(#ring1)" strokeWidth="0.5" opacity="0.1" strokeDasharray="6 4" />
+    <div className="relative w-full max-w-md mx-auto animate-float-slow rounded-[2rem] border border-[#ffd88a]/24 bg-gradient-to-br from-[#21141a] via-[#130f16] to-[#0a0a0f] p-4 sm:p-5 shadow-2xl shadow-black/35 ring-1 ring-white/6">
+      <div className="flex items-start justify-between gap-4 border-b border-white/10 pb-4">
+        <div>
+          <p className="text-[10px] uppercase tracking-[0.24em] text-[#ffd88a]/80">Service snapshot</p>
+          <p className="mt-1 text-lg font-semibold text-white leading-tight">Three lanes. One clear route.</p>
+          <p className="mt-1 text-sm text-white/72">Readable at a glance. Built for handoff.</p>
+        </div>
+        <span className="shrink-0 rounded-full border border-[#ffd88a]/18 bg-white/5 px-2.5 py-1 text-[11px] font-semibold text-[#ffe0a3]">Human review</span>
+      </div>
 
-        {/* DNA Helix curves */}
-        <path d="M170,100 Q250,180 330,100" stroke="#D4A373" strokeWidth="2" opacity="0.3" fill="none" />
-        <path d="M170,100 Q250,20 330,100" stroke="#D97706" strokeWidth="2" opacity="0.3" fill="none" />
-        <path d="M170,190 Q250,270 330,190" stroke="#D4A373" strokeWidth="1.5" opacity="0.2" fill="none" />
-        <path d="M170,190 Q250,110 330,190" stroke="#D97706" strokeWidth="1.5" opacity="0.2" fill="none" />
-        <path d="M170,280 Q250,360 330,280" stroke="#D4A373" strokeWidth="1.5" opacity="0.15" fill="none" />
-        <path d="M170,280 Q250,200 330,280" stroke="#D97706" strokeWidth="1.5" opacity="0.15" fill="none" />
-
-        {/* Helix rungs */}
-        {[130, 160, 220, 250].map((y, i) => (
-          <line key={i} x1={195} y1={y} x2={305} y2={y} stroke="#D4A373" strokeWidth="0.8" opacity="0.12" />
+      <div className="mt-4 space-y-3">
+        {lanes.map((lane, idx) => (
+          <div
+            key={lane.title}
+            className={`rounded-2xl border p-3.5 ${idx === 0 ? "border-[#ffd88a]/22 bg-[#fff3d6]/8" : "border-white/10 bg-white/4"}`}
+          >
+            <div className="flex items-start gap-3">
+              <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${lane.accent} text-sm font-bold text-white shadow-md`}>
+                {lane.n}
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between gap-3">
+                  <h3 className="truncate text-sm sm:text-[15px] font-semibold text-white">{lane.title}</h3>
+                  {idx === 0 && <span className="rounded-full border border-[#ffd88a]/18 bg-[#ffd88a]/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#ffd88a]">Primary</span>}
+                </div>
+                <p className="mt-1 text-sm text-white/84 leading-snug">{lane.desc}</p>
+              </div>
+              <ArrowRight size={15} className="mt-1 shrink-0 text-[#ffd88a]" />
+            </div>
+          </div>
         ))}
+      </div>
 
-        {/* Connection lines */}
-        <line x1="250" y1="250" x2="120" y2="170" stroke="#D4A373" strokeWidth="1.2" opacity="0.15" />
-        <line x1="250" y1="250" x2="380" y2="170" stroke="#8B5CF6" strokeWidth="1.2" opacity="0.15" />
-        <line x1="250" y1="250" x2="120" y2="340" stroke="#D97706" strokeWidth="1" opacity="0.12" />
-        <line x1="250" y1="250" x2="380" y2="340" stroke="#A78BFA" strokeWidth="1" opacity="0.12" />
-        <line x1="250" y1="250" x2="250" y2="100" stroke="#92400E" strokeWidth="1" opacity="0.15" />
-        <line x1="250" y1="250" x2="250" y2="400" stroke="#92400E" strokeWidth="1" opacity="0.1" />
+      <div className="mt-4 grid grid-cols-3 gap-2">
+        {[
+          ["Response", "24h"],
+          ["Focus", "Scope"],
+          ["Output", "Handoff"],
+        ].map(([label, value]) => (
+          <div key={label} className="rounded-xl border border-white/10 bg-black/25 px-3 py-2 text-center">
+            <div className="text-[9px] uppercase tracking-[0.2em] text-white/50">{label}</div>
+            <div className="mt-0.5 text-sm font-semibold text-white">{value}</div>
+          </div>
+        ))}
+      </div>
 
-        {/* Health nodes (warm) */}
-        <circle cx="120" cy="170" r="30" fill="url(#amber-grad)" opacity="0.9" />
-        <circle cx="120" cy="340" r="22" fill="url(#caramel-grad)" opacity="0.8" />
-        <circle cx="185" cy="420" r="16" fill="url(#amber-grad)" opacity="0.5" />
-
-        {/* Discovery nodes (cool) */}
-        <circle cx="380" cy="170" r="26" fill="url(#violet-grad)" opacity="0.85" />
-        <circle cx="380" cy="340" r="20" fill="url(#violet-grad)" opacity="0.75" />
-        <circle cx="315" cy="420" r="14" fill="url(#violet-light)" opacity="0.5" />
-
-        {/* Center hub */}
-        <circle cx="250" cy="250" r="44" fill="url(#brand-grad)" />
-        <circle cx="250" cy="250" r="54" stroke="url(#brand-grad)" strokeWidth="1" opacity="0.15" fill="none" />
-
-        {/* Top + bottom nodes */}
-        <circle cx="250" cy="100" r="18" fill="url(#amber-grad)" opacity="0.7" />
-        <circle cx="250" cy="400" r="16" fill="url(#violet-light)" opacity="0.6" />
-
-        {/* Tiny icons inside main nodes */}
-        <text x="120" y="176" textAnchor="middle" fill="white" fontSize="22">&#9829;</text>
-        <text x="380" y="176" textAnchor="middle" fill="white" fontSize="18">&#9883;</text>
-        <text x="250" y="257" textAnchor="middle" fill="white" fontSize="24" fontWeight="bold">&#9854;</text>
-
-        {/* Floating particles */}
-        <circle cx="80" cy="250" r="5" fill="#D97706" opacity="0.25" className="animate-pulse-soft" />
-        <circle cx="420" cy="250" r="4" fill="#8B5CF6" opacity="0.25" className="animate-pulse-soft" />
-        <circle cx="160" cy="80" r="6" fill="#D4A373" opacity="0.2" />
-        <circle cx="340" cy="430" r="5" fill="#A78BFA" opacity="0.2" />
-        <circle cx="60" cy="380" r="3" fill="#F59E0B" opacity="0.15" />
-        <circle cx="440" cy="120" r="3" fill="#7C3AED" opacity="0.15" />
-
-        {/* Gradients */}
-        <defs>
-          <linearGradient id="ring1" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#D4A373" />
-            <stop offset="100%" stopColor="#8B5CF6" />
-          </linearGradient>
-          <linearGradient id="amber-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#F59E0B" />
-            <stop offset="100%" stopColor="#D97706" />
-          </linearGradient>
-          <linearGradient id="caramel-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#D97706" />
-            <stop offset="100%" stopColor="#B45309" />
-          </linearGradient>
-          <linearGradient id="violet-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#A78BFA" />
-            <stop offset="100%" stopColor="#7C3AED" />
-          </linearGradient>
-          <linearGradient id="violet-light" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#C4B5FD" />
-            <stop offset="100%" stopColor="#A78BFA" />
-          </linearGradient>
-          <linearGradient id="brand-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#D4A373" />
-            <stop offset="100%" stopColor="#92400E" />
-          </linearGradient>
-        </defs>
-      </svg>
+      <div className="mt-4 flex items-center gap-2 rounded-xl border border-white/10 bg-white/4 px-3 py-2 text-xs text-white/78">
+        <Check size={12} className="text-[#ffd88a]" />
+        Research support only. High-stakes decisions still get human review.
+      </div>
     </div>
   );
 }
@@ -719,28 +689,50 @@ export function App() {
 
         {/* Mobile-first service snapshot */}
         <div className="max-w-5xl mx-auto px-5 sm:px-6 mt-10 sm:mt-20 relative z-10 lg:hidden">
-          <div className="rounded-3xl border border-white/10 bg-white/6 backdrop-blur-xl p-4 sm:p-5 shadow-xl shadow-black/15">
-            <div className="flex items-center justify-between gap-4 mb-4">
+          <div className="rounded-3xl border border-[#ffd88a]/28 bg-gradient-to-br from-[#25151c] via-[#17131a] to-[#0d0c11] p-4 sm:p-5 shadow-2xl shadow-black/35 ring-1 ring-white/6">
+            <div className="flex items-start justify-between gap-4 mb-4">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.22em] text-white/45">Service snapshot</p>
-                <p className="text-sm font-semibold text-white">Three lanes. One route.</p>
+                <p className="text-[10px] uppercase tracking-[0.24em] text-[#ffd88a]/80">Service snapshot</p>
+                <p className="text-base sm:text-lg font-semibold text-white leading-tight">Three lanes. One clear route.</p>
+                <p className="text-xs sm:text-sm text-white/72 mt-1.5">Choose a lane, scope fast, hand off cleanly.</p>
               </div>
-              <a href="#bu-section" className="text-xs font-semibold text-[#ffd88a] hover:text-[#ffe7b0] transition">View details</a>
+              <a href="#bu-section" className="shrink-0 text-xs font-semibold px-2.5 py-1.5 rounded-full border border-[#ffd88a]/20 bg-white/5 text-[#ffe0a3] hover:bg-white/10 transition">View details</a>
             </div>
             <div className="grid gap-3">
               {[
-                ["peptide-service", "Peptides, quotes, consults."],
-                ["biostatx", "Biostatistics and decision-ready reporting."],
-                ["genox-site", "Discovery and partner scoping."],
-              ].map(([lane, desc]) => (
-                <div key={lane} className="flex items-center justify-between gap-3 rounded-2xl border border-white/8 bg-black/20 px-4 py-3">
-                  <div>
-                    <div className="text-sm font-semibold text-white">{lane}</div>
-                    <div className="text-xs text-white/58">{desc}</div>
+                ["peptide-service", "Peptide projects, quotes, consults.", "Primary lane"],
+                ["biostatx", "Biostatistics and decision-ready reporting.", "Analysis"],
+                ["genox-site", "Discovery and partner scoping.", "Scope"],
+              ].map(([lane, desc, tag], idx) => (
+                <div key={lane} className={`rounded-2xl border ${idx === 0 ? "border-[#ffd88a]/24 bg-[#fff7e6]/8" : "border-white/12 bg-white/6"} px-4 py-3.5 backdrop-blur-sm`}>
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0 flex-1 border-l-2 border-[#ffd88a]/35 pl-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className="text-[15px] font-semibold tracking-tight text-white leading-none">{lane}</div>
+                        {idx === 0 && <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#ffd88a]/12 text-[#ffd88a] border border-[#ffd88a]/16">{tag}</span>}
+                      </div>
+                      <div className="text-sm text-white/84 leading-snug">{desc}</div>
+                    </div>
+                    <ArrowRight size={15} className="text-[#ffd88a] shrink-0 mt-0.5" />
                   </div>
-                  <ArrowRight size={14} className="text-white/50 shrink-0" />
                 </div>
               ))}
+            </div>
+            <div className="mt-4 grid grid-cols-3 gap-2">
+              {[
+                ["Response", "24h"],
+                ["Focus", "Scope"],
+                ["Output", "Handoff"],
+              ].map(([label, value]) => (
+                <div key={label} className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-center">
+                  <div className="text-[9px] uppercase tracking-[0.2em] text-white/45">{label}</div>
+                  <div className="text-sm font-semibold text-white mt-0.5">{value}</div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-4 flex items-center gap-2 text-xs text-white/75">
+              <Check size={12} className="text-[#ffd88a]" />
+              Research support only. High-stakes decisions still get human review.
             </div>
           </div>
         </div>

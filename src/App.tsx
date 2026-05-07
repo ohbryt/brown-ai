@@ -373,32 +373,33 @@ function HeroIllustration() {
   ];
 
   return (
-    <div className="relative w-full max-w-md mx-auto animate-float-slow rounded-[2rem] border border-[#ffd88a]/24 bg-gradient-to-br from-[#21141a] via-[#130f16] to-[#0a0a0f] p-4 sm:p-5 shadow-2xl shadow-black/35 ring-1 ring-white/6">
-      <div className="flex items-start justify-between gap-4 border-b border-white/10 pb-4">
+    <div className="relative w-full max-w-md mx-auto animate-float-slow overflow-hidden rounded-[2rem] border border-[#ffd88a]/22 bg-gradient-to-br from-[#1c1117] via-[#120f14] to-[#09090d] p-4 sm:p-5 shadow-[0_28px_80px_rgba(0,0,0,0.38)] ring-1 ring-white/5">
+      <div className="pointer-events-none absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_top_right,rgba(255,216,138,0.12),transparent_38%),radial-gradient(circle_at_bottom_left,rgba(139,92,246,0.08),transparent_32%)]" />
+      <div className="relative flex items-start justify-between gap-4 border-b border-white/10 pb-4">
         <div>
-          <p className="text-[10px] uppercase tracking-[0.24em] text-[#ffd88a]/80">Service snapshot</p>
+          <p className="text-[10px] uppercase tracking-[0.28em] text-[#ffd88a]/82">Service snapshot</p>
           <p className="mt-1 text-lg font-semibold text-white leading-tight">Three lanes. One clear route.</p>
-          <p className="mt-1 text-sm text-white/72">Readable at a glance. Built for handoff.</p>
+          <p className="mt-1 text-sm text-white/70">Concise, scoped, human-reviewed.</p>
         </div>
-        <span className="shrink-0 rounded-full border border-[#ffd88a]/18 bg-white/5 px-2.5 py-1 text-[11px] font-semibold text-[#ffe0a3]">Human review</span>
+        <span className="shrink-0 rounded-full border border-[#ffd88a]/18 bg-white/5 px-2.5 py-1 text-[11px] font-semibold text-[#ffe0a3] shadow-sm shadow-black/20">Human review</span>
       </div>
 
-      <div className="mt-4 space-y-3">
+      <div className="relative mt-4 space-y-3">
         {lanes.map((lane, idx) => (
           <div
             key={lane.title}
-            className={`rounded-2xl border p-3.5 ${idx === 0 ? "border-[#ffd88a]/22 bg-[#fff3d6]/8" : "border-white/10 bg-white/4"}`}
+            className={`rounded-2xl border p-3.5 backdrop-blur-sm ${idx === 0 ? "border-[#ffd88a]/24 bg-[#fff1cf]/8 shadow-[0_0_0_1px_rgba(255,216,138,0.05)]" : "border-white/10 bg-white/[0.035]"}`}
           >
             <div className="flex items-start gap-3">
-              <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${lane.accent} text-sm font-bold text-white shadow-md`}>
+              <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${lane.accent} text-sm font-bold text-white shadow-md shadow-black/20 ring-1 ring-white/10`}>
                 {lane.n}
               </div>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center justify-between gap-3">
-                  <h3 className="truncate text-sm sm:text-[15px] font-semibold text-white">{lane.title}</h3>
-                  {idx === 0 && <span className="rounded-full border border-[#ffd88a]/18 bg-[#ffd88a]/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#ffd88a]">Primary</span>}
+                  <h3 className="truncate text-[15px] font-semibold tracking-tight text-white">{lane.title}</h3>
+                  {idx === 0 && <span className="rounded-full border border-[#ffd88a]/18 bg-[#ffd88a]/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-[#ffd88a]">Primary</span>}
                 </div>
-                <p className="mt-1 text-sm text-white/84 leading-snug">{lane.desc}</p>
+                <p className="mt-1 text-[13px] leading-snug text-white/80">{lane.desc}</p>
               </div>
               <ArrowRight size={15} className="mt-1 shrink-0 text-[#ffd88a]" />
             </div>
@@ -406,20 +407,20 @@ function HeroIllustration() {
         ))}
       </div>
 
-      <div className="mt-4 grid grid-cols-3 gap-2">
+      <div className="relative mt-4 grid grid-cols-3 gap-2">
         {[
           ["Response", "24h"],
           ["Focus", "Scope"],
           ["Output", "Handoff"],
         ].map(([label, value]) => (
-          <div key={label} className="rounded-xl border border-white/10 bg-black/25 px-3 py-2 text-center">
-            <div className="text-[9px] uppercase tracking-[0.2em] text-white/50">{label}</div>
+          <div key={label} className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-center shadow-inner shadow-black/10">
+            <div className="text-[9px] uppercase tracking-[0.2em] text-white/46">{label}</div>
             <div className="mt-0.5 text-sm font-semibold text-white">{value}</div>
           </div>
         ))}
       </div>
 
-      <div className="mt-4 flex items-center gap-2 rounded-xl border border-white/10 bg-white/4 px-3 py-2 text-xs text-white/78">
+      <div className="relative mt-4 flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.035] px-3 py-2 text-xs text-white/75">
         <Check size={12} className="text-[#ffd88a]" />
         Research support only. High-stakes decisions still get human review.
       </div>
@@ -689,48 +690,49 @@ export function App() {
 
         {/* Mobile-first service snapshot */}
         <div className="max-w-5xl mx-auto px-5 sm:px-6 mt-10 sm:mt-20 relative z-10 lg:hidden">
-          <div className="rounded-3xl border border-[#ffd88a]/28 bg-gradient-to-br from-[#25151c] via-[#17131a] to-[#0d0c11] p-4 sm:p-5 shadow-2xl shadow-black/35 ring-1 ring-white/6">
-            <div className="flex items-start justify-between gap-4 mb-4">
+          <div className="relative overflow-hidden rounded-[2rem] border border-[#ffd88a]/22 bg-gradient-to-br from-[#1c1117] via-[#120f14] to-[#09090d] p-4 sm:p-5 shadow-[0_24px_72px_rgba(0,0,0,0.34)] ring-1 ring-white/5">
+            <div className="pointer-events-none absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_top_right,rgba(255,216,138,0.12),transparent_40%),radial-gradient(circle_at_bottom_left,rgba(139,92,246,0.08),transparent_34%)]" />
+            <div className="relative flex items-start justify-between gap-4 border-b border-white/10 pb-4">
               <div>
-                <p className="text-[10px] uppercase tracking-[0.24em] text-[#ffd88a]/80">Service snapshot</p>
-                <p className="text-base sm:text-lg font-semibold text-white leading-tight">Three lanes. One clear route.</p>
-                <p className="text-xs sm:text-sm text-white/72 mt-1.5">Choose a lane, scope fast, hand off cleanly.</p>
+                <p className="text-[10px] uppercase tracking-[0.28em] text-[#ffd88a]/82">Service snapshot</p>
+                <p className="mt-1 text-base sm:text-lg font-semibold text-white leading-tight">Three lanes. One clear route.</p>
+                <p className="mt-1 text-xs sm:text-sm text-white/70">Concise, scoped, human-reviewed.</p>
               </div>
-              <a href="#bu-section" className="shrink-0 text-xs font-semibold px-2.5 py-1.5 rounded-full border border-[#ffd88a]/20 bg-white/5 text-[#ffe0a3] hover:bg-white/10 transition">View details</a>
+              <a href="#bu-section" className="shrink-0 rounded-full border border-[#ffd88a]/18 bg-white/5 px-3 py-1.5 text-xs font-semibold text-[#ffe0a3] shadow-sm shadow-black/20 transition hover:bg-white/10">View details</a>
             </div>
-            <div className="grid gap-3">
+            <div className="relative grid gap-3 mt-4">
               {[
                 ["peptide-service", "Peptide projects, quotes, consults.", "Primary lane"],
                 ["biostatx", "Biostatistics and decision-ready reporting.", "Analysis"],
                 ["genox-site", "Discovery and partner scoping.", "Scope"],
               ].map(([lane, desc, tag], idx) => (
-                <div key={lane} className={`rounded-2xl border ${idx === 0 ? "border-[#ffd88a]/24 bg-[#fff7e6]/8" : "border-white/12 bg-white/6"} px-4 py-3.5 backdrop-blur-sm`}>
+                <div key={lane} className={`rounded-2xl border p-3.5 ${idx === 0 ? "border-[#ffd88a]/24 bg-[#fff1cf]/8 shadow-[0_0_0_1px_rgba(255,216,138,0.05)]" : "border-white/10 bg-white/[0.035]"} backdrop-blur-sm`}>
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0 flex-1 border-l-2 border-[#ffd88a]/35 pl-3">
                       <div className="flex items-center gap-2 mb-1">
                         <div className="text-[15px] font-semibold tracking-tight text-white leading-none">{lane}</div>
                         {idx === 0 && <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#ffd88a]/12 text-[#ffd88a] border border-[#ffd88a]/16">{tag}</span>}
                       </div>
-                      <div className="text-sm text-white/84 leading-snug">{desc}</div>
+                      <div className="text-[13px] text-white/80 leading-snug">{desc}</div>
                     </div>
                     <ArrowRight size={15} className="text-[#ffd88a] shrink-0 mt-0.5" />
                   </div>
                 </div>
               ))}
             </div>
-            <div className="mt-4 grid grid-cols-3 gap-2">
+            <div className="relative mt-4 grid grid-cols-3 gap-2">
               {[
                 ["Response", "24h"],
                 ["Focus", "Scope"],
                 ["Output", "Handoff"],
               ].map(([label, value]) => (
-                <div key={label} className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-center">
-                  <div className="text-[9px] uppercase tracking-[0.2em] text-white/45">{label}</div>
+                <div key={label} className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-center shadow-inner shadow-black/10">
+                  <div className="text-[9px] uppercase tracking-[0.2em] text-white/46">{label}</div>
                   <div className="text-sm font-semibold text-white mt-0.5">{value}</div>
                 </div>
               ))}
             </div>
-            <div className="mt-4 flex items-center gap-2 text-xs text-white/75">
+            <div className="relative mt-4 flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.035] px-3 py-2 text-xs text-white/75">
               <Check size={12} className="text-[#ffd88a]" />
               Research support only. High-stakes decisions still get human review.
             </div>

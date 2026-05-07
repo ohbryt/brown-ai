@@ -634,11 +634,11 @@ export function App() {
               Paperclip
             </button>
             <span className="w-px h-4 bg-gray-200 mx-2" />
-            <a href="#ceo" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">CEO</a>
+            <a href="#ceo" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Founder / CEO</a>
             <a href="#research" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Research</a>
-            <a href="#products" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Products</a>
+            <a href="#products" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Services</a>
             <a href="#team" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Team</a>
-            <a href="#pricing" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Pricing</a>
+            <a href="#pricing" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Contact</a>
           </div>
           <button onClick={() => openWaitlist("peptide-service")} className="hidden sm:inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-brand to-accent text-white text-sm font-semibold shadow-sm shadow-brand/10 hover:shadow-md hover:shadow-brand/20 transition">
             Get Started
@@ -1424,10 +1424,10 @@ export function App() {
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-12">
             <span className="section-badge bg-amber-50 text-brand border border-amber-200 mb-4">
-              <Award size={12} /> Founder & CEO
+              <Award size={12} /> Founder / CEO
             </span>
             <h2 className="heading-serif text-4xl sm:text-5xl mb-3">Chang-Myung Oh, M.D., Ph.D.</h2>
-            <p className="text-text-secondary max-w-xl mx-auto">내분비학 전문의이자 대사·노화 연구자. 임상 의학과 AI를 융합하여 장수 과학의 새로운 패러다임을 만듭니다.</p>
+            <p className="text-text-secondary max-w-xl mx-auto">Endocrinology, metabolism, and AI-led company building — combining clinical judgment with decision-ready systems.</p>
           </div>
 
           <div className="grid lg:grid-cols-3 gap-8">
@@ -1716,7 +1716,7 @@ export function App() {
           </div>
 
           <p className="text-center text-sm text-text-muted mt-8">
-            Brown Biotech Discovery (B2B) 파트너십은 <a href="mailto:brownbio.ocm@gmail.com" className="text-violet-600 hover:underline font-medium">brownbio.ocm@gmail.com</a>으로 문의하세요.
+            Brown Biotech Discovery (B2B) partnerships: <a href="mailto:brownbio.ocm@gmail.com" className="text-violet-600 hover:underline font-medium">brownbio.ocm@gmail.com</a>
           </p>
         </div>
       </section>
@@ -1744,7 +1744,7 @@ export function App() {
             </div>
           </div>
           <p className="mt-4 text-center text-xs text-text-muted">
-            Founded by MD/PhD Endocrinologist · Aging & Metabolism · 16 AI Agents · 7 Products
+            Brown Biotech Inc. · decision-ready biotech services · peptide-service · biostatx · genox-site
           </p>
         </div>
       </footer>

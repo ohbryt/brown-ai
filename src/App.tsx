@@ -824,10 +824,10 @@ export function App() {
             <div className="space-y-20">
               {/* Tagline */}
               <div className="text-center">
-                <span className="section-badge bg-amber-50 text-amber-700 border border-amber-200 mb-4">For Individuals</span>
-                <h2 className="heading-serif text-4xl sm:text-5xl mb-4">AI Health Platform</h2>
+                <span className="section-badge bg-amber-50 text-amber-700 border border-amber-200 mb-4">Service Lane</span>
+                <h2 className="heading-serif text-4xl sm:text-5xl mb-4">Personal Health Intelligence</h2>
                 <p className="text-text-secondary max-w-lg mx-auto text-lg">
-                  혈액 검사, 바이오마커, 프로토콜을 한 흐름으로 정리해 더 빠른 결정을 돕습니다.
+                  혈액 검사, 바이오마커, 프로토콜을 한 흐름으로 정리해 decision confidence를 높입니다.
                 </p>
               </div>
 
@@ -849,13 +849,13 @@ export function App() {
 
               {/* How it works */}
               <div>
-                <h3 className="heading-serif text-3xl text-center mb-10">Process</h3>
+                <h3 className="heading-serif text-3xl text-center mb-10">Flow</h3>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                   {[
-                    { num: "1", title: "데이터 업로드", desc: "혈액 검사, 웨어러블 데이터, 건강 기록", icon: Database },
-                    { num: "2", title: "AI 분석", desc: "6개 전문 에이전트가 동시 분석", icon: Brain },
-                    { num: "3", title: "프로토콜 생성", desc: "영양/운동/수면 맞춤 프로토콜", icon: Sparkles },
-                    { num: "4", title: "추적 & 최적화", desc: "FitFlow 연동, AI 지속 최적화", icon: Activity },
+                    { num: "1", title: "Intake", desc: "혈액 검사, 웨어러블 데이터, 건강 기록", icon: Database },
+                    { num: "2", title: "Review", desc: "6개 전문 에이전트가 동시 분석", icon: Brain },
+                    { num: "3", title: "Plan", desc: "영양/운동/수면 맞춤 프로토콜", icon: Sparkles },
+                    { num: "4", title: "Track", desc: "FitFlow 연동, AI 지속 최적화", icon: Activity },
                   ].map((item) => {
                     const Icon = item.icon;
                     return (
@@ -874,8 +874,8 @@ export function App() {
 
               {/* Health App Showcase */}
               <div>
-                <h3 className="heading-serif text-3xl text-center mb-4">Health App Preview</h3>
-                <p className="text-sm text-text-muted text-center mb-10">혈액검사 업로드부터 맞춤 프로토콜까지 — 실제 앱 화면을 확인하세요</p>
+                <h3 className="heading-serif text-3xl text-center mb-4">Service Flow Preview</h3>
+                <p className="text-sm text-text-muted text-center mb-10">브리프부터 추적까지 — 실제 화면 흐름을 확인하세요</p>
 
                 <div className="grid lg:grid-cols-2 gap-8">
                   {/* App Mockup — Phone Frame */}
@@ -1011,8 +1011,8 @@ export function App() {
 
               {/* Health Agents */}
               <div>
-                <h3 className="heading-serif text-3xl text-center mb-2">Health AI Team</h3>
-                <p className="text-sm text-text-muted text-center mb-8">6 Specialized Agents · Click to expand</p>
+                <h3 className="heading-serif text-3xl text-center mb-2">Health Review Team</h3>
+                <p className="text-sm text-text-muted text-center mb-8">6 specialists · Click to expand</p>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {healthAgents.map((a) => <AgentCard key={a.slug} agent={a} accentColor="from-amber-400 to-amber-600" />)}
                 </div>
@@ -1020,19 +1020,19 @@ export function App() {
 
               {/* Products — Expandable Cards */}
               <div id="products">
-                <h3 className="heading-serif text-3xl text-center mb-2">Product Suite</h3>
-                <p className="text-sm text-text-muted text-center mb-8">각 제품의 핵심만 빠르게 확인하세요</p>
+                <h3 className="heading-serif text-3xl text-center mb-2">Service Portfolio</h3>
+                <p className="text-sm text-text-muted text-center mb-8">각 lane의 역할만 빠르게 확인하세요</p>
                 <div className="mb-8 bg-gradient-to-br from-violet-50 to-fuchsia-50 border border-violet-100 rounded-3xl p-7 shadow-sm">
                   <div className="max-w-3xl mx-auto text-center">
-                    <span className="section-badge bg-white text-violet-700 border border-violet-200 mb-4">Service Lane</span>
-                    <h4 className="heading-serif text-3xl mb-3">AI Automation Service</h4>
+                    <span className="section-badge bg-white text-violet-700 border border-violet-200 mb-4">Primary Service Lane</span>
+                    <h4 className="heading-serif text-3xl mb-3">Peptide Service</h4>
                     <p className="text-text-secondary mb-5 max-w-2xl mx-auto">
-                      We design tailored AI automation systems that eliminate repetitive work, connect your tools, and leave your team with a reliable handoff.
+                      Peptide projects, quotes, and consults start here. One brief, one scope, one human review gate.
                     </p>
                     <div className="flex flex-wrap justify-center gap-3 text-xs text-violet-700 font-medium">
-                      <span className="px-3 py-1.5 rounded-full bg-white border border-violet-100">Discovery calls</span>
-                      <span className="px-3 py-1.5 rounded-full bg-white border border-violet-100">Claude Code prompts</span>
-                      <span className="px-3 py-1.5 rounded-full bg-white border border-violet-100">N8N / MCP delivery</span>
+                      <span className="px-3 py-1.5 rounded-full bg-white border border-violet-100">Request a Brief</span>
+                      <span className="px-3 py-1.5 rounded-full bg-white border border-violet-100">Scope Review</span>
+                      <span className="px-3 py-1.5 rounded-full bg-white border border-violet-100">Human review</span>
                     </div>
                   </div>
                 </div>
@@ -1071,15 +1071,15 @@ export function App() {
               {/* Tagline */}
               <div className="text-center">
                 <span className="section-badge bg-violet-50 text-violet-700 border border-violet-200 mb-4">For Pharma & Biotech</span>
-                <h2 className="heading-serif text-4xl sm:text-5xl mb-4">AI Drug Discovery Pipeline</h2>
+                <h2 className="heading-serif text-4xl sm:text-5xl mb-4">Discovery and Translational Planning</h2>
                 <p className="text-text-secondary max-w-lg mx-auto text-lg">
-                  노화/대사 분야에 특화된 AI 신약 발굴. 타겟 발굴부터 FDA 제출까지 AI가 가속합니다.
+                  노화/대사 타겟 발굴부터 번역 패키지 정리까지, decision-ready research로 묶습니다.
                 </p>
               </div>
 
               {/* Focus Areas */}
               <div>
-                <h3 className="heading-serif text-3xl text-center mb-8">Focus Areas</h3>
+                <h3 className="heading-serif text-3xl text-center mb-8">Key Questions</h3>
                 <div className="grid sm:grid-cols-3 gap-5">
                   {[
                     { title: "Aging Therapeutics", desc: "세노리틱스, mTOR 억제제, NAD+ 부스터, 텔로미어 유지", icon: Hourglass },
@@ -1398,10 +1398,10 @@ export function App() {
         <div className="max-w-5xl mx-auto px-6">
           <div className="text-center mb-12">
             <span className="section-badge bg-amber-50 text-brand border border-amber-200 mb-4">Platform</span>
-            <h2 className="heading-serif text-4xl mb-3">Shared Platform Team</h2>
+            <h2 className="heading-serif text-4xl mb-3">Core Operating Team</h2>
             <p className="text-text-secondary max-w-md mx-auto">
-              세 사업부를 지원하는 공통 인프라 팀.
-              HIPAA 준수 데이터 파이프라인, AI/ML 모델, 규제 컴플라이언스.
+              세 lane을 받쳐주는 공통 운영팀.
+              데이터, 실행, 규제, 그리고 human review를 연결합니다.
             </p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-3xl mx-auto">

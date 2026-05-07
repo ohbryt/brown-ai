@@ -2,10 +2,10 @@
 
 ## HQ
 **Brown Biotech HQ**
-One source of truth for service lanes, intake, decisions, and weekly review.
+Decision-ready source of truth for service lanes, intake, decisions, and weekly review.
 
 ## Operating principle
-One owner. One next step. One review gate.
+One owner. One next step. One human review gate.
 
 ## Core pages
 - **Team Roster** — roles, ownership, and coverage
@@ -20,7 +20,7 @@ One owner. One next step. One review gate.
 - **CTA:** Request a Brief
 
 ## Short operating paragraph
-Brown Biotech runs on a single intake path. Requests enter the HQ workflow, get routed to the right lane, and move forward with human review for any high-stakes decision.
+Brown Biotech HQ keeps the company aligned around a single intake path. Requests enter the HQ workflow, get routed to the right lane, and move forward with human review for any high-stakes decision.
 
 ## Reusable HQ intro
-Brown Biotech HQ keeps the company aligned: service lanes, lead routing, and weekly decisions in one place.
+Brown Biotech HQ is the operating center for service lanes, intake routing, and weekly decision-making.

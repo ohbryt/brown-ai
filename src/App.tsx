@@ -1626,17 +1626,17 @@ export function App() {
       <section id="pricing" className="py-24 bg-surface-raised">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-14">
-            <span className="section-badge bg-amber-50 text-amber-700 border border-amber-200 mb-4">Pricing</span>
-            <h2 className="heading-serif text-4xl mb-3">개인 건강 관리 플랜</h2>
-            <p className="text-text-secondary max-w-lg mx-auto">무료로 시작하여 AI 대사 건강 분석을 체험하세요. 업그레이드 시 6개 전문 AI 에이전트가 맞춤형 장수 프로토콜을 설계합니다.</p>
+            <span className="section-badge bg-amber-50 text-amber-700 border border-amber-200 mb-4">Service Access</span>
+            <h2 className="heading-serif text-4xl mb-3">Health Memberships</h2>
+            <p className="text-text-secondary max-w-lg mx-auto">Choose the level of review you need. Start light, move deeper when the signal matters, and keep human review in the loop for higher-stakes decisions.</p>
           </div>
 
           <div className="grid lg:grid-cols-3 gap-6">
             {healthPlans.map((p) => (
               <div key={p.name} className={`relative flex flex-col rounded-3xl p-7 border ${p.highlight ? "bg-gradient-to-b from-amber-50 to-white border-amber-200 shadow-lg shadow-amber-500/8 ring-1 ring-amber-200" : "bg-white border-gray-100 shadow-sm"}`}>
-                {p.highlight && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-amber-500 to-brand text-white text-[10px] font-bold shadow-sm">RECOMMENDED</div>
-                )}
+                {p.highlight ? (
+                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full bg-gradient-to-r from-amber-500 to-brand text-white text-[10px] font-bold shadow-sm">MOST USED</div>
+                ) : null}
                 <h3 className="text-lg font-bold mb-1">{p.name}</h3>
                 <p className="text-xs text-text-muted mb-4">{p.desc}</p>
                 <div className="mb-4">
@@ -1677,12 +1677,12 @@ export function App() {
 
           {/* Comparison highlights */}
           <div className="mt-14 bg-white border border-gray-100 rounded-3xl p-8 shadow-sm">
-            <h3 className="font-bold text-center mb-8">플랜 비교</h3>
+            <h3 className="font-bold text-center mb-8">Capability comparison</h3>
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-gray-100">
-                    <th className="text-left py-3 pr-4 text-text-muted font-medium text-xs">기능</th>
+                    <th className="text-left py-3 pr-4 text-text-muted font-medium text-xs">Capability</th>
                     <th className="text-center py-3 px-4 text-text-muted font-medium text-xs">Basic</th>
                     <th className="text-center py-3 px-4 font-medium text-xs text-amber-700">Pro</th>
                     <th className="text-center py-3 px-4 text-text-muted font-medium text-xs">Premium</th>

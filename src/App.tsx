@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { buildIntakePreview } from "./lib/intake";
 import {
   Activity,
   Apple,
@@ -49,6 +50,20 @@ import {
    THREE BUSINESS UNITS
    ═══════════════════════════════════════════ */
 type BU = "health" | "discovery" | "paperclip";
+
+type IntakeResponse = {
+  ok: boolean;
+  id?: string;
+  url?: string;
+  serviceLane?: string;
+  priority?: string;
+  route?: string;
+  owner?: string;
+  approvalNeeded?: boolean;
+  statusFlow?: Array<{ step: string; detail: string }>;
+  nextStep?: string;
+  telegram?: { sent: boolean; reason: string };
+};
 
 interface Agent {
   slug: string;
@@ -475,6 +490,7 @@ function WaitlistModal({ open, onClose, plan }: { open: boolean; onClose: () => 
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [result, setResult] = useState<IntakeResponse | null>(null);
   if (!open) return null;
 
   const modalTitle =
@@ -490,6 +506,32 @@ function WaitlistModal({ open, onClose, plan }: { open: boolean; onClose: () => 
       : plan === "peptide-service"
         ? "Peptide projects, quotes, and consults start here. Share the minimum context and we will scope the next step."
         : "Tell us what you want to remove, automate, or scope first.";
+
+  const preview = buildIntakePreview({
+    name,
+    email,
+    company,
+    message,
+    source: "website",
+    serviceLane,
+    priority,
+    plan,
+  });
+
+  const payloadPreview = {
+    name,
+    email,
+    company,
+    source: "website",
+    serviceLane: preview.serviceLane,
+    priority: preview.priority,
+    plan,
+    route: preview.route,
+    owner: preview.owner,
+    approvalNeeded: preview.approvalNeeded,
+  };
+
+  const statusFlow = result?.statusFlow ?? preview.statusFlow;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -511,10 +553,11 @@ function WaitlistModal({ open, onClose, plan }: { open: boolean; onClose: () => 
           plan,
         }),
       });
+      const body = (await response.json()) as IntakeResponse;
       if (!response.ok) {
-        const text = await response.text();
-        throw new Error(text || "Request failed");
+        throw new Error((body as { error?: string }).error || "Request failed");
       }
+      setResult(body);
       setSubmitted(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to submit request.");
@@ -526,16 +569,65 @@ function WaitlistModal({ open, onClose, plan }: { open: boolean; onClose: () => 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" onClick={onClose}>
       <div className="absolute inset-0 bg-black/30 backdrop-blur-sm" />
-      <div className="relative bg-white border border-gray-100 rounded-3xl p-8 w-full max-w-lg shadow-2xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+      <div className="relative bg-white border border-gray-100 rounded-3xl p-8 w-full max-w-2xl shadow-2xl max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
         <button onClick={onClose} className="absolute top-4 right-4 text-text-muted hover:text-text-primary transition"><X size={18} /></button>
         {submitted ? (
-          <div className="text-center py-6">
-            <div className="w-16 h-16 rounded-full bg-amber-50 flex items-center justify-center mx-auto mb-4">
-              <Check size={28} className="text-amber-600" />
+          <div className="py-4 sm:py-6">
+            <div className="flex items-center gap-4 mb-5">
+              <div className="w-16 h-16 rounded-full bg-amber-50 flex items-center justify-center shrink-0">
+                <Check size={28} className="text-amber-600" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold mb-1">Request received</h3>
+                <p className="text-sm text-text-secondary">{name}</p>
+                <p className="text-xs text-text-muted">Saved to Notion and routed for review.</p>
+              </div>
             </div>
-            <h3 className="text-xl font-bold mb-2">Request received</h3>
-            <p className="text-sm text-text-secondary mb-1">{name}</p>
-            <p className="text-xs text-text-muted">We’ve placed this into the Brown Biotech intake queue.</p>
+
+            <div className="grid gap-3 sm:grid-cols-3 mb-5 text-sm">
+              <div className="rounded-2xl border border-gray-100 bg-gray-50 p-4">
+                <p className="text-[10px] uppercase tracking-[0.28em] text-gray-500">Route</p>
+                <p className="mt-1 font-semibold text-gray-900">{result?.route ?? preview.route}</p>
+              </div>
+              <div className="rounded-2xl border border-gray-100 bg-gray-50 p-4">
+                <p className="text-[10px] uppercase tracking-[0.28em] text-gray-500">Owner</p>
+                <p className="mt-1 font-semibold text-gray-900">{result?.owner ?? preview.owner}</p>
+              </div>
+              <div className="rounded-2xl border border-gray-100 bg-gray-50 p-4">
+                <p className="text-[10px] uppercase tracking-[0.28em] text-gray-500">Notion</p>
+                <a href={result?.url || "#"} className="mt-1 block font-semibold text-violet-700 hover:underline break-all">
+                  {result?.id ? `Open record ${result.id.slice(0, 8)}` : "Record created"}
+                </a>
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-gray-100 bg-white p-4 mb-5">
+              <div className="flex items-center justify-between gap-3 mb-3">
+                <div>
+                  <p className="text-[10px] uppercase tracking-[0.28em] text-gray-500">Status flow</p>
+                  <p className="mt-1 text-sm font-semibold text-gray-900">What happens next</p>
+                </div>
+                <span className="text-[10px] rounded-full bg-emerald-50 px-2.5 py-1 font-medium text-emerald-700 border border-emerald-200">{result?.approvalNeeded ? "Human review" : "Standard review"}</span>
+              </div>
+              <div className="space-y-2">
+                {statusFlow.map((step, idx) => (
+                  <div key={step.step} className="flex items-start gap-3 rounded-xl bg-gray-50 px-3 py-2">
+                    <div className="mt-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-white border border-gray-200 text-[10px] font-semibold text-gray-500">{idx + 1}</div>
+                    <div>
+                      <p className="text-sm font-medium text-gray-900">{step.step}</p>
+                      <p className="text-xs text-gray-600">{step.detail}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {result?.nextStep && (
+              <div className="rounded-2xl border border-amber-100 bg-amber-50/70 p-4 text-sm text-amber-900">
+                <p className="text-[10px] uppercase tracking-[0.28em] text-amber-700">Next step</p>
+                <p className="mt-1 font-medium">{result.nextStep}</p>
+              </div>
+            )}
           </div>
         ) : (
           <>
@@ -595,6 +687,27 @@ function WaitlistModal({ open, onClose, plan }: { open: boolean; onClose: () => 
                 onChange={(e) => setMessage(e.target.value)}
                 className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-text-primary placeholder:text-text-muted text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition resize-none"
               />
+
+              <div className="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                <div className="flex items-center justify-between gap-3">
+                  <div>
+                    <p className="text-[10px] uppercase tracking-[0.28em] text-slate-500">Preview</p>
+                    <p className="mt-1 text-sm font-semibold text-slate-900">Live intake payload</p>
+                  </div>
+                  <span className="text-[10px] rounded-full bg-white px-2.5 py-1 font-medium text-slate-600 border border-slate-200">Notion-aligned</span>
+                </div>
+                <div className="mt-3 grid gap-2 text-xs text-slate-700 sm:grid-cols-2">
+                  <div className="rounded-xl bg-white px-3 py-2 border border-slate-200"><span className="text-slate-400">Lane</span><br /><span className="font-medium">{preview.serviceLane}</span></div>
+                  <div className="rounded-xl bg-white px-3 py-2 border border-slate-200"><span className="text-slate-400">Priority</span><br /><span className="font-medium">{preview.priority}</span></div>
+                  <div className="rounded-xl bg-white px-3 py-2 border border-slate-200"><span className="text-slate-400">Route</span><br /><span className="font-medium">{preview.route}</span></div>
+                  <div className="rounded-xl bg-white px-3 py-2 border border-slate-200"><span className="text-slate-400">Owner</span><br /><span className="font-medium">{preview.owner}</span></div>
+                </div>
+                <details className="mt-3 rounded-xl border border-slate-200 bg-white p-3">
+                  <summary className="cursor-pointer list-none text-xs font-medium text-slate-700">Sample payload JSON</summary>
+                  <pre className="mt-3 overflow-x-auto rounded-lg bg-slate-950 px-3 py-3 text-[11px] leading-5 text-slate-100">{JSON.stringify(payloadPreview, null, 2)}</pre>
+                </details>
+              </div>
+
               {error && <p className="text-sm text-red-600">{error}</p>}
               <button type="submit" disabled={submitting} className="w-full py-3 rounded-xl bg-gradient-to-r from-brand to-accent text-white font-semibold text-sm shadow-md shadow-brand/15 hover:shadow-lg hover:shadow-brand/25 transition disabled:opacity-60 disabled:cursor-not-allowed">
                 {submitting ? "Sending..." : "Send private brief"}
@@ -607,7 +720,6 @@ function WaitlistModal({ open, onClose, plan }: { open: boolean; onClose: () => 
     </div>
   );
 }
-
 /* ═══════════════════════════════════════════
    APP — Bright & Hopeful Landing Page
    ═══════════════════════════════════════════ */

@@ -1,113 +1,20 @@
-type IntakeBody = {
-  name?: string;
-  email?: string;
-  company?: string;
-  message?: string;
-  source?: string;
-  serviceLane?: string;
-  plan?: string;
-  priority?: string;
-};
+import {
+  buildComputedIntake,
+  buildStatusFlow,
+  type IntakeBody,
+  NOTION_FIELDS,
+} from "../src/lib/intake";
 
 const NOTION_VERSION = "2022-06-28";
 const DEFAULT_DB_ID = "201ef22d-4086-47c6-a33c-707150572c05";
-const ALLOWED_LANES = new Set([
-  "ai-automation-service",
-  "business-pipeline",
-  "genox-site",
-  "biostatx",
-  "peptide-service",
-]);
-const LANE_ALIASES: Record<string, string> = {
-  general: "business-pipeline",
-  other: "business-pipeline",
-  "general/other": "business-pipeline",
-};
-const ALLOWED_PRIORITIES = new Set(["hot", "warm", "cold"]);
 const TELEGRAM_API_BASE = "https://api.telegram.org";
-
-function text(value: unknown) {
-  return typeof value === "string" ? value.trim() : "";
-}
-
-function excerpt(message: string, limit = 180) {
-  const normalized = message.replace(/\s+/g, " ").trim();
-  return normalized.length > limit ? `${normalized.slice(0, limit - 1)}…` : normalized;
-}
-
-function containsAny(haystack: string, needles: string[]) {
-  const lower = haystack.toLowerCase();
-  return needles.some((needle) => lower.includes(needle));
-}
-
-function normalizeServiceLane(rawLane: string) {
-  const lane = rawLane.trim().toLowerCase();
-  return LANE_ALIASES[lane] ?? lane;
-}
-
-function inferPriority(payload: IntakeBody) {
-  const requested = text(payload.priority).toLowerCase();
-  if (ALLOWED_PRIORITIES.has(requested)) return requested;
-
-  const message = `${text(payload.message)} ${text(payload.plan)} ${text(payload.serviceLane)}`.toLowerCase();
-  if (containsAny(message, ["urgent", "asap", "today", "immediately", "hot"])) return "hot";
-  if (containsAny(message, ["later", "next week", "explore", "maybe", "soon"])) return "cold";
-  return "warm";
-}
-
-function inferOwner(serviceLane: string) {
-  switch (serviceLane) {
-    case "ai-automation-service":
-      return "Founder / Strategy";
-    case "biostatx":
-      return "Founder / Strategy";
-    case "genox-site":
-      return "Research";
-    case "peptide-service":
-      return "Ops";
-    case "business-pipeline":
-    default:
-      return "Founder / Strategy";
-  }
-}
-
-function inferSummary(payload: IntakeBody, serviceLane: string) {
-  const parts = [
-    serviceLane,
-    payload.company?.trim(),
-    payload.name?.trim(),
-    excerpt(payload.message ?? "", 140),
-  ].filter(Boolean);
-  return parts.join(" · ");
-}
-
-function inferNextStep(serviceLane: string, priority: string, approvalNeeded: boolean) {
-  if (approvalNeeded) return "Review the request with a human before any external action.";
-  if (priority === "hot") return "Book a call and confirm the smallest viable next step today.";
-  if (serviceLane === "ai-automation-service") return "Review the workflow, estimate effort, and decide whether to scope a paid proof-of-work.";
-  if (serviceLane === "peptide-service") return "Confirm target, format, and turnaround, then scope the brief.";
-  if (serviceLane === "biostatx") return "Confirm the dataset, endpoint, and decision the analysis must support.";
-  if (serviceLane === "genox-site") return "Clarify the target, stage, and partner context, then route to discovery review.";
-  return "Review the request, confirm fit, and route to the correct owner.";
-}
-
-function humanApprovalNeeded(message: string) {
-  return containsAny(message, ["money", "legal", "contract", "deploy", "deployment", "launch", "medical", "clinical", "claim"]);
-}
-
-function triageRoute(priority: string, approvalNeeded: boolean) {
-  if (approvalNeeded) return "Escalate";
-  if (priority === "hot") return "Book call";
-  if (priority === "cold") return "Nurture";
-  return "Review";
-}
 
 function telegramAlertText(params: {
   title: string;
   serviceLane: string;
   priority: string;
-  owner: string;
   route: string;
+  owner: string;
   approvalNeeded: boolean;
   name: string;
   email: string;
@@ -117,6 +24,8 @@ function telegramAlertText(params: {
   message: string;
   notionUrl?: string;
 }) {
+  const normalizedMessage = params.message.replace(/\s+/g, " ").trim();
+  const excerpt = normalizedMessage.length > 239 ? `${normalizedMessage.slice(0, 239)}…` : normalizedMessage;
   const lines = [
     `Brown Biotech intake · ${params.priority.toUpperCase()}${params.approvalNeeded ? " · APPROVAL" : ""}`,
     params.title,
@@ -128,14 +37,15 @@ function telegramAlertText(params: {
     `Email: ${params.email || "-"}`,
     `Company: ${params.company || "-"}`,
     `Next step: ${params.nextStep}`,
-    `Message: ${excerpt(params.message, 240) || "-"}`,
+    `Message: ${excerpt || "-"}`,
   ];
 
   if (params.notionUrl) {
     lines.push(`Notion: ${params.notionUrl}`);
   }
 
-  return lines.join("\n");
+  return lines.join("
+");
 }
 
 async function sendTelegramAlert(message: string) {
@@ -192,57 +102,52 @@ export default async function handler(req: any, res: any) {
     return res.status(400).json({ error: "Invalid JSON body" });
   }
 
-  const name = text(payload.name);
-  const email = text(payload.email);
-  const company = text(payload.company);
-  const message = text(payload.message);
-  const source = text(payload.source) || "website";
-  const requestedLane = normalizeServiceLane(text(payload.serviceLane));
-  const priority = inferPriority(payload);
-  const serviceLane = ALLOWED_LANES.has(requestedLane) ? requestedLane : "business-pipeline";
-  const owner = inferOwner(serviceLane);
-  const approvalNeeded = humanApprovalNeeded(message);
-  const route = triageRoute(priority, approvalNeeded);
-  const nextStep = inferNextStep(serviceLane, priority, approvalNeeded);
-  const title = `${serviceLane} inquiry · ${company || name || email || "website"}`;
+  const computed = buildComputedIntake(payload);
+  const statusFlow = buildStatusFlow({
+    route: computed.route,
+    approvalNeeded: computed.approvalNeeded,
+    serviceLane: computed.serviceLane,
+  });
+  const source = typeof payload.source === "string" && payload.source.trim() ? payload.source.trim() : "website";
+  const message = typeof payload.message === "string" ? payload.message.trim() : "";
 
   const pageBody = {
     parent: { database_id: dbId },
     properties: {
-      Name: {
-        title: [{ type: "text", text: { content: title } }],
+      [NOTION_FIELDS.title]: {
+        title: [{ type: "text", text: { content: computed.title } }],
       },
-      Contact: {
-        rich_text: [{ type: "text", text: { content: email } }],
+      [NOTION_FIELDS.contact]: {
+        rich_text: [{ type: "text", text: { content: typeof payload.email === "string" ? payload.email.trim() : "" } }],
       },
-      Company: {
-        rich_text: [{ type: "text", text: { content: company } }],
+      [NOTION_FIELDS.company]: {
+        rich_text: [{ type: "text", text: { content: typeof payload.company === "string" ? payload.company.trim() : "" } }],
       },
-      Status: {
+      [NOTION_FIELDS.status]: {
         select: { name: "new" },
       },
-      Priority: {
-        select: { name: ALLOWED_PRIORITIES.has(priority) ? priority : "warm" },
+      [NOTION_FIELDS.priority]: {
+        select: { name: computed.priority },
       },
-      Source: {
-        select: { name: source || "website" },
+      [NOTION_FIELDS.source]: {
+        select: { name: source },
       },
-      "Service Lane": {
-        select: { name: serviceLane },
+      [NOTION_FIELDS.serviceLane]: {
+        select: { name: computed.serviceLane },
       },
-      Summary: {
-        rich_text: [{ type: "text", text: { content: inferSummary(payload, serviceLane) } }],
+      [NOTION_FIELDS.summary]: {
+        rich_text: [{ type: "text", text: { content: computed.summary } }],
       },
-      "Next Step": {
-        rich_text: [{ type: "text", text: { content: nextStep } }],
+      [NOTION_FIELDS.nextStep]: {
+        rich_text: [{ type: "text", text: { content: computed.nextStep } }],
       },
-      "Approval Needed": {
-        checkbox: approvalNeeded,
+      [NOTION_FIELDS.approvalNeeded]: {
+        checkbox: computed.approvalNeeded,
       },
-      Owner: {
-        select: { name: owner },
+      [NOTION_FIELDS.owner]: {
+        select: { name: computed.owner },
       },
-      Date: {
+      [NOTION_FIELDS.date]: {
         date: { start: new Date().toISOString() },
       },
     },
@@ -274,17 +179,17 @@ export default async function handler(req: any, res: any) {
   }
 
   const telegramMessage = telegramAlertText({
-    title,
-    serviceLane,
-    priority,
-    owner,
-    route,
-    approvalNeeded,
-    name,
-    email,
-    company,
+    title: computed.title,
+    serviceLane: computed.serviceLane,
+    priority: computed.priority,
+    route: computed.route,
+    owner: computed.owner,
+    approvalNeeded: computed.approvalNeeded,
+    name: typeof payload.name === "string" ? payload.name.trim() : "",
+    email: typeof payload.email === "string" ? payload.email.trim() : "",
+    company: typeof payload.company === "string" ? payload.company.trim() : "",
     source,
-    nextStep,
+    nextStep: computed.nextStep,
     message,
     notionUrl: notionPage.url,
   });
@@ -296,11 +201,13 @@ export default async function handler(req: any, res: any) {
     ok: true,
     id: notionPage.id,
     url: notionPage.url,
-    serviceLane,
-    priority,
-    route,
-    owner,
-    approvalNeeded,
+    serviceLane: computed.serviceLane,
+    priority: computed.priority,
+    route: computed.route,
+    owner: computed.owner,
+    approvalNeeded: computed.approvalNeeded,
+    nextStep: computed.nextStep,
+    statusFlow,
     telegram: telegramAlert,
   });
 }

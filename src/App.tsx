@@ -770,37 +770,48 @@ export function App() {
       </nav>
 
       {/* ── HERO ── */}
-      <section className="relative pt-28 sm:pt-32 pb-16 sm:pb-20 overflow-hidden bg-gradient-to-b from-[#07070d] via-[#0f0f18] to-[#15111a] text-white">
-        <div className="hero-glow top-[-200px] left-1/2 -translate-x-1/2" />
-        <div className="blob-warm w-[500px] h-[500px] -top-20 -right-40" />
-        <div className="blob-cool w-[400px] h-[400px] top-40 -left-40" />
+      <section className="relative pt-28 sm:pt-32 pb-14 sm:pb-20 overflow-hidden bg-[radial-gradient(circle_at_top,rgba(255,216,138,0.12),transparent_28%),linear-gradient(180deg,#09090f_0%,#11111a_55%,#15111a_100%)] text-white">
+        <div className="hero-glow top-[-220px] left-1/2 -translate-x-1/2" />
+        <div className="blob-warm w-[380px] h-[380px] -top-24 -right-32 opacity-80" />
+        <div className="blob-cool w-[320px] h-[320px] top-44 -left-24 opacity-70" />
 
         <div className="max-w-7xl mx-auto px-5 sm:px-6 grid lg:grid-cols-2 gap-10 sm:gap-12 items-center relative z-10">
           {/* Left: Text */}
           <div className="text-white max-w-xl">
-            <div className="section-badge bg-white/10 text-white border border-white/10 mb-6 sm:mb-8">
+            <div className="section-badge bg-white/8 text-white border border-white/10 mb-5 sm:mb-7 backdrop-blur-sm">
               <Sparkles size={12} /> Decision-ready biotech · Human review
             </div>
 
-            <h1 className="heading-serif text-[3rem] sm:text-6xl lg:text-7xl leading-[0.98] tracking-tight mb-4 sm:mb-6">
-              <span className="bg-gradient-to-r from-[#ffd88a] via-[#f0b45f] to-[#b86c1b] bg-clip-text text-transparent">
-                Biotech services,
+            <h1 className="heading-serif text-[2.9rem] sm:text-6xl lg:text-[5.25rem] leading-[0.94] tracking-tight mb-4 sm:mb-5">
+              <span className="block bg-gradient-to-r from-[#fff0c2] via-[#f0b45f] to-[#b86c1b] bg-clip-text text-transparent">
+                AI-powered
               </span>
-              <br />
-              <span className="text-white">scoped with precision.</span>
+              <span className="block text-white">biotech decisions.</span>
             </h1>
 
-            <p className="text-base sm:text-lg text-white/72 max-w-lg mb-6 sm:mb-8 leading-relaxed">
-              브라운 바이오텍 주식회사는 peptide-service를 중심으로, biostatistics와 discovery scoping을 하나의 intake 흐름으로 정리합니다.
+            <p className="text-[15px] sm:text-lg text-white/76 max-w-lg mb-6 sm:mb-7 leading-relaxed">
+              브라운 바이오텍 주식회사는 복잡한 요청을 하나의 깔끔한 브리프, 하나의 owner, 하나의 next step으로 정리합니다.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
               <button onClick={() => openWaitlist("peptide-service")} className="group inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-full bg-gradient-to-r from-brand to-accent text-white font-semibold shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-black/30 transition-all w-full sm:w-auto">
                 Request a Brief <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </button>
-              <a href="#bu-section" className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-full border-2 border-white/15 text-white font-semibold hover:bg-white/5 transition w-full sm:w-auto">
-                View Service Hub
+              <a href="#bu-section" className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-full border border-white/15 text-white/90 font-semibold hover:bg-white/6 transition w-full sm:w-auto backdrop-blur-sm">
+                See the Workflow
               </a>
+            </div>
+
+            <div className="mt-6 flex flex-wrap gap-2 text-[11px] sm:text-xs text-white/78">
+              {[
+                "One intake",
+                "Primary lane",
+                "Human review",
+              ].map((chip) => (
+                <span key={chip} className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 tracking-[0.04em] shadow-sm shadow-black/10">
+                  {chip}
+                </span>
+              ))}
             </div>
           </div>
 

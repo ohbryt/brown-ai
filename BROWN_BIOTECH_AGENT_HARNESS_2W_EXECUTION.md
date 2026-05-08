@@ -320,3 +320,60 @@ You are done with v1 when:
 5. Eval harness
 6. Human review gate
 7. Pilot delivery
+
+---
+
+## Operating contract v1
+
+### Intake fields
+Use these fields everywhere — homepage form, Notion intake, and internal triage:
+- `name`
+- `email`
+- `company`
+- `serviceLane`
+- `priority` (`hot`, `warm`, `cold`)
+- `topic`
+- `target`
+- `context`
+- `message`
+- `approvalNeeded` (boolean)
+- `owner`
+- `status`
+
+### Brief output schema
+Every brief should contain:
+1. **Title**
+2. **One-line summary**
+3. **What we reviewed**
+4. **Evidence table**
+5. **Key risks / caveats**
+6. **Recommendation**
+7. **Next step**
+8. **Confidence level**
+9. **Human review note**
+
+### Review rubric
+Score each brief 1–5 on:
+- factual accuracy
+- citation quality
+- completeness
+- recommendation quality
+- format compliance
+
+### Human review rules
+Always require review when the request involves:
+- money
+- legal / contract language
+- deployment / launch
+- public announcements
+- medical or clinical claims
+
+### Daily operating loop
+1. New intake arrives
+2. Triage assigns owner and priority
+3. Research sub-agents gather evidence
+4. Citation checker removes unsupported claims
+5. Writer assembles the brief
+6. Human review approves or edits
+7. Brief is delivered
+8. Final version is archived in Notion

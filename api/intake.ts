@@ -18,6 +18,11 @@ const ALLOWED_LANES = new Set([
   "biostatx",
   "peptide-service",
 ]);
+const LANE_ALIASES: Record<string, string> = {
+  general: "business-pipeline",
+  other: "business-pipeline",
+  "general/other": "business-pipeline",
+};
 const ALLOWED_PRIORITIES = new Set(["hot", "warm", "cold"]);
 const TELEGRAM_API_BASE = "https://api.telegram.org";
 
@@ -33,6 +38,11 @@ function excerpt(message: string, limit = 180) {
 function containsAny(haystack: string, needles: string[]) {
   const lower = haystack.toLowerCase();
   return needles.some((needle) => lower.includes(needle));
+}
+
+function normalizeServiceLane(rawLane: string) {
+  const lane = rawLane.trim().toLowerCase();
+  return LANE_ALIASES[lane] ?? lane;
 }
 
 function inferPriority(payload: IntakeBody) {
@@ -71,9 +81,13 @@ function inferSummary(payload: IntakeBody, serviceLane: string) {
   return parts.join(" · ");
 }
 
-function inferNextStep(serviceLane: string, priority: string) {
+function inferNextStep(serviceLane: string, priority: string, approvalNeeded: boolean) {
+  if (approvalNeeded) return "Review the request with a human before any external action.";
   if (priority === "hot") return "Book a call and confirm the smallest viable next step today.";
   if (serviceLane === "ai-automation-service") return "Review the workflow, estimate effort, and decide whether to scope a paid proof-of-work.";
+  if (serviceLane === "peptide-service") return "Confirm target, format, and turnaround, then scope the brief.";
+  if (serviceLane === "biostatx") return "Confirm the dataset, endpoint, and decision the analysis must support.";
+  if (serviceLane === "genox-site") return "Clarify the target, stage, and partner context, then route to discovery review.";
   return "Review the request, confirm fit, and route to the correct owner.";
 }
 
@@ -81,11 +95,19 @@ function humanApprovalNeeded(message: string) {
   return containsAny(message, ["money", "legal", "contract", "deploy", "deployment", "launch", "medical", "clinical", "claim"]);
 }
 
+function triageRoute(priority: string, approvalNeeded: boolean) {
+  if (approvalNeeded) return "Escalate";
+  if (priority === "hot") return "Book call";
+  if (priority === "cold") return "Nurture";
+  return "Review";
+}
+
 function telegramAlertText(params: {
   title: string;
   serviceLane: string;
   priority: string;
   owner: string;
+  route: string;
   approvalNeeded: boolean;
   name: string;
   email: string;
@@ -99,6 +121,7 @@ function telegramAlertText(params: {
     `Brown Biotech intake · ${params.priority.toUpperCase()}${params.approvalNeeded ? " · APPROVAL" : ""}`,
     params.title,
     `Service lane: ${params.serviceLane}`,
+    `Route: ${params.route}`,
     `Owner: ${params.owner}`,
     `Source: ${params.source}`,
     `Name: ${params.name || "-"}`,
@@ -174,12 +197,13 @@ export default async function handler(req: any, res: any) {
   const company = text(payload.company);
   const message = text(payload.message);
   const source = text(payload.source) || "website";
-  const requestedLane = text(payload.serviceLane);
+  const requestedLane = normalizeServiceLane(text(payload.serviceLane));
   const priority = inferPriority(payload);
   const serviceLane = ALLOWED_LANES.has(requestedLane) ? requestedLane : "business-pipeline";
   const owner = inferOwner(serviceLane);
-  const nextStep = inferNextStep(serviceLane, priority);
   const approvalNeeded = humanApprovalNeeded(message);
+  const route = triageRoute(priority, approvalNeeded);
+  const nextStep = inferNextStep(serviceLane, priority, approvalNeeded);
   const title = `${serviceLane} inquiry · ${company || name || email || "website"}`;
 
   const pageBody = {
@@ -254,6 +278,7 @@ export default async function handler(req: any, res: any) {
     serviceLane,
     priority,
     owner,
+    route,
     approvalNeeded,
     name,
     email,
@@ -273,6 +298,7 @@ export default async function handler(req: any, res: any) {
     url: notionPage.url,
     serviceLane,
     priority,
+    route,
     owner,
     approvalNeeded,
     telegram: telegramAlert,

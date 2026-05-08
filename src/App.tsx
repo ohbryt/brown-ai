@@ -577,7 +577,7 @@ function WaitlistModal({ open, onClose, plan }: { open: boolean; onClose: () => 
                 <option value="peptide-service">Peptide Service</option>
                 <option value="biostatx">BioStatX</option>
                 <option value="genox-site">Genox Site</option>
-                <option value="general">General / Other</option>
+                <option value="business-pipeline">General / Ops</option>
               </select>
               <select
                 value={priority}

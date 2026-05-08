@@ -1,0 +1,30 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#09090D"/>
+  <rect x="48" y="48" width="1104" height="534" rx="36" fill="url(#bg)" stroke="rgba(255,216,138,0.18)"/>
+  <circle cx="1002" cy="114" r="168" fill="rgba(255,216,138,0.08)"/>
+  <circle cx="160" cy="500" r="138" fill="rgba(124,58,237,0.10)"/>
+  <text x="96" y="140" fill="#FFD88A" font-size="28" font-family="Inter, sans-serif" letter-spacing="0.24em">BROWN BIOTECH INC.</text>
+  <text x="96" y="250" fill="#FFFFFF" font-size="74" font-family="Instrument Serif, serif" font-weight="600">Private biotech</text>
+  <text x="96" y="326" fill="#FFFFFF" font-size="74" font-family="Instrument Serif, serif" font-weight="600">briefs, scoped with precision.</text>
+  <text x="96" y="394" fill="rgba(255,255,255,0.76)" font-size="28" font-family="Inter, sans-serif">Peptide service · Biostatistics review · Discovery scoping</text>
+  <g transform="translate(96 446)">
+    <rect width="178" height="46" rx="23" fill="rgba(255,216,138,0.12)" stroke="rgba(255,216,138,0.22)"/>
+    <text x="89" y="30" text-anchor="middle" fill="#FFD88A" font-size="20" font-family="Inter, sans-serif" font-weight="700">One intake</text>
+  </g>
+  <g transform="translate(292 446)">
+    <rect width="194" height="46" rx="23" fill="rgba(255,255,255,0.06)" stroke="rgba(255,255,255,0.12)"/>
+    <text x="97" y="30" text-anchor="middle" fill="#FFFFFF" font-size="20" font-family="Inter, sans-serif" font-weight="700">Human review</text>
+  </g>
+  <g transform="translate(510 446)">
+    <rect width="160" height="46" rx="23" fill="rgba(124,58,237,0.14)" stroke="rgba(124,58,237,0.25)"/>
+    <text x="80" y="30" text-anchor="middle" fill="#D8B4FE" font-size="20" font-family="Inter, sans-serif" font-weight="700">Private brief</text>
+  </g>
+  <text x="96" y="540" fill="rgba(255,255,255,0.66)" font-size="24" font-family="Inter, sans-serif">brownbio.tech</text>
+  <defs>
+    <linearGradient id="bg" x1="66" y1="40" x2="1134" y2="590" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#120F14"/>
+      <stop offset="0.52" stop-color="#0E111B"/>
+      <stop offset="1" stop-color="#09090D"/>
+    </linearGradient>
+  </defs>
+</svg>

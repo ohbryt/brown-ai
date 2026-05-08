@@ -249,7 +249,7 @@ const products: ProductInfo[] = [
     gradient: "from-brand-light to-brand", badgeBg: "bg-amber-50", badgeText: "text-brand", badgeBorder: "border-amber-100", accentText: "text-brand", ringColor: "#92400e", accentColor: "#92400e",
     features: ["AI 타겟 발굴 & 검증", "가상 화합물 스크리닝 & 분자 도킹", "ADMET 독성/약동학 예측", "약물 재창출 (Drug Repurposing)", "FDA 임상시험 설계 자동화"],
     useCase: { title: "Partner brief", description: "Move from target idea to a partner-ready brief with clear evidence, scope, and next step." },
-    highlights: [{ label: "발굴 속도", value: "72시간" }, { label: "스크리닝", value: "100만+ 화합물" }, { label: "파이프라인", value: "타겟→리드" }],
+    highlights: [{ label: "브리프", value: "Ready" }, { label: "스크리닝", value: "Ranked" }, { label: "핸드오프", value: "Fast" }],
   },
 ];
 
@@ -470,6 +470,7 @@ function WaitlistModal({ open, onClose, plan }: { open: boolean; onClose: () => 
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
   const [serviceLane, setServiceLane] = useState(plan === "discovery" ? "genox-site" : "peptide-service");
+  const [priority, setPriority] = useState(plan === "discovery" ? "hot" : "warm");
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -478,16 +479,16 @@ function WaitlistModal({ open, onClose, plan }: { open: boolean; onClose: () => 
 
   const modalTitle =
     plan === "discovery"
-      ? "Partner Inquiry — Request a Brief"
+      ? "Discovery / Partner Brief — Request a Brief"
       : plan === "peptide-service"
         ? "Peptide Service — Request a Brief"
         : `${plan} — Request a Brief`;
 
   const modalCopy =
     plan === "discovery"
-      ? "Discovery and partner-fit requests go here. Tell us what you are exploring and we will route the next step."
+      ? "Tell us the target, stage, and partner context. We will route the brief to the right review path."
       : plan === "peptide-service"
-        ? "Peptide projects, quotes, and consults start here. Keep it short and we will scope the next step."
+        ? "Peptide projects, quotes, and consults start here. Share the minimum context and we will scope the next step."
         : "Tell us what you want to remove, automate, or scope first.";
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -506,6 +507,7 @@ function WaitlistModal({ open, onClose, plan }: { open: boolean; onClose: () => 
           message,
           source: "website",
           serviceLane,
+          priority,
           plan,
         }),
       });
@@ -577,6 +579,15 @@ function WaitlistModal({ open, onClose, plan }: { open: boolean; onClose: () => 
                 <option value="genox-site">Genox Site</option>
                 <option value="general">General / Other</option>
               </select>
+              <select
+                value={priority}
+                onChange={(e) => setPriority(e.target.value)}
+                className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-text-primary text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition"
+              >
+                <option value="hot">Hot — ready to scope now</option>
+                <option value="warm">Warm — exploring options</option>
+                <option value="cold">Cold — early signal only</option>
+              </select>
               <textarea
                 rows={4}
                 placeholder="What do you want to remove, automate, or scope first?"
@@ -586,9 +597,9 @@ function WaitlistModal({ open, onClose, plan }: { open: boolean; onClose: () => 
               />
               {error && <p className="text-sm text-red-600">{error}</p>}
               <button type="submit" disabled={submitting} className="w-full py-3 rounded-xl bg-gradient-to-r from-brand to-accent text-white font-semibold text-sm shadow-md shadow-brand/15 hover:shadow-lg hover:shadow-brand/25 transition disabled:opacity-60 disabled:cursor-not-allowed">
-                {submitting ? "Sending..." : plan === "discovery" ? "Send inquiry" : "Request brief"}
+                {submitting ? "Sending..." : "Send private brief"}
               </button>
-              <p className="text-[11px] text-text-muted text-center">This goes straight into the Brown Biotech intake queue.</p>
+              <p className="text-[11px] text-text-muted text-center">This goes straight into the Brown Biotech intake queue with service lane and priority attached.</p>
             </form>
           </>
         )}
@@ -641,7 +652,7 @@ export function App() {
             <a href="#pricing" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Contact</a>
           </div>
           <button onClick={() => openWaitlist("peptide-service")} className="hidden sm:inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-brand to-accent text-white text-sm font-semibold shadow-sm shadow-brand/10 hover:shadow-md hover:shadow-brand/20 transition">
-            Get Started
+            Request a Brief
           </button>
         </div>
       </nav>
@@ -1070,10 +1081,10 @@ export function App() {
             <div className="space-y-20">
               {/* Tagline */}
               <div className="text-center">
-                <span className="section-badge bg-violet-50 text-violet-700 border border-violet-200 mb-4">For Pharma & Biotech</span>
+                <span className="section-badge bg-violet-50 text-violet-700 border border-violet-200 mb-4">B2B Discovery</span>
                 <h2 className="heading-serif text-4xl sm:text-5xl mb-4">Discovery and Translational Planning</h2>
                 <p className="text-text-secondary max-w-lg mx-auto text-lg">
-                  노화/대사 타겟 발굴부터 번역 패키지 정리까지, decision-ready research로 묶습니다.
+                  노화/대사 타겟 발굴부터 번역 패키지 정리까지, partner-ready brief로 묶습니다.
                 </p>
               </div>
 
@@ -1102,8 +1113,8 @@ export function App() {
 
               {/* Pipeline — Visual Graphic */}
               <div>
-                <h3 className="heading-serif text-3xl text-center mb-4">Discovery Pipeline</h3>
-                <p className="text-sm text-text-muted text-center mb-10">타겟 발굴부터 FDA 제출까지 — AI가 가속하는 6단계 파이프라인</p>
+                <h3 className="heading-serif text-3xl text-center mb-8">Discovery Workflow</h3>
+                <p className="text-sm text-text-muted text-center mb-10">타겟 스캐닝부터 번역 패키지 정리까지 — decision-ready research support</p>
 
                 {/* SVG Pipeline Graphic */}
                 <div className="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm mb-8">
@@ -1128,7 +1139,7 @@ export function App() {
                     <text x="295" y="72" textAnchor="middle" fill="#7C3AED" fontSize="24">⚗️</text>
                     <text x="295" y="95" textAnchor="middle" fill="#5B21B6" fontSize="11" fontWeight="700">Virtual Screening</text>
                     <text x="295" y="112" textAnchor="middle" fill="#8B5CF6" fontSize="8">분자 도킹 · ADMET</text>
-                    <text x="295" y="125" textAnchor="middle" fill="#8B5CF6" fontSize="8">100만+ 화합물 스크리닝</text>
+                    <text x="295" y="125" textAnchor="middle" fill="#8B5CF6" fontSize="8">large-library screening</text>
 
                     {/* Stage 3: Drug Repurposing */}
                     <rect x="430" y="40" width="150" height="100" rx="16" fill="#EDE9FE" stroke="#C4B5FD" strokeWidth="1.5" />
@@ -1142,7 +1153,7 @@ export function App() {
                     <text x="710" y="72" textAnchor="middle" fill="#6D28D9" fontSize="24">🧬</text>
                     <text x="710" y="95" textAnchor="middle" fill="#5B21B6" fontSize="11" fontWeight="700">Lead Candidate</text>
                     <text x="710" y="112" textAnchor="middle" fill="#7C3AED" fontSize="8">SAR 최적화</text>
-                    <text x="710" y="125" textAnchor="middle" fill="#7C3AED" fontSize="8">72시간 내 리드 도출</text>
+                    <text x="710" y="125" textAnchor="middle" fill="#7C3AED" fontSize="8">rapid lead handoff</text>
 
                     {/* Stage 5: Genomic Validation (bottom row) */}
                     <rect x="220" y="190" width="150" height="100" rx="16" fill="#FEFCE8" stroke="#FDE68A" strokeWidth="1.5" />
@@ -1161,7 +1172,7 @@ export function App() {
                     {/* Timeline badge */}
                     <rect x="680" y="220" width="180" height="50" rx="25" fill="url(#pipeline-grad)" />
                     <text x="770" y="242" textAnchor="middle" fill="white" fontSize="11" fontWeight="700">타겟 → 리드 후보</text>
-                    <text x="770" y="258" textAnchor="middle" fill="rgba(255,255,255,0.8)" fontSize="10">72시간 · AI 가속</text>
+                    <text x="770" y="258" textAnchor="middle" fill="rgba(255,255,255,0.8)" fontSize="10">rapid first pass</text>
 
                     <defs>
                       <marker id="arrowV" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
@@ -1182,7 +1193,7 @@ export function App() {
                   </h4>
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <h5 className="font-semibold text-sm text-violet-800 mb-2">Partner discovery stack</h5>
+                      <h5 className="font-semibold text-sm text-violet-800 mb-2">Partner-ready brief</h5>
                       <div className="space-y-2 text-xs text-text-secondary leading-relaxed">
                         <p><span className="font-mono text-violet-600">01</span> Target → affinity shortlist</p>
                         <p><span className="font-mono text-violet-600">02</span> De novo design → optimization → expansion</p>
@@ -1191,34 +1202,34 @@ export function App() {
                       </div>
                     </div>
                     <div className="bg-white rounded-xl p-5 border border-violet-100">
-                      <h5 className="font-semibold text-sm mb-3">파이프라인 성과 지표</h5>
+                      <h5 className="font-semibold text-sm mb-3">Decision outputs</h5>
                       <div className="space-y-3">
                         <div className="flex justify-between items-center">
-                          <span className="text-xs text-text-muted">타겟 발굴 속도</span>
+                          <span className="text-xs text-text-muted">Target shortlist</span>
                           <div className="flex items-center gap-2">
                             <div className="w-24 h-2 bg-gray-100 rounded-full overflow-hidden"><div className="w-[90%] h-full bg-violet-500 rounded-full" /></div>
-                            <span className="text-xs font-bold text-violet-700">90% ↑</span>
+                            <span className="text-xs font-bold text-violet-700">Ready</span>
                           </div>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-xs text-text-muted">스크리닝 비용 절감</span>
+                          <span className="text-xs text-text-muted">Screening queue</span>
                           <div className="flex items-center gap-2">
                             <div className="w-24 h-2 bg-gray-100 rounded-full overflow-hidden"><div className="w-[75%] h-full bg-violet-500 rounded-full" /></div>
-                            <span className="text-xs font-bold text-violet-700">75% ↓</span>
+                            <span className="text-xs font-bold text-violet-700">Ranked</span>
                           </div>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-xs text-text-muted">리드 도출 기간</span>
+                          <span className="text-xs text-text-muted">Handoff speed</span>
                           <div className="flex items-center gap-2">
                             <div className="w-24 h-2 bg-gray-100 rounded-full overflow-hidden"><div className="w-[95%] h-full bg-violet-500 rounded-full" /></div>
-                            <span className="text-xs font-bold text-violet-700">72h</span>
+                            <span className="text-xs font-bold text-violet-700">Fast first pass</span>
                           </div>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span className="text-xs text-text-muted">ADMET 예측 정확도</span>
+                          <span className="text-xs text-text-muted">Risk flags</span>
                           <div className="flex items-center gap-2">
                             <div className="w-24 h-2 bg-gray-100 rounded-full overflow-hidden"><div className="w-[88%] h-full bg-emerald-500 rounded-full" /></div>
-                            <span className="text-xs font-bold text-emerald-700">88%</span>
+                            <span className="text-xs font-bold text-emerald-700">Contextual</span>
                           </div>
                         </div>
                       </div>
@@ -1229,8 +1240,8 @@ export function App() {
 
               {/* Discovery Agents */}
               <div>
-                <h3 className="heading-serif text-3xl text-center mb-2">Discovery AI Team</h3>
-                <p className="text-sm text-text-muted text-center mb-8">5 Specialized Agents · Click to expand</p>
+                <h3 className="heading-serif text-3xl text-center mb-2">Discovery Review Team</h3>
+                <p className="text-sm text-text-muted text-center mb-8">5 specialists · Click to expand</p>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {discoveryAgents.map((a) => <AgentCard key={a.slug} agent={a} accentColor="from-violet-400 to-purple-500" />)}
                 </div>
@@ -1427,7 +1438,7 @@ export function App() {
               <Award size={12} /> Founder / CEO
             </span>
             <h2 className="heading-serif text-4xl sm:text-5xl mb-3">Chang-Myung Oh, M.D., Ph.D.</h2>
-            <p className="text-text-secondary max-w-xl mx-auto">Endocrinology, metabolism, and AI-led company building — combining clinical judgment with decision-ready systems.</p>
+            <p className="text-text-secondary max-w-xl mx-auto">Clinical endocrinology, metabolism, and biotech company building — combining research depth with a decision-ready operating style.</p>
           </div>
 
           <div className="grid lg:grid-cols-3 gap-8">
@@ -1458,7 +1469,7 @@ export function App() {
             {/* Right — Career & Research */}
             <div className="lg:col-span-2 space-y-6">
               <div className="bg-white border border-gray-100 rounded-3xl p-7 shadow-sm">
-                <h4 className="font-bold text-sm mb-5 flex items-center gap-2"><GraduationCap size={16} className="text-brand" /> Career Timeline</h4>
+                <h4 className="font-bold text-sm mb-5 flex items-center gap-2"><GraduationCap size={16} className="text-brand" /> Career Track Record</h4>
                 <div className="space-y-3">
                   {[
                     { year: "2025 –", role: "Professor", org: "Department of BMSE, GIST", highlight: true },
@@ -1482,7 +1493,7 @@ export function App() {
               </div>
 
               <div className="bg-white border border-gray-100 rounded-3xl p-7 shadow-sm">
-                <h4 className="font-bold text-sm mb-5 flex items-center gap-2"><BookOpen size={16} className="text-violet-600" /> Selected Publications</h4>
+                <h4 className="font-bold text-sm mb-5 flex items-center gap-2"><BookOpen size={16} className="text-violet-600" /> Selected Papers</h4>
                 <div className="space-y-3">
                   {[
                     { journal: "Nature Communications", title: "Regulation of systemic energy homeostasis by serotonin in adipose tissues", year: "2015", color: "bg-red-50 text-red-600 border-red-100" },
@@ -1528,8 +1539,8 @@ export function App() {
             <span className="section-badge bg-violet-50 text-violet-700 border border-violet-200 mb-4">
               <Microscope size={12} /> Research Spotlight
             </span>
-            <h2 className="heading-serif text-4xl sm:text-5xl mb-3">최신 연구 하이라이트</h2>
-            <p className="text-text-secondary max-w-xl mx-auto">Brown AI 플랫폼이 추적하는 대사·노화 분야 최신 연구</p>
+            <h2 className="heading-serif text-4xl sm:text-5xl mb-3">Research Briefing</h2>
+            <p className="text-text-secondary max-w-xl mx-auto">Metabolism and aging signals tracked into a concise, decision-ready reading list.</p>
           </div>
 
           {/* Featured Paper Card */}
@@ -1716,7 +1727,7 @@ export function App() {
           </div>
 
           <p className="text-center text-sm text-text-muted mt-8">
-            Brown Biotech Discovery (B2B) partnerships: <a href="mailto:brownbio.ocm@gmail.com" className="text-violet-600 hover:underline font-medium">brownbio.ocm@gmail.com</a>
+            Brown Biotech Discovery (B2B) private briefs: <a href="mailto:brownbio.ocm@gmail.com" className="text-violet-600 hover:underline font-medium">brownbio.ocm@gmail.com</a>
           </p>
         </div>
       </section>
@@ -1744,7 +1755,7 @@ export function App() {
             </div>
           </div>
           <p className="mt-4 text-center text-xs text-text-muted">
-            Brown Biotech Inc. · decision-ready biotech services · peptide-service · biostatx · genox-site
+            Brown Biotech Inc. · decision-ready biotech services · peptide-service · biostatx · genox-site · private brief intake
           </p>
         </div>
       </footer>

@@ -6,6 +6,7 @@ type IntakeBody = {
   source?: string;
   serviceLane?: string;
   plan?: string;
+  priority?: string;
 };
 
 const NOTION_VERSION = "2022-06-28";
@@ -35,6 +36,9 @@ function containsAny(haystack: string, needles: string[]) {
 }
 
 function inferPriority(payload: IntakeBody) {
+  const requested = text(payload.priority).toLowerCase();
+  if (ALLOWED_PRIORITIES.has(requested)) return requested;
+
   const message = `${text(payload.message)} ${text(payload.plan)} ${text(payload.serviceLane)}`.toLowerCase();
   if (containsAny(message, ["urgent", "asap", "today", "immediately", "hot"])) return "hot";
   if (containsAny(message, ["later", "next week", "explore", "maybe", "soon"])) return "cold";

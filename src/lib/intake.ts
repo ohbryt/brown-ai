@@ -26,6 +26,16 @@ export const ALLOWED_LANES = new Set([
   "genox-site",
   "biostatx",
   "peptide-service",
+  "lead-intake-router",
+  "paid-brief-generator",
+  "literature-scan-copilot",
+  "competitor-watcher",
+  "meeting-to-action-system",
+  "client-update-autopilot",
+  "sop-builder",
+  "approval-gate-workflow",
+  "content-repurposing-engine",
+  "ops-dashboard-sync",
 ]);
 
 export const LANE_ALIASES: Record<string, string> = {
@@ -84,6 +94,19 @@ export function inferPriority(payload: IntakeBody) {
 
 export function inferOwner(serviceLane: string) {
   switch (serviceLane) {
+    case "lead-intake-router":
+    case "competitor-watcher":
+    case "meeting-to-action-system":
+    case "ops-dashboard-sync":
+      return "Ops";
+    case "paid-brief-generator":
+    case "client-update-autopilot":
+    case "content-repurposing-engine":
+      return "Founder / Strategy";
+    case "literature-scan-copilot":
+    case "sop-builder":
+    case "approval-gate-workflow":
+      return "Research / Ops";
     case "ai-automation-service":
       return "Founder / Strategy";
     case "biostatx":
@@ -95,6 +118,28 @@ export function inferOwner(serviceLane: string) {
     case "business-pipeline":
     default:
       return "Founder / Strategy";
+  }
+}
+
+function laneLabel(serviceLane: string) {
+  switch (serviceLane) {
+    case "lead-intake-router": return "Lead intake router";
+    case "paid-brief-generator": return "Paid brief";
+    case "literature-scan-copilot": return "Literature scan copilot";
+    case "competitor-watcher": return "Competitor watcher";
+    case "meeting-to-action-system": return "Meeting-to-action system";
+    case "client-update-autopilot": return "Client update autopilot";
+    case "sop-builder": return "SOP builder";
+    case "approval-gate-workflow": return "Approval gate workflow";
+    case "content-repurposing-engine": return "Content repurposing engine";
+    case "ops-dashboard-sync": return "Ops dashboard sync";
+    case "ai-automation-service": return "Automation";
+    case "biostatx": return "BioStatX";
+    case "genox-site": return "Genox Site";
+    case "peptide-service": return "Peptide Service";
+    case "business-pipeline":
+    default:
+      return "Business pipeline";
   }
 }
 
@@ -122,6 +167,9 @@ export function triageRoute(priority: string, approvalNeeded: boolean) {
 export function inferNextStep(serviceLane: string, priority: string, approvalNeeded: boolean) {
   if (approvalNeeded) return "Review the request with a human before any external action.";
   if (priority === "hot") return "Book a call and confirm the smallest viable next step today.";
+  if (serviceLane === "lead-intake-router") return "Confirm the inbound sources, routing rules, and owner map.";
+  if (serviceLane === "paid-brief-generator") return "Confirm scope, assumptions, and the approval boundary before drafting the brief.";
+  if (serviceLane === "literature-scan-copilot") return "Confirm the research question, keywords, and required citation standard.";
   if (serviceLane === "ai-automation-service") return "Review the workflow, estimate effort, and decide whether to scope a paid proof-of-work.";
   if (serviceLane === "peptide-service") return "Confirm target, format, and turnaround, then scope the brief.";
   if (serviceLane === "biostatx") return "Confirm the dataset, endpoint, and decision the analysis must support.";
@@ -142,7 +190,7 @@ export function buildComputedIntake(payload: IntakeBody): ComputedIntake {
   const approvalNeeded = humanApprovalNeeded(message);
   const route = triageRoute(priority, approvalNeeded);
   const nextStep = inferNextStep(serviceLane, priority, approvalNeeded);
-  const title = `${serviceLane} inquiry · ${company || name || email || "website"}`;
+  const title = `${laneLabel(serviceLane)} brief · ${company || name || email || "website"}`;
   const summary = inferSummary(payload, serviceLane);
 
   void source;

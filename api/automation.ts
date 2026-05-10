@@ -1,9 +1,5 @@
-import {
-  buildComputedIntake,
-  buildStatusFlow,
-  type IntakeBody,
-  NOTION_FIELDS,
-} from "../src/lib/intake";
+import { buildAutomationBlueprint, type AutomationBody } from "../src/lib/automation";
+import { NOTION_FIELDS } from "../src/lib/intake";
 
 const NOTION_VERSION = "2022-06-28";
 const DEFAULT_DB_ID = "201ef22d-4086-47c6-a33c-707150572c05";
@@ -12,6 +8,7 @@ const ENV = (globalThis as { process?: { env?: Record<string, string | undefined
 
 function telegramAlertText(params: {
   title: string;
+  automationType: string;
   serviceLane: string;
   priority: string;
   route: string;
@@ -21,24 +18,29 @@ function telegramAlertText(params: {
   email: string;
   company: string;
   source: string;
+  objective: string;
+  systems: string[];
+  trigger: string;
+  output: string;
   nextStep: string;
-  message: string;
   notionUrl?: string;
 }) {
-  const normalizedMessage = params.message.replace(/\s+/g, " ").trim();
-  const excerpt = normalizedMessage.length > 239 ? `${normalizedMessage.slice(0, 239)}…` : normalizedMessage;
   const lines = [
-    `Brown Biotech intake · ${params.priority.toUpperCase()}${params.approvalNeeded ? " · APPROVAL" : ""}`,
+    `Brown Biotech automation brief · ${params.priority.toUpperCase()}${params.approvalNeeded ? " · APPROVAL" : ""}`,
     params.title,
+    `Type: ${params.automationType}`,
     `Service lane: ${params.serviceLane}`,
     `Route: ${params.route}`,
     `Owner: ${params.owner}`,
+    `Systems: ${params.systems.length ? params.systems.join(", ") : "-"}`,
+    `Trigger: ${params.trigger || "-"}`,
+    `Output: ${params.output || "-"}`,
     `Source: ${params.source}`,
     `Name: ${params.name || "-"}`,
     `Email: ${params.email || "-"}`,
     `Company: ${params.company || "-"}`,
     `Next step: ${params.nextStep}`,
-    `Message: ${excerpt || "-"}`,
+    `Objective: ${params.objective}`,
   ];
 
   if (params.notionUrl) {
@@ -95,27 +97,21 @@ export default async function handler(req: any, res: any) {
     return res.status(500).json({ error: "NOTION_API_KEY is not configured" });
   }
 
-  let payload: IntakeBody = {};
+  let payload: AutomationBody = {};
   try {
     payload = typeof req.body === "string" ? JSON.parse(req.body) : (req.body ?? {});
   } catch {
     return res.status(400).json({ error: "Invalid JSON body" });
   }
 
-  const computed = buildComputedIntake(payload);
-  const statusFlow = buildStatusFlow({
-    route: computed.route,
-    approvalNeeded: computed.approvalNeeded,
-    serviceLane: computed.serviceLane,
-  });
+  const blueprint = buildAutomationBlueprint(payload);
   const source = typeof payload.source === "string" && payload.source.trim() ? payload.source.trim() : "website";
-  const message = typeof payload.message === "string" ? payload.message.trim() : "";
 
   const pageBody = {
     parent: { database_id: dbId },
     properties: {
       [NOTION_FIELDS.title]: {
-        title: [{ type: "text", text: { content: computed.title } }],
+        title: [{ type: "text", text: { content: blueprint.title } }],
       },
       [NOTION_FIELDS.contact]: {
         rich_text: [{ type: "text", text: { content: typeof payload.email === "string" ? payload.email.trim() : "" } }],
@@ -127,25 +123,25 @@ export default async function handler(req: any, res: any) {
         select: { name: "new" },
       },
       [NOTION_FIELDS.priority]: {
-        select: { name: computed.priority },
+        select: { name: blueprint.priority },
       },
       [NOTION_FIELDS.source]: {
         select: { name: source },
       },
       [NOTION_FIELDS.serviceLane]: {
-        select: { name: computed.serviceLane },
+        select: { name: blueprint.serviceLane },
       },
       [NOTION_FIELDS.summary]: {
-        rich_text: [{ type: "text", text: { content: computed.summary } }],
+        rich_text: [{ type: "text", text: { content: blueprint.summary } }],
       },
       [NOTION_FIELDS.nextStep]: {
-        rich_text: [{ type: "text", text: { content: computed.nextStep } }],
+        rich_text: [{ type: "text", text: { content: blueprint.nextStep } }],
       },
       [NOTION_FIELDS.approvalNeeded]: {
-        checkbox: computed.approvalNeeded,
+        checkbox: blueprint.approvalNeeded,
       },
       [NOTION_FIELDS.owner]: {
-        select: { name: computed.owner },
+        select: { name: blueprint.owner },
       },
       [NOTION_FIELDS.date]: {
         date: { start: new Date().toISOString() },
@@ -166,7 +162,7 @@ export default async function handler(req: any, res: any) {
   const textResp = await notionResp.text();
   if (!notionResp.ok) {
     return res.status(502).json({
-      error: "Failed to create Notion intake page",
+      error: "Failed to create Notion automation page",
       details: textResp,
     });
   }
@@ -179,18 +175,22 @@ export default async function handler(req: any, res: any) {
   }
 
   const telegramMessage = telegramAlertText({
-    title: computed.title,
-    serviceLane: computed.serviceLane,
-    priority: computed.priority,
-    route: computed.route,
-    owner: computed.owner,
-    approvalNeeded: computed.approvalNeeded,
+    title: blueprint.title,
+    automationType: blueprint.automationType,
+    serviceLane: blueprint.serviceLane,
+    priority: blueprint.priority,
+    route: blueprint.route,
+    owner: blueprint.owner,
+    approvalNeeded: blueprint.approvalNeeded,
     name: typeof payload.name === "string" ? payload.name.trim() : "",
     email: typeof payload.email === "string" ? payload.email.trim() : "",
     company: typeof payload.company === "string" ? payload.company.trim() : "",
     source,
-    nextStep: computed.nextStep,
-    message,
+    objective: blueprint.objective,
+    systems: blueprint.systems,
+    trigger: blueprint.trigger,
+    output: blueprint.output,
+    nextStep: blueprint.nextStep,
     notionUrl: notionPage.url,
   });
 
@@ -201,13 +201,20 @@ export default async function handler(req: any, res: any) {
     ok: true,
     id: notionPage.id,
     url: notionPage.url,
-    serviceLane: computed.serviceLane,
-    priority: computed.priority,
-    route: computed.route,
-    owner: computed.owner,
-    approvalNeeded: computed.approvalNeeded,
-    nextStep: computed.nextStep,
-    statusFlow,
+    title: blueprint.title,
+    automationType: blueprint.automationType,
+    serviceLane: blueprint.serviceLane,
+    priority: blueprint.priority,
+    route: blueprint.route,
+    owner: blueprint.owner,
+    approvalNeeded: blueprint.approvalNeeded,
+    nextStep: blueprint.nextStep,
+    statusFlow: blueprint.statusFlow,
+    phases: blueprint.phases,
+    checklist: blueprint.checklist,
+    systems: blueprint.systems,
+    trigger: blueprint.trigger,
+    output: blueprint.output,
     telegram: telegramAlert,
   });
 }

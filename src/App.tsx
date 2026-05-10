@@ -259,7 +259,7 @@ const products: ProductInfo[] = [
   },
   {
     slug: "brown-biotech", name: "Brown Biotech", badge: "Drug Discovery",
-    desc: "Target discovery, affinity modeling, and translational planning for partner-ready projects.",
+    desc: "Decision-ready briefs, peptide-service, and partner-ready translational planning.",
     url: "https://brown-biotech-website.vercel.app", icon: Dna,
     gradient: "from-brand-light to-brand", badgeBg: "bg-amber-50", badgeText: "text-brand", badgeBorder: "border-amber-100", accentText: "text-brand", ringColor: "#92400e", accentColor: "#92400e",
     features: ["AI 타겟 발굴 & 검증", "가상 화합물 스크리닝 & 분자 도킹", "ADMET 독성/약동학 예측", "약물 재창출 (Drug Repurposing)", "FDA 임상시험 설계 자동화"],
@@ -267,6 +267,50 @@ const products: ProductInfo[] = [
     highlights: [{ label: "브리프", value: "Ready" }, { label: "스크리닝", value: "Ranked" }, { label: "핸드오프", value: "Fast" }],
   },
 ];
+
+const automationCatalog = [
+  { slug: "lead-intake-router", title: "Lead Intake Router", desc: "Classify inbound leads, assign owner, and create the next action.", tag: "Routing" },
+  { slug: "paid-brief-generator", title: "Paid Brief", desc: "Turn vague inquiries into scoped, reviewable paid briefs.", tag: "Scoping" },
+  { slug: "literature-scan-copilot", title: "Literature Scan Copilot", desc: "Summarize papers into a decision-ready research brief.", tag: "Research" },
+  { slug: "competitor-watcher", title: "Competitor Watcher", desc: "Monitor competitors and surface weekly changes.", tag: "Monitoring" },
+  { slug: "meeting-to-action-system", title: "Meeting-to-Action System", desc: "Convert meetings into tasks, owners, and follow-through.", tag: "Execution" },
+  { slug: "client-update-autopilot", title: "Client Update Autopilot", desc: "Draft concise client updates with a human approval gate.", tag: "Comms" },
+  { slug: "sop-builder", title: "SOP Builder", desc: "Turn repeat work into a clean SOP and checklist.", tag: "Process" },
+  { slug: "approval-gate-workflow", title: "Approval Gate Workflow", desc: "Detect risk and route sensitive items for review.", tag: "Risk" },
+  { slug: "content-repurposing-engine", title: "Content Repurposing Engine", desc: "Convert one approved artifact into channel-specific drafts.", tag: "Content" },
+  { slug: "ops-dashboard-sync", title: "Ops Dashboard Sync", desc: "Keep the HQ view current across intake, briefs, and approvals.", tag: "HQ" },
+];
+
+const productLaneLabels: Record<string, string> = {
+  "lead-intake-router": "Lead Intake Router",
+  "paid-brief-generator": "Paid Brief",
+  "literature-scan-copilot": "Literature Scan Copilot",
+  "competitor-watcher": "Competitor Watcher",
+  "meeting-to-action-system": "Meeting-to-Action System",
+  "client-update-autopilot": "Client Update Autopilot",
+  "sop-builder": "SOP Builder",
+  "approval-gate-workflow": "Approval Gate Workflow",
+  "content-repurposing-engine": "Content Repurposing Engine",
+  "ops-dashboard-sync": "Ops Dashboard Sync",
+  "ai-automation-service": "Automation Service",
+  "biostatx": "BioStatX",
+  "genox-site": "Genox Site",
+  "peptide-service": "Peptide Service",
+  "business-pipeline": "General / Ops",
+};
+
+const productLaneSet = new Set(Object.keys(productLaneLabels));
+
+function prettyPlanLabel(plan: string) {
+  return productLaneLabels[plan] ?? plan;
+}
+
+function requestPlanToLane(plan: string) {
+  if (plan === "discovery") return "genox-site";
+  if (plan === "automation") return "ai-automation-service";
+  if (productLaneSet.has(plan)) return plan;
+  return "peptide-service";
+}
 
 /* ═══════════════════════════════════════════
    PRODUCT CARD — expandable with detail panel
@@ -382,9 +426,9 @@ function ProductDetailPanel({ product, isOpen }: { product: ProductInfo | null; 
    ═══════════════════════════════════════════ */
 function HeroIllustration() {
   const lanes = [
-    { n: "01", title: "peptide-service", desc: "Primary lane for peptide projects, quotes, and consults.", accent: "from-[#ffd88a] to-[#d88a2c]" },
-    { n: "02", title: "biostatx", desc: "Decision-ready statistics and reporting.", accent: "from-white/25 to-white/10" },
-    { n: "03", title: "genox-site", desc: "Discovery scoping and partner fit.", accent: "from-white/25 to-white/10" },
+    { n: "01", title: "peptide-service", desc: "Peptide projects, quotes, consults.", accent: "from-[#ffd88a] to-[#d88a2c]" },
+    { n: "02", title: "biostatx", desc: "Decision-ready statistics.", accent: "from-white/25 to-white/10" },
+    { n: "03", title: "genox-site", desc: "Discovery scoping.", accent: "from-white/25 to-white/10" },
   ];
 
   return (
@@ -393,10 +437,9 @@ function HeroIllustration() {
       <div className="relative flex items-start justify-between gap-4 border-b border-white/10 pb-4">
         <div>
           <p className="text-[10px] uppercase tracking-[0.28em] text-[#ffd88a]/82">Service snapshot</p>
-          <p className="mt-1 text-lg font-semibold text-white leading-tight">Three lanes. One intake.</p>
-          <p className="mt-1 text-sm text-white/70">Primary lane first. Human review always.</p>
+          <p className="mt-1 text-lg font-semibold text-white leading-tight">One paid brief. Three lanes.</p>
+          <p className="mt-1 text-sm text-white/70">Primary lane first. Human review required.</p>
         </div>
-        <span className="shrink-0 rounded-full border border-[#ffd88a]/18 bg-white/5 px-2.5 py-1 text-[11px] font-semibold text-[#ffe0a3] shadow-sm shadow-black/20">Human review</span>
       </div>
 
       <div className="relative mt-4 space-y-3">
@@ -422,10 +465,9 @@ function HeroIllustration() {
         ))}
       </div>
 
-      <div className="relative mt-4 grid grid-cols-3 gap-2">
+      <div className="relative mt-4 grid grid-cols-2 gap-2">
         {[
           ["Response", "24h"],
-          ["Focus", "Scope"],
           ["Output", "Handoff"],
         ].map(([label, value]) => (
           <div key={label} className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-center shadow-inner shadow-black/10">
@@ -484,7 +526,7 @@ function WaitlistModal({ open, onClose, plan }: { open: boolean; onClose: () => 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
-  const [serviceLane, setServiceLane] = useState(plan === "discovery" ? "genox-site" : "peptide-service");
+  const [serviceLane, setServiceLane] = useState(requestPlanToLane(plan));
   const [priority, setPriority] = useState(plan === "discovery" ? "hot" : "warm");
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -493,19 +535,20 @@ function WaitlistModal({ open, onClose, plan }: { open: boolean; onClose: () => 
   const [result, setResult] = useState<IntakeResponse | null>(null);
   if (!open) return null;
 
-  const modalTitle =
-    plan === "discovery"
-      ? "Discovery / Partner Brief — Request a Brief"
-      : plan === "peptide-service"
-        ? "Peptide Service — Request a Brief"
-        : `${plan} — Request a Brief`;
+  const modalTitle = `${prettyPlanLabel(plan)} — Request a Brief`;
 
   const modalCopy =
     plan === "discovery"
       ? "Tell us the target, stage, and partner context. We will route the brief to the right review path."
-      : plan === "peptide-service"
-        ? "Peptide projects, quotes, and consults start here. Share the minimum context and we will scope the next step."
-        : "Tell us what you want to remove, automate, or scope first.";
+      : plan === "automation"
+        ? "Tell us what should trigger, what should happen, and which systems need to connect. We will scope the automation brief."
+        : plan === "paid-brief-generator"
+          ? "Tell us the one question you need answered. We will verify context and turn it into a decision-ready brief."
+          : productLaneSet.has(plan)
+            ? "Tell us the minimum context for this automation lane. We will scope the workflow and route it for review."
+            : plan === "peptide-service"
+              ? "Peptide requests start here. Share the minimum context and we will scope the next step."
+              : "Tell us what you want to remove, automate, or scope first.";
 
   const preview = buildIntakePreview({
     name,
@@ -539,18 +582,39 @@ function WaitlistModal({ open, onClose, plan }: { open: boolean; onClose: () => 
     setSubmitting(true);
     setError("");
     try {
-      const response = await fetch("/api/intake", {
+      const payload = {
+        name,
+        email,
+        company,
+        message,
+        source: "website",
+        serviceLane,
+        priority,
+        plan,
+      };
+
+      const endpoint =
+        serviceLane === "lead-intake-router" ||
+        serviceLane === "paid-brief-generator" ||
+        serviceLane === "literature-scan-copilot" ||
+        serviceLane === "competitor-watcher" ||
+        serviceLane === "meeting-to-action-system" ||
+        serviceLane === "client-update-autopilot" ||
+        serviceLane === "sop-builder" ||
+        serviceLane === "approval-gate-workflow" ||
+        serviceLane === "content-repurposing-engine" ||
+        serviceLane === "ops-dashboard-sync"
+          ? "/api/products"
+          : serviceLane === "ai-automation-service"
+            ? "/api/automation"
+            : "/api/intake";
+
+      const response = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name,
-          email,
-          company,
-          message,
-          source: "website",
-          serviceLane,
-          priority,
-          plan,
+          ...payload,
+          kind: serviceLane,
         }),
       });
       const body = (await response.json()) as IntakeResponse;
@@ -666,7 +730,18 @@ function WaitlistModal({ open, onClose, plan }: { open: boolean; onClose: () => 
                 onChange={(e) => setServiceLane(e.target.value)}
                 className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-text-primary text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/30 focus:border-amber-500 transition"
               >
+                <option value="lead-intake-router">Lead Intake Router</option>
+                <option value="paid-brief-generator">Paid Brief</option>
+                <option value="literature-scan-copilot">Literature Scan Copilot</option>
+                <option value="competitor-watcher">Competitor Watcher</option>
+                <option value="meeting-to-action-system">Meeting-to-Action System</option>
+                <option value="client-update-autopilot">Client Update Autopilot</option>
+                <option value="sop-builder">SOP Builder</option>
+                <option value="approval-gate-workflow">Approval Gate Workflow</option>
+                <option value="content-repurposing-engine">Content Repurposing Engine</option>
+                <option value="ops-dashboard-sync">Ops Dashboard Sync</option>
                 <option value="peptide-service">Peptide Service</option>
+                <option value="ai-automation-service">Automation Service</option>
                 <option value="biostatx">BioStatX</option>
                 <option value="genox-site">Genox Site</option>
                 <option value="business-pipeline">General / Ops</option>
@@ -757,13 +832,13 @@ export function App() {
               Paperclip
             </button>
             <span className="w-px h-4 bg-gray-200 mx-2" />
-            <a href="#ceo" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Founder / CEO</a>
-            <a href="#research" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Research</a>
+            <a href="#about" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">About</a>
             <a href="#products" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Services</a>
-            <a href="#team" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Team</a>
-            <a href="#pricing" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Contact</a>
+            <a href="#directory" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Directory</a>
+            <a href="#process" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Process</a>
+            <a href="#contact" className="px-3 py-1.5 text-text-secondary hover:text-text-primary transition">Contact</a>
           </div>
-          <button onClick={() => openWaitlist("peptide-service")} className="hidden sm:inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-brand to-accent text-white text-sm font-semibold shadow-sm shadow-brand/10 hover:shadow-md hover:shadow-brand/20 transition">
+          <button onClick={() => openWaitlist("paid-brief-generator")} className="hidden sm:inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gradient-to-r from-brand to-accent text-white text-sm font-semibold shadow-sm shadow-brand/10 hover:shadow-md hover:shadow-brand/20 transition">
             Request a Brief
           </button>
         </div>
@@ -772,39 +847,39 @@ export function App() {
       {/* ── HERO ── */}
       <section className="relative pt-28 sm:pt-32 pb-14 sm:pb-20 overflow-hidden bg-[radial-gradient(circle_at_top,rgba(255,216,138,0.12),transparent_28%),linear-gradient(180deg,#09090f_0%,#11111a_55%,#15111a_100%)] text-white">
         <div className="hero-glow top-[-220px] left-1/2 -translate-x-1/2" />
-        <div className="blob-warm w-[380px] h-[380px] -top-24 -right-32 opacity-80" />
-        <div className="blob-cool w-[320px] h-[320px] top-44 -left-24 opacity-70" />
+        <div className="blob-warm hidden sm:block w-[380px] h-[380px] -top-24 -right-32 opacity-80" />
+        <div className="blob-cool hidden sm:block w-[320px] h-[320px] top-44 -left-24 opacity-70" />
 
         <div className="max-w-7xl mx-auto px-5 sm:px-6 grid lg:grid-cols-2 gap-10 sm:gap-12 items-center relative z-10">
           {/* Left: Text */}
           <div className="text-white max-w-xl">
             <div className="section-badge bg-white/8 text-white border border-white/10 mb-5 sm:mb-7 backdrop-blur-sm">
-              <Sparkles size={12} /> Decision-ready biotech · Human review
+              <Sparkles size={12} /> Premium biotech services · Paid brief first
             </div>
 
             <h1 className="heading-serif text-[2.9rem] sm:text-6xl lg:text-[5.25rem] leading-[0.94] tracking-tight mb-4 sm:mb-5">
               <span className="block bg-gradient-to-r from-[#fff0c2] via-[#f0b45f] to-[#b86c1b] bg-clip-text text-transparent">
-                AI-powered
+                One brief.
               </span>
-              <span className="block text-white">biotech decisions.</span>
+              <span className="block text-white">One owner. One next step.</span>
             </h1>
 
             <p className="text-[15px] sm:text-lg text-white/76 max-w-lg mb-6 sm:mb-7 leading-relaxed">
-              브라운 바이오텍 주식회사는 복잡한 요청을 하나의 깔끔한 브리프, 하나의 owner, 하나의 next step으로 정리합니다.
+              브라운 바이오텍 주식회사는 paid brief로 시작해 privacy-aware, human-approved decision-ready work를 제공합니다.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
-              <button onClick={() => openWaitlist("peptide-service")} className="group inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-full bg-gradient-to-r from-brand to-accent text-white font-semibold shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-black/30 transition-all w-full sm:w-auto">
+              <button onClick={() => openWaitlist("paid-brief-generator")} className="group inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-full bg-gradient-to-r from-brand to-accent text-white font-semibold shadow-lg shadow-black/20 hover:shadow-xl hover:shadow-black/30 transition-all w-full sm:w-auto">
                 Request a Brief <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
               </button>
               <a href="#bu-section" className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3.5 rounded-full border border-white/15 text-white/90 font-semibold hover:bg-white/6 transition w-full sm:w-auto backdrop-blur-sm">
-                See the Workflow
+                View the Service Lanes
               </a>
             </div>
 
-            <div className="mt-6 flex flex-wrap gap-2 text-[11px] sm:text-xs text-white/78">
+            <div className="mt-6 hidden sm:flex flex-wrap gap-2 text-[11px] sm:text-xs text-white/78">
               {[
-                "One intake",
+                "Paid brief",
                 "Primary lane",
                 "Human review",
               ].map((chip) => (
@@ -818,57 +893,6 @@ export function App() {
           {/* Right: Illustration */}
           <div className="hidden lg:block">
             <HeroIllustration />
-          </div>
-        </div>
-
-        {/* Mobile-first service snapshot */}
-        <div className="max-w-5xl mx-auto px-5 sm:px-6 mt-10 sm:mt-20 relative z-10 lg:hidden">
-          <div className="relative overflow-hidden rounded-[2rem] border border-[#ffd88a]/22 bg-gradient-to-br from-[#1c1117] via-[#120f14] to-[#09090d] p-4 sm:p-5 shadow-[0_24px_72px_rgba(0,0,0,0.34)] ring-1 ring-white/5">
-            <div className="pointer-events-none absolute inset-0 rounded-[2rem] bg-[radial-gradient(circle_at_top_right,rgba(255,216,138,0.12),transparent_40%),radial-gradient(circle_at_bottom_left,rgba(139,92,246,0.08),transparent_34%)]" />
-            <div className="relative flex items-start justify-between gap-4 border-b border-white/10 pb-4">
-              <div>
-                <p className="text-[10px] uppercase tracking-[0.28em] text-[#ffd88a]/82">Service snapshot</p>
-                <p className="mt-1 text-base sm:text-lg font-semibold text-white leading-tight">Three lanes. One intake.</p>
-                <p className="mt-1 text-xs sm:text-sm text-white/70">Primary lane first. Human review always.</p>
-              </div>
-              <a href="#bu-section" className="shrink-0 rounded-full border border-[#ffd88a]/18 bg-white/5 px-3 py-1.5 text-xs font-semibold text-[#ffe0a3] shadow-sm shadow-black/20 transition hover:bg-white/10">View details</a>
-            </div>
-            <div className="relative grid gap-3 mt-4">
-              {[
-                ["peptide-service", "Primary lane for peptide projects, quotes, and consults.", "Primary lane"],
-                ["biostatx", "Decision-ready statistics and reporting.", "Analysis"],
-                ["genox-site", "Discovery scoping and partner fit.", "Scope"],
-              ].map(([lane, desc, tag], idx) => (
-                <div key={lane} className={`rounded-2xl border p-3.5 ${idx === 0 ? "border-[#ffd88a]/24 bg-[#fff1cf]/8 shadow-[0_0_0_1px_rgba(255,216,138,0.05)]" : "border-white/10 bg-white/[0.035]"} backdrop-blur-sm`}>
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0 flex-1 border-l-2 border-[#ffd88a]/35 pl-3">
-                      <div className="flex items-center gap-2 mb-1">
-                        <div className="text-[15px] font-semibold tracking-tight text-white leading-none">{lane}</div>
-                        {idx === 0 && <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#ffd88a]/12 text-[#ffd88a] border border-[#ffd88a]/16">{tag}</span>}
-                      </div>
-                      <div className="text-[13px] text-white/80 leading-snug">{desc}</div>
-                    </div>
-                    <ArrowRight size={15} className="text-[#ffd88a] shrink-0 mt-0.5" />
-                  </div>
-                </div>
-              ))}
-            </div>
-            <div className="relative mt-4 grid grid-cols-3 gap-2">
-              {[
-                ["Response", "24h"],
-                ["Focus", "Scope"],
-                ["Output", "Handoff"],
-              ].map(([label, value]) => (
-                <div key={label} className="rounded-xl border border-white/10 bg-black/20 px-3 py-2 text-center shadow-inner shadow-black/10">
-                  <div className="text-[9px] uppercase tracking-[0.2em] text-white/46">{label}</div>
-                  <div className="text-sm font-semibold text-white mt-0.5">{value}</div>
-                </div>
-              ))}
-            </div>
-            <div className="relative mt-4 flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.035] px-3 py-2 text-xs text-white/75">
-              <Check size={12} className="text-[#ffd88a]" />
-              Research support only. High-stakes decisions stay human-reviewed.
-            </div>
           </div>
         </div>
 
@@ -958,10 +982,10 @@ export function App() {
             <div className="space-y-20">
               {/* Tagline */}
               <div className="text-center">
-                <span className="section-badge bg-amber-50 text-amber-700 border border-amber-200 mb-4">Service Lane</span>
-                <h2 className="heading-serif text-4xl sm:text-5xl mb-4">Personal Health Intelligence</h2>
+                <span className="section-badge bg-amber-50 text-amber-700 border border-amber-200 mb-4">Supporting Lane</span>
+                <h2 className="heading-serif text-4xl sm:text-5xl mb-4">Support Lane</h2>
                 <p className="text-text-secondary max-w-lg mx-auto text-lg">
-                  혈액 검사, 바이오마커, 프로토콜을 한 흐름으로 정리해 decision confidence를 높입니다.
+                  Useful proof, not the main sale. This lane supports trust while peptide-service carries the commercial weight.
                 </p>
               </div>
 
@@ -983,13 +1007,13 @@ export function App() {
 
               {/* How it works */}
               <div>
-                <h3 className="heading-serif text-3xl text-center mb-10">Flow</h3>
+                <h3 className="heading-serif text-3xl text-center mb-10">Brief flow</h3>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                   {[
-                    { num: "1", title: "Intake", desc: "혈액 검사, 웨어러블 데이터, 건강 기록", icon: Database },
-                    { num: "2", title: "Review", desc: "6개 전문 에이전트가 동시 분석", icon: Brain },
-                    { num: "3", title: "Plan", desc: "영양/운동/수면 맞춤 프로토콜", icon: Sparkles },
-                    { num: "4", title: "Track", desc: "FitFlow 연동, AI 지속 최적화", icon: Activity },
+                    { num: "1", title: "Intake", desc: "Minimum context", icon: Database },
+                    { num: "2", title: "Review", desc: "Human + AI review", icon: Brain },
+                    { num: "3", title: "Plan", desc: "One clear next step", icon: Sparkles },
+                    { num: "4", title: "Track", desc: "Follow-through", icon: Activity },
                   ].map((item) => {
                     const Icon = item.icon;
                     return (
@@ -1008,8 +1032,8 @@ export function App() {
 
               {/* Health App Showcase */}
               <div>
-                <h3 className="heading-serif text-3xl text-center mb-4">Service Flow Preview</h3>
-                <p className="text-sm text-text-muted text-center mb-10">브리프부터 추적까지 — 실제 화면 흐름을 확인하세요</p>
+                <h3 className="heading-serif text-3xl text-center mb-4">Preview</h3>
+                <p className="text-sm text-text-muted text-center mb-10">Brief to follow-through, kept short and reviewable.</p>
 
                 <div className="grid lg:grid-cols-2 gap-8">
                   {/* App Mockup — Phone Frame */}
@@ -1154,14 +1178,14 @@ export function App() {
 
               {/* Products — Expandable Cards */}
               <div id="products">
-                <h3 className="heading-serif text-3xl text-center mb-2">Service Portfolio</h3>
-                <p className="text-sm text-text-muted text-center mb-8">각 lane의 역할만 빠르게 확인하세요</p>
+                <h3 className="heading-serif text-3xl text-center mb-2">Primary Service Lane</h3>
+                <p className="text-sm text-text-muted text-center mb-8">Paid Brief starts the relationship; peptide-service is the primary commercial lane.</p>
                 <div className="mb-8 bg-gradient-to-br from-violet-50 to-fuchsia-50 border border-violet-100 rounded-3xl p-7 shadow-sm">
                   <div className="max-w-3xl mx-auto text-center">
                     <span className="section-badge bg-white text-violet-700 border border-violet-200 mb-4">Primary Service Lane</span>
-                    <h4 className="heading-serif text-3xl mb-3">Peptide Service</h4>
+                    <h4 className="heading-serif text-3xl mb-3">Paid Brief → Peptide Service</h4>
                     <p className="text-text-secondary mb-5 max-w-2xl mx-auto">
-                      Peptide projects, quotes, and consults start here. One brief, one scope, one human review gate.
+                      One question, one recommendation, one next step. Human review is built in for high-stakes decisions.
                     </p>
                     <div className="flex flex-wrap justify-center gap-3 text-xs text-violet-700 font-medium">
                       <span className="px-3 py-1.5 rounded-full bg-white border border-violet-100">Request a Brief</span>
@@ -1196,6 +1220,36 @@ export function App() {
                   })}
                 </div>
               </div>
+
+              <div className="mt-10 bg-white border border-gray-100 rounded-3xl p-6 sm:p-8 shadow-sm">
+                <div className="text-center max-w-3xl mx-auto mb-8">
+                  <span className="section-badge bg-blue-50 text-blue-700 border border-blue-100 mb-4">Automation Catalog</span>
+                  <h3 className="heading-serif text-3xl mb-3">10 automation products</h3>
+                  <p className="text-text-secondary">
+                    Each product is a narrow, human-controlled workflow that starts with a brief and ends in a durable artifact.
+                  </p>
+                </div>
+                <div className="grid sm:grid-cols-2 xl:grid-cols-3 gap-4">
+                  {automationCatalog.map((item) => (
+                    <div key={item.slug} className="rounded-2xl border border-gray-100 bg-gray-50 p-5 shadow-sm hover:shadow-md transition">
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <p className="text-[10px] uppercase tracking-[0.24em] text-blue-600 font-semibold">{item.tag}</p>
+                          <h4 className="mt-1 font-bold text-lg text-text-primary">{item.title}</h4>
+                        </div>
+                        <span className="text-[10px] rounded-full bg-white border border-gray-200 px-2.5 py-1 text-text-muted">Ready</span>
+                      </div>
+                      <p className="mt-3 text-sm text-text-secondary leading-relaxed">{item.desc}</p>
+                      <button
+                        onClick={() => openWaitlist(item.slug)}
+                        className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-blue-700 hover:text-blue-800"
+                      >
+                        Request brief <ArrowRight size={14} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           )}
 
@@ -1205,15 +1259,15 @@ export function App() {
               {/* Tagline */}
               <div className="text-center">
                 <span className="section-badge bg-violet-50 text-violet-700 border border-violet-200 mb-4">B2B Discovery</span>
-                <h2 className="heading-serif text-4xl sm:text-5xl mb-4">Discovery and Translational Planning</h2>
+                <h2 className="heading-serif text-4xl sm:text-5xl mb-4">Partner Briefs</h2>
                 <p className="text-text-secondary max-w-lg mx-auto text-lg">
-                  노화/대사 타겟 발굴부터 번역 패키지 정리까지, partner-ready brief로 묶습니다.
+                  Target ideas become partner-ready scope, evidence, and next steps.
                 </p>
               </div>
 
               {/* Focus Areas */}
               <div>
-                <h3 className="heading-serif text-3xl text-center mb-8">Key Questions</h3>
+                <h3 className="heading-serif text-3xl text-center mb-8">Focus areas</h3>
                 <div className="grid sm:grid-cols-3 gap-5">
                   {[
                     { title: "Aging Therapeutics", desc: "세노리틱스, mTOR 억제제, NAD+ 부스터, 텔로미어 유지", icon: Hourglass },
@@ -1236,8 +1290,8 @@ export function App() {
 
               {/* Pipeline — Visual Graphic */}
               <div>
-                <h3 className="heading-serif text-3xl text-center mb-8">Discovery Workflow</h3>
-                <p className="text-sm text-text-muted text-center mb-10">타겟 스캐닝부터 번역 패키지 정리까지 — decision-ready research support</p>
+                <h3 className="heading-serif text-3xl text-center mb-8">Partner brief flow</h3>
+                <p className="text-sm text-text-muted text-center mb-10">Short research path from target scan to handoff.</p>
 
                 {/* SVG Pipeline Graphic */}
                 <div className="bg-white border border-gray-100 rounded-3xl p-8 shadow-sm mb-8">
@@ -1375,12 +1429,12 @@ export function App() {
                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-violet-400 to-purple-600 flex items-center justify-center mx-auto mb-5">
                   <Building2 size={28} className="text-white" />
                 </div>
-                <h3 className="heading-serif text-3xl mb-3">Partner discovery</h3>
+                <h3 className="heading-serif text-3xl mb-3">Paid brief → partner engagement</h3>
                 <p className="text-text-secondary mb-6 max-w-md mx-auto">
-                  Target discovery, affinity modeling, and partner-ready translation.
+                  Start with a decision-ready brief. If the scope is a fit, move into peptide-service, biostatx, or a monthly retainer.
                 </p>
-                <button onClick={() => openWaitlist("discovery")} className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-violet-500 to-purple-600 text-white font-semibold shadow-lg shadow-violet-500/15 hover:shadow-xl hover:shadow-violet-500/25 transition text-sm">
-                  Request Partner Brief <ArrowRight size={14} />
+                <button onClick={() => openWaitlist("paid-brief-generator")} className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-violet-500 to-purple-600 text-white font-semibold shadow-lg shadow-violet-500/15 hover:shadow-xl hover:shadow-violet-500/25 transition text-sm">
+                  Request a Paid Brief <ArrowRight size={14} />
                 </button>
               </div>
             </div>
@@ -1392,9 +1446,9 @@ export function App() {
               {/* Tagline */}
               <div className="text-center">
                 <span className="section-badge bg-blue-50 text-blue-700 border border-blue-200 mb-4">AI Infrastructure</span>
-                <h2 className="heading-serif text-4xl sm:text-5xl mb-4">AI Orchestration Platform</h2>
+                <h2 className="heading-serif text-4xl sm:text-5xl mb-4">Internal operations</h2>
                 <p className="text-text-secondary max-w-lg mx-auto text-lg">
-                  LLM 파이프라인을 설계하고, ClipMart에서 템플릿을 공유하고, 멀티모델로 AI를 오케스트레이션합니다.
+                  Workflow automation and reusable internal tools that support delivery.
                 </p>
               </div>
 
@@ -1416,7 +1470,7 @@ export function App() {
 
               {/* How it works */}
               <div>
-                <h3 className="heading-serif text-3xl text-center mb-10">Process</h3>
+                <h3 className="heading-serif text-3xl text-center mb-10">Build loop</h3>
                 <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                   {paperclipHowItWorks.map((item) => {
                     const Icon = item.icon;
@@ -1517,6 +1571,9 @@ export function App() {
                   <a href="https://dist-chi-two-33.vercel.app" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold shadow-lg shadow-blue-500/15 hover:shadow-xl hover:shadow-blue-500/25 transition text-sm">
                     Visit Paperclip <ExternalLink size={14} />
                   </a>
+                  <button onClick={() => openWaitlist("automation")} className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-white border-2 border-blue-200 text-blue-700 font-semibold hover:bg-blue-50 transition text-sm">
+                    Request Automation Brief <ArrowRight size={14} />
+                  </button>
                   <a href="https://github.com/paperclipai/paperclip" target="_blank" rel="noopener" className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full border-2 border-blue-200 text-blue-700 font-semibold hover:bg-blue-50 transition text-sm">
                     GitHub <ArrowRight size={14} />
                   </a>
@@ -1756,13 +1813,95 @@ export function App() {
         </div>
       </section>
 
+      {/* ── DIRECTORY ── */}
+      <section id="directory" className="py-24 bg-surface-raised">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="text-center mb-14">
+            <span className="section-badge bg-blue-50 text-blue-700 border border-blue-100 mb-4">
+              <FileText size={12} /> Operating Directory
+            </span>
+            <h2 className="heading-serif text-4xl mb-3">Operating Directory</h2>
+            <p className="text-text-secondary max-w-2xl mx-auto">
+              Three lists only: what helps a brief, what supports delivery, and what needs review.
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-6">
+            {[
+              {
+                title: "API Directory",
+                badge: "Target / evidence / automation",
+                body: "External APIs that help scope briefs, improve evidence quality, route intake, or reduce manual work.",
+                bullets: ["Lane-aware", "Last verified", "Status tracked"],
+                accent: "blue",
+              },
+              {
+                title: "Partner Directory",
+                badge: "Lab / vendor / advisor",
+                body: "People and organizations with a plausible next step who can support delivery, distribution, or credibility.",
+                bullets: ["Owner assigned", "Next action", "Approval gate"],
+                accent: "violet",
+              },
+              {
+                title: "Resource Directory",
+                badge: "Template / checklist / tool",
+                body: "Reusable assets that speed up brief writing, review, launch QA, and delivery without reinventing the workflow.",
+                bullets: ["High reuse", "Last reviewed", "Retire / merge rule"],
+                accent: "amber",
+              },
+            ].map((item) => (
+              <div key={item.title} className="bg-white border border-gray-100 rounded-3xl p-7 shadow-sm card-lift">
+                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center mb-5 ${item.accent === "blue" ? "bg-blue-50 text-blue-700 border border-blue-100" : item.accent === "violet" ? "bg-violet-50 text-violet-700 border border-violet-100" : "bg-amber-50 text-amber-700 border border-amber-100"}`}>
+                  <Box size={22} />
+                </div>
+                <div className="flex items-center gap-2 mb-3">
+                  <h3 className="text-lg font-bold">{item.title}</h3>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-gray-50 border border-gray-100 text-text-muted font-semibold">{item.badge}</span>
+                </div>
+                <p className="text-sm text-text-secondary leading-relaxed mb-5">{item.body}</p>
+                <div className="space-y-2">
+                  {item.bullets.map((bullet) => (
+                    <div key={bullet} className="flex items-center gap-2 text-xs text-text-secondary">
+                      <span className={`w-1.5 h-1.5 rounded-full ${item.accent === "blue" ? "bg-blue-600" : item.accent === "violet" ? "bg-violet-600" : "bg-amber-600"}`} />
+                      <span>{bullet}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-8 bg-white border border-gray-100 rounded-3xl p-7 shadow-sm">
+            <div className="grid lg:grid-cols-2 gap-6 items-start">
+              <div>
+                <h3 className="font-bold text-lg mb-2">Operating rule</h3>
+                <p className="text-sm text-text-secondary leading-relaxed">
+                  If it does not help a brief, a decision, or a delivery step, it does not belong in the directory.
+                </p>
+              </div>
+              <div className="grid sm:grid-cols-3 gap-3">
+                {[
+                  "Promote",
+                  "Merge",
+                  "Retire",
+                ].map((tag) => (
+                  <div key={tag} className="rounded-2xl border border-gray-100 bg-gray-50 px-4 py-3 text-sm font-semibold text-text-secondary text-center">
+                    {tag}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── PRICING ── */}
       <section id="pricing" className="py-24 bg-surface-raised">
         <div className="max-w-6xl mx-auto px-6">
           <div className="text-center mb-14">
-            <span className="section-badge bg-amber-50 text-amber-700 border border-amber-200 mb-4">Service Access</span>
-            <h2 className="heading-serif text-4xl mb-3">Health Memberships</h2>
-            <p className="text-text-secondary max-w-lg mx-auto">Choose the level of review you need. Start light, move deeper when the signal matters, and keep human review in the loop for higher-stakes decisions.</p>
+            <span className="section-badge bg-amber-50 text-amber-700 border border-amber-200 mb-4">Revenue paths</span>
+            <h2 className="heading-serif text-4xl mb-3">Paid brief · peptide-service · retainer</h2>
+            <p className="text-text-secondary max-w-lg mx-auto">Start with the brief, then move into the service lane or the retainer only when the fit is clear.</p>
           </div>
 
           <div className="grid lg:grid-cols-3 gap-6">
@@ -1878,7 +2017,7 @@ export function App() {
             </div>
           </div>
           <p className="mt-4 text-center text-xs text-text-muted">
-            Brown Biotech Inc. · decision-ready biotech services · peptide-service · biostatx · genox-site · private brief intake
+            Brown Biotech Inc. · decision-ready biotech services · paid brief intake · peptide-service · biostatx · genox-site
           </p>
         </div>
       </footer>

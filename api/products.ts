@@ -242,7 +242,6 @@ export default async function handler(req: any, res: any) {
 
   const dbId = ENV.INTAKE_DATABASE_ID || DEFAULT_DB_ID;
   const notionToken = ENV.NOTION_API_KEY;
-  if (!notionToken) return res.status(500).json({ error: "NOTION_API_KEY is not configured" });
 
   let payload: ProductBody = {};
   try {
@@ -253,6 +252,52 @@ export default async function handler(req: any, res: any) {
 
   const blueprint = buildBlueprint(payload);
   const source = text(payload.source) || "website";
+
+  if (!notionToken) {
+    const telegramAlert = await sendTelegramAlert(
+      telegramAlertText({
+        title: blueprint.title,
+        automationType: blueprint.kind,
+        serviceLane: blueprint.serviceLane,
+        priority: blueprint.priority,
+        route: blueprint.route,
+        owner: blueprint.owner,
+        approvalNeeded: blueprint.approvalNeeded,
+        name: text(payload.name),
+        email: text(payload.email),
+        company: text(payload.company),
+        source,
+        objective: blueprint.objective,
+        systems: [],
+        trigger: blueprint.trigger,
+        output: blueprint.output,
+        nextStep: blueprint.nextStep,
+      }),
+    );
+
+    const localId = `local-${Date.now().toString(36)}`;
+    return res.status(200).json({
+      ok: true,
+      id: localId,
+      url: null,
+      title: blueprint.title,
+      automationType: blueprint.kind,
+      serviceLane: blueprint.serviceLane,
+      priority: blueprint.priority,
+      route: blueprint.route,
+      owner: blueprint.owner,
+      approvalNeeded: blueprint.approvalNeeded,
+      nextStep: blueprint.nextStep,
+      statusFlow: blueprint.statusFlow,
+      phases: blueprint.phases,
+      checklist: blueprint.checklist,
+      systems: blueprint.sources,
+      trigger: blueprint.trigger,
+      output: blueprint.output,
+      telegram: telegramAlert,
+      notion: { created: false, reason: "missing-config" },
+    });
+  }
 
   const pageBody = {
     parent: { database_id: dbId },

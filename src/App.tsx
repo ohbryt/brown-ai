@@ -535,7 +535,7 @@ function WaitlistModal({ open, onClose, plan }: { open: boolean; onClose: () => 
   const [result, setResult] = useState<IntakeResponse | null>(null);
   if (!open) return null;
 
-  const modalTitle = `${prettyPlanLabel(plan)} — Request a Brief`;
+  const modalTitle = plan === "paid-brief-generator" ? "Paid Brief — Request a Paid Brief" : `${prettyPlanLabel(plan)} — Request a Brief`;
 
   const modalCopy =
     plan === "discovery"
@@ -543,7 +543,7 @@ function WaitlistModal({ open, onClose, plan }: { open: boolean; onClose: () => 
       : plan === "automation"
         ? "Tell us what should trigger, what should happen, and which systems need to connect. We will scope the automation brief."
         : plan === "paid-brief-generator"
-          ? "Tell us the one question you need answered. We will verify context and turn it into a decision-ready brief."
+          ? "Paid Brief starts at ₩1.5M. Tell us the one question you need answered and we will verify context, scope the brief, and route the next step."
           : productLaneSet.has(plan)
             ? "Tell us the minimum context for this automation lane. We will scope the workflow and route it for review."
             : plan === "peptide-service"
@@ -785,7 +785,7 @@ function WaitlistModal({ open, onClose, plan }: { open: boolean; onClose: () => 
 
               {error && <p className="text-sm text-red-600">{error}</p>}
               <button type="submit" disabled={submitting} className="w-full py-3 rounded-xl bg-gradient-to-r from-brand to-accent text-white font-semibold text-sm shadow-md shadow-brand/15 hover:shadow-lg hover:shadow-brand/25 transition disabled:opacity-60 disabled:cursor-not-allowed">
-                {submitting ? "Sending..." : "Send private brief"}
+                {submitting ? "Sending..." : "Request a Paid Brief"}
               </button>
               <p className="text-[11px] text-text-muted text-center">This goes straight into the Brown Biotech intake queue with service lane and priority attached.</p>
             </form>
@@ -854,7 +854,7 @@ export function App() {
           {/* Left: Text */}
           <div className="text-white max-w-xl">
             <div className="section-badge bg-white/8 text-white border border-white/10 mb-5 sm:mb-7 backdrop-blur-sm">
-              <Sparkles size={12} /> Premium biotech services · Paid brief first
+              <Sparkles size={12} /> Decision-ready biotech services · Paid brief first
             </div>
 
             <h1 className="heading-serif text-[2.9rem] sm:text-6xl lg:text-[5.25rem] leading-[0.94] tracking-tight mb-4 sm:mb-5">
@@ -865,7 +865,7 @@ export function App() {
             </h1>
 
             <p className="text-[15px] sm:text-lg text-white/76 max-w-lg mb-6 sm:mb-7 leading-relaxed">
-              브라운 바이오텍 주식회사는 paid brief로 시작해 privacy-aware, human-approved decision-ready work를 제공합니다.
+              브라운 바이오텍 주식회사는 Paid Brief로 시작해 privacy-aware, human-approved decision-ready work를 제공합니다. 첫 유료 브리프는 ₩1.5M부터 시작하고, peptide-service가 주요 수익 라인입니다.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
@@ -880,6 +880,7 @@ export function App() {
             <div className="mt-6 hidden sm:flex flex-wrap gap-2 text-[11px] sm:text-xs text-white/78">
               {[
                 "Paid brief",
+                "₩1.5M+",
                 "Primary lane",
                 "Human review",
               ].map((chip) => (
@@ -1179,7 +1180,7 @@ export function App() {
               {/* Products — Expandable Cards */}
               <div id="products">
                 <h3 className="heading-serif text-3xl text-center mb-2">Primary Service Lane</h3>
-                <p className="text-sm text-text-muted text-center mb-8">Paid Brief starts the relationship; peptide-service is the primary commercial lane.</p>
+                <p className="text-sm text-text-muted text-center mb-8">Paid Brief starts the relationship; peptide-service is the primary commercial lane. Paid Brief begins at ₩1.5M, and peptide-service projects start at ₩5M+.</p>
                 <div className="mb-8 bg-gradient-to-br from-violet-50 to-fuchsia-50 border border-violet-100 rounded-3xl p-7 shadow-sm">
                   <div className="max-w-3xl mx-auto text-center">
                     <span className="section-badge bg-white text-violet-700 border border-violet-200 mb-4">Primary Service Lane</span>
